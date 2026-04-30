@@ -1,79 +1,129 @@
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight, ChevronDown } from "lucide-react";
+
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
+};
 
 export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Background Image */}
+      {/* Layered background */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-[2px] z-10" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background z-20" />
-        <img 
-          src="/hero-bg.png" 
-          alt="Abstract Background" 
-          className="w-full h-full object-cover opacity-60"
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(45,100,255,0.12),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_80%_80%,rgba(45,100,255,0.06),transparent)]" />
+        {/* Grid lines */}
+        <div
+          className="absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
+            backgroundSize: "80px 80px",
+          }}
         />
       </div>
 
-      <div className="container relative z-30 px-4 md:px-6 flex flex-col items-center text-center">
+      {/* Floating orbs */}
+      <motion.div
+        animate={{ y: [0, -30, 0], scale: [1, 1.05, 1] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/4 left-[10%] w-72 h-72 rounded-full bg-primary/5 blur-3xl pointer-events-none"
+      />
+      <motion.div
+        animate={{ y: [0, 20, 0], scale: [1, 1.08, 1] }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        className="absolute bottom-1/4 right-[10%] w-96 h-96 rounded-full bg-blue-500/5 blur-3xl pointer-events-none"
+      />
+
+      <div className="container relative z-10 px-4 md:px-6">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-4xl"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="max-w-5xl mx-auto text-center"
         >
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-8"
+          <motion.div
+            variants={itemVariants}
+            className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-10"
           >
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-sm font-medium tracking-wide text-foreground/80 uppercase">Accepting New Clients</span>
-          </motion.div>
-          
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 text-foreground">
-            We Build Digital <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">
-              Legacies.
+            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+            <span className="text-xs font-semibold tracking-[0.25em] uppercase text-foreground/70">
+              Currently Accepting New Clients
             </span>
-          </h1>
-          
-          <p className="text-lg md:text-xl text-foreground/60 mb-12 max-w-2xl mx-auto leading-relaxed">
-            NEXUS is an elite digital agency for ambitious brands. We don't just build websites and manage social media—we engineer market dominance.
-          </p>
+          </motion.div>
+
+          <motion.h1
+            variants={itemVariants}
+            className="text-[clamp(3rem,9vw,7.5rem)] font-black tracking-tight leading-[0.9] mb-8"
+          >
+            <span className="block text-foreground">We Build</span>
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary/80 to-blue-400">
+              Digital Empires.
+            </span>
+          </motion.h1>
+
+          <motion.p
+            variants={itemVariants}
+            className="text-lg md:text-xl text-foreground/50 mb-14 max-w-2xl mx-auto leading-relaxed font-light"
+          >
+            Next Edge Digital is an elite studio that engineers market-leading websites
+            and dominates social media for ambitious brands. We don't do average.
+          </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
+            variants={itemVariants}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Button size="lg" className="h-14 px-8 text-base bg-primary text-primary-foreground hover:bg-primary/90 rounded-full group">
+            <a
+              href="#contact"
+              data-testid="button-hero-primary"
+              className="group inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-bold text-sm tracking-widest uppercase rounded-sm hover:bg-primary/90 transition-all duration-300 hover:gap-4"
+            >
               Start a Project
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button size="lg" variant="outline" className="h-14 px-8 text-base rounded-full bg-transparent border-white/10 hover:bg-white/5">
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </a>
+            <a
+              href="#work"
+              data-testid="button-hero-secondary"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-transparent text-foreground/70 font-semibold text-sm tracking-widest uppercase border border-white/10 rounded-sm hover:border-white/30 hover:text-foreground transition-all duration-300"
+            >
               View Our Work
-            </Button>
+            </a>
+          </motion.div>
+
+          {/* Trust badges */}
+          <motion.div
+            variants={itemVariants}
+            className="mt-16 flex flex-wrap items-center justify-center gap-8 text-foreground/30"
+          >
+            {["150+ Projects Delivered", "98% Client Retention", "7 Years of Excellence"].map((badge) => (
+              <div key={badge} className="flex items-center gap-2 text-xs tracking-widest uppercase font-medium">
+                <span className="w-1 h-1 rounded-full bg-primary/60" />
+                {badge}
+              </div>
+            ))}
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-30"
+        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
       >
-        <span className="text-xs uppercase tracking-widest text-foreground/40">Scroll</span>
-        <motion.div 
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          className="w-[1px] h-12 bg-gradient-to-b from-primary/50 to-transparent"
-        />
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+        >
+          <ChevronDown className="w-4 h-4 text-foreground/20" />
+        </motion.div>
       </motion.div>
     </section>
   );
