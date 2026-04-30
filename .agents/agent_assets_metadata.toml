@@ -1,0 +1,32 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "c5rCU57XR2dDnrqAJRVp-"
+uri = "file://artifacts/agency-site/public/hero-bg.png"
+type = "image"
+title = "Abstract cinematic dark hero background"
+
+[[generated]]
+id = "H8hQ9CbZi9gPxd0TQ-CsD"
+uri = "file://artifacts/agency-site/public/project-1.png"
+type = "image"
+title = "Premium e-commerce project mockup"
+
+[[generated]]
+id = "HNIx7LlhVUi3DXAI16XfG"
+uri = "file://artifacts/agency-site/public/project-2.png"
+type = "image"
+title = "Fintech app project mockup"
+
+[[generated]]
+id = "NOJrGVh1tR_QX6SFeZzIw"
+uri = "file://artifacts/agency-site/public/project-3.png"
+type = "image"
+title = "Luxury real estate project mockup"
+
+[[generated]]
+id = "Zh3DLfVBq5rqyM49JbTWa"
+uri = "file://artifacts/agency-site/public/project-4.png"
+type = "image"
+title = "Automotive brand identity project"
