@@ -230,18 +230,27 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.4, duration: 1.2 }}
-            className="mt-16 flex flex-wrap items-center justify-center gap-8"
+            className="mt-16 flex flex-wrap items-center justify-center gap-4"
           >
-            {["150+ Projects Delivered", "98% Client Retention", "7 Years of Excellence"].map((badge, i) => (
+            {[
+              { label: "150+ Projects Delivered", icon: "🏆" },
+              { label: "98% Client Retention", icon: "🤝" },
+              { label: "7 Years of Excellence", icon: "⭐" },
+            ].map((badge, i) => (
               <motion.div
-                key={badge}
+                key={badge.label}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.5 + i * 0.1, duration: 0.6 }}
-                className="flex items-center gap-2.5 text-[11px] tracking-[0.2em] uppercase font-medium text-foreground/30 hover:text-foreground/50 transition-colors"
+                transition={{ delay: 1.5 + i * 0.12, duration: 0.6 }}
+                className="flex items-center gap-2.5 px-4 py-2 rounded-full text-[11px] tracking-[0.15em] uppercase font-semibold"
+                style={{
+                  background: "rgba(202,163,83,0.07)",
+                  border: "1px solid rgba(202,163,83,0.18)",
+                  color: "rgba(255,255,255,0.65)",
+                }}
               >
-                <span className="w-1 h-1 rounded-full bg-primary/60" />
-                {badge}
+                <span>{badge.icon}</span>
+                {badge.label}
               </motion.div>
             ))}
           </motion.div>

@@ -14,6 +14,7 @@ import { Process } from "./components/sections/Process";
 import { Portfolio } from "./components/sections/Portfolio";
 import { Testimonials } from "./components/sections/Testimonials";
 import { FAQ } from "./components/sections/FAQ";
+import { WhyUs } from "./components/sections/WhyUs";
 import { Contact } from "./components/sections/Contact";
 import { BookCall } from "./components/sections/BookCall";
 import { Footer } from "./components/sections/Footer";
@@ -234,6 +235,7 @@ function AgencySite() {
         <main>
           <Hero />
           <TrustedBy />
+          <WhyUs />
           <Services />
           <Stats />
           <Process />

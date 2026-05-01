@@ -11,6 +11,8 @@ const projects = [
     gradient: ["#7F1D1D", "#BE185D", "#4C1D95"],
     result: "+214% Online Revenue",
     year: "2024",
+    slug: "aurafashion.com",
+    ui: { nav: 3, hero: true, blocks: [4, 3] },
   },
   {
     title: "Nova Wealth",
@@ -20,6 +22,8 @@ const projects = [
     gradient: ["#1E3A5F", "#0E7490", "#1D4ED8"],
     result: "3x Client Acquisition",
     year: "2024",
+    slug: "novawealth.io",
+    ui: { nav: 4, hero: true, blocks: [3, 4] },
   },
   {
     title: "Lumina Estates",
@@ -29,6 +33,8 @@ const projects = [
     gradient: ["#78350F", "#B45309", "#92400E"],
     result: "+40% Avg Sale Price",
     year: "2023",
+    slug: "luminaestates.co",
+    ui: { nav: 3, hero: true, blocks: [2, 4] },
   },
   {
     title: "Apex Motors",
@@ -38,6 +44,8 @@ const projects = [
     gradient: ["#064E3B", "#065F46", "#047857"],
     result: "580K New Followers",
     year: "2023",
+    slug: "apexmotors.com",
+    ui: { nav: 5, hero: true, blocks: [3, 3] },
   },
   {
     title: "Orbit Media",
@@ -47,6 +55,8 @@ const projects = [
     gradient: ["#3B0764", "#4C1D95", "#5B21B6"],
     result: "+180% Organic Traffic",
     year: "2024",
+    slug: "orbitmedia.io",
+    ui: { nav: 4, hero: true, blocks: [4, 2] },
   },
   {
     title: "Forge Capital",
@@ -56,6 +66,8 @@ const projects = [
     gradient: ["#1F2937", "#374151", "#4B5563"],
     result: "Premium Market Position",
     year: "2024",
+    slug: "forgecapital.com",
+    ui: { nav: 3, hero: true, blocks: [2, 3] },
   },
 ];
 
@@ -66,6 +78,70 @@ const filters = [
   { label: "Social", value: "social" },
   { label: "SEO", value: "seo" },
 ];
+
+function BrowserMockup({ project }: { project: typeof projects[0] }) {
+  return (
+    <div className="absolute inset-0 flex flex-col pointer-events-none">
+      {/* Browser chrome */}
+      <div
+        className="flex-shrink-0 h-8 flex items-center px-3 gap-2 z-10"
+        style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(6px)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}
+      >
+        <div className="flex gap-1.5">
+          <div className="w-2 h-2 rounded-full" style={{ background: "rgba(255,80,80,0.7)" }} />
+          <div className="w-2 h-2 rounded-full" style={{ background: "rgba(255,200,50,0.7)" }} />
+          <div className="w-2 h-2 rounded-full" style={{ background: "rgba(50,210,90,0.7)" }} />
+        </div>
+        <div
+          className="flex-1 h-5 rounded-full flex items-center px-2.5 gap-1.5 mx-1"
+          style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.08)" }}
+        >
+          <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "rgba(50,210,90,0.6)" }} />
+          <span className="text-[8px] text-white/25 tracking-wide truncate font-mono">{project.slug}</span>
+        </div>
+      </div>
+
+      {/* Simulated page content */}
+      <div className="flex-1 relative overflow-hidden opacity-25">
+        {/* Simulated nav */}
+        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/10">
+          <div className="w-4 h-1.5 rounded-full bg-white/60" />
+          <div className="flex-1" />
+          {Array.from({ length: project.ui.nav }).map((_, i) => (
+            <div key={i} className="w-6 h-1 rounded-full bg-white/30" />
+          ))}
+          <div className="w-8 h-3 rounded-sm bg-white/40" />
+        </div>
+
+        {/* Simulated hero */}
+        {project.ui.hero && (
+          <div className="px-4 py-3 flex flex-col gap-1.5">
+            <div className="h-2.5 rounded-sm w-2/3 bg-white/50" />
+            <div className="h-1.5 rounded-sm w-full bg-white/25" />
+            <div className="h-1.5 rounded-sm w-4/5 bg-white/25" />
+            <div className="mt-1 flex gap-2">
+              <div className="h-4 w-14 rounded-sm bg-white/40" />
+              <div className="h-4 w-14 rounded-sm bg-white/20" />
+            </div>
+          </div>
+        )}
+
+        {/* Simulated content blocks row 1 */}
+        <div className="px-4 grid gap-1.5 mt-1" style={{ gridTemplateColumns: `repeat(${project.ui.blocks[0]}, 1fr)` }}>
+          {Array.from({ length: project.ui.blocks[0] }).map((_, i) => (
+            <div key={i} className="h-10 rounded-md bg-white/10" />
+          ))}
+        </div>
+        {/* Simulated content blocks row 2 */}
+        <div className="px-4 grid gap-1.5 mt-1.5" style={{ gridTemplateColumns: `repeat(${project.ui.blocks[1]}, 1fr)` }}>
+          {Array.from({ length: project.ui.blocks[1] }).map((_, i) => (
+            <div key={i} className="h-8 rounded-md bg-white/10" />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function ProjectCard({ project, index }: { project: typeof projects[0]; index: number }) {
   return (
@@ -79,29 +155,20 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
       whileHover={{ y: -8, transition: { duration: 0.3 } }}
       data-testid={`card-portfolio-${index}`}
     >
+      {/* Background gradient */}
       <div
         className="absolute inset-0"
-        style={{
-          background: `linear-gradient(135deg, ${project.gradient[0]}, ${project.gradient[1]}, ${project.gradient[2]})`,
-        }}
+        style={{ background: `linear-gradient(135deg, ${project.gradient[0]}, ${project.gradient[1]}, ${project.gradient[2]})` }}
       />
-      <div
-        className="absolute inset-0 opacity-[0.06]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
-        }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-      <div className="absolute top-5 left-5 right-5 flex items-center justify-between z-10">
-        <span
-          className="text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1.5 rounded-full"
-          style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(8px)", color: "rgba(255,255,255,0.7)" }}
-        >
-          {project.year}
-        </span>
+      {/* Browser mockup */}
+      <BrowserMockup project={project} />
+
+      {/* Bottom gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+
+      {/* Top right hover arrow */}
+      <div className="absolute top-10 right-5 z-10">
         <div
           className="w-9 h-9 rounded-full flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
           style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.2)" }}
@@ -110,24 +177,19 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
         </div>
       </div>
 
+      {/* Result badge on hover */}
       <div className="absolute top-1/2 -translate-y-1/2 left-5 z-10">
         <div
           className="px-3 py-1.5 rounded-lg text-xs font-bold tracking-wide opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
-          style={{
-            background: "rgba(202,163,83,0.2)",
-            backdropFilter: "blur(8px)",
-            border: "1px solid rgba(202,163,83,0.4)",
-            color: "#F0C97A",
-          }}
+          style={{ background: "rgba(202,163,83,0.2)", backdropFilter: "blur(8px)", border: "1px solid rgba(202,163,83,0.4)", color: "#F0C97A" }}
         >
           {project.result}
         </div>
       </div>
 
+      {/* Bottom content */}
       <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
-        <p className="text-[10px] font-semibold tracking-[0.25em] uppercase text-white/40 mb-2">
-          {project.category}
-        </p>
+        <p className="text-[10px] font-semibold tracking-[0.25em] uppercase text-white/40 mb-2">{project.category}</p>
         <h3 className="text-2xl font-black text-white mb-4 group-hover:text-primary transition-colors duration-300">
           {project.title}
         </h3>
@@ -167,10 +229,7 @@ export function Portfolio() {
       ref={sectionRef}
       className="py-32 bg-background relative z-10 border-t border-white/5 overflow-hidden"
     >
-      <motion.div
-        style={{ y: headerY, opacity: headerOpacity }}
-        className="container px-4 md:px-6 mb-10"
-      >
+      <motion.div style={{ y: headerY, opacity: headerOpacity }} className="container px-4 md:px-6 mb-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-10">
           <div>
             <p className="text-xs font-semibold tracking-[0.3em] uppercase text-primary mb-4">Our Work</p>
@@ -200,7 +259,7 @@ export function Portfolio() {
                 <motion.div
                   layoutId="filter-pill"
                   className="absolute inset-0 rounded-full"
-                  style={{ background: "rgba(202,163,83,0.08)" }}
+                  style={{ background: "rgba(202,163,83,0.06)" }}
                   transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
                 />
               )}
@@ -229,10 +288,7 @@ export function Portfolio() {
         <motion.a
           href="#contact"
           className="flex-shrink-0 w-[220px] h-[460px] rounded-2xl flex flex-col items-center justify-center gap-4 group"
-          style={{
-            background: "rgba(202,163,83,0.04)",
-            border: "1px solid rgba(202,163,83,0.15)",
-          }}
+          style={{ background: "rgba(202,163,83,0.04)", border: "1px solid rgba(202,163,83,0.15)" }}
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
