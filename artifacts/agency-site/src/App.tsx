@@ -20,7 +20,6 @@ import { Footer } from "./components/sections/Footer";
 import { FloatingWhatsApp } from "./components/sections/FloatingWhatsApp";
 import { CustomCursor } from "./components/CustomCursor";
 import { NoiseOverlay } from "./components/NoiseOverlay";
-import { Preloader } from "./components/Preloader";
 import { BackToTop } from "./components/BackToTop";
 
 const queryClient = new QueryClient();
@@ -42,7 +41,6 @@ function AgencySite() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
-  const [loaded, setLoaded] = useState(false);
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
@@ -87,7 +85,7 @@ function AgencySite() {
     });
 
     return () => observers.forEach((o) => o.disconnect());
-  }, [loaded]);
+  }, []);
 
   const handleNavClick = (href: string) => {
     setMenuOpen(false);
@@ -99,13 +97,10 @@ function AgencySite() {
   };
 
   return (
-    <>
-      {!loaded && <Preloader onComplete={() => setLoaded(true)} />}
-
-      <div
-        className="min-h-screen bg-background text-foreground dark selection:bg-primary selection:text-primary-foreground font-sans"
-        style={{ cursor: "none" }}
-      >
+    <div
+      className="min-h-screen bg-background text-foreground dark selection:bg-primary selection:text-primary-foreground font-sans"
+      style={{ cursor: "none" }}
+    >
         <CustomCursor />
         <NoiseOverlay />
 
@@ -253,7 +248,6 @@ function AgencySite() {
         <FloatingWhatsApp />
         <BackToTop />
       </div>
-    </>
   );
 }
 
