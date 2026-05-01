@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Lenis from "lenis";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -13,12 +13,15 @@ import { Stats } from "./components/sections/Stats";
 import { Process } from "./components/sections/Process";
 import { Portfolio } from "./components/sections/Portfolio";
 import { Testimonials } from "./components/sections/Testimonials";
+import { FAQ } from "./components/sections/FAQ";
 import { Contact } from "./components/sections/Contact";
 import { BookCall } from "./components/sections/BookCall";
 import { Footer } from "./components/sections/Footer";
 import { FloatingWhatsApp } from "./components/sections/FloatingWhatsApp";
 import { CustomCursor } from "./components/CustomCursor";
 import { NoiseOverlay } from "./components/NoiseOverlay";
+import { Preloader } from "./components/Preloader";
+import { BackToTop } from "./components/BackToTop";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +41,9 @@ function AgencySite() {
   });
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const [loaded, setLoaded] = useState(false);
+  const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -45,6 +51,7 @@ function AgencySite() {
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
+    lenisRef.current = lenis;
 
     const raf = (time: number) => {
       lenis.raf(time);
@@ -61,144 +68,192 @@ function AgencySite() {
     };
   }, []);
 
+  // Intersection Observer for active nav section
+  useEffect(() => {
+    const sectionIds = ["work", "services", "process", "contact"];
+    const observers: IntersectionObserver[] = [];
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
+  }, [loaded]);
+
+  const handleNavClick = (href: string) => {
+    setMenuOpen(false);
+    const id = href.replace("#", "");
+    const el = document.getElementById(id);
+    if (el && lenisRef.current) {
+      lenisRef.current.scrollTo(el, { offset: -80, duration: 1.4 });
+    }
+  };
+
   return (
-    <div
-      className="min-h-screen bg-background text-foreground dark selection:bg-primary selection:text-primary-foreground font-sans"
-      style={{ cursor: "none" }}
-    >
-      {/* Futuristic layer stack */}
-      <CustomCursor />
-      <NoiseOverlay />
+    <>
+      {!loaded && <Preloader onComplete={() => setLoaded(true)} />}
 
-      {/* Scroll progress bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] z-50 origin-left"
-        style={{
-          scaleX,
-          background: "linear-gradient(to right, #8B6914, #CAA353, #F0C97A)",
-          boxShadow: "0 0 8px rgba(202,163,83,0.6)",
-        }}
-      />
-
-      {/* Navbar */}
-      <nav
-        className="fixed top-0 left-0 right-0 z-40 transition-all duration-500"
-        style={{
-          background: scrolled ? "rgba(10,10,12,0.92)" : "rgba(10,10,12,0.5)",
-          backdropFilter: "blur(20px)",
-          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent",
-        }}
+      <div
+        className="min-h-screen bg-background text-foreground dark selection:bg-primary selection:text-primary-foreground font-sans"
+        style={{ cursor: "none" }}
       >
-        <div className="container flex items-center justify-between h-20 px-4 md:px-6">
-          <a href="#" className="flex items-center gap-3 group" data-testid="link-logo">
-            <div className="relative w-9 h-9 flex items-center justify-center">
-              <div
-                className="absolute inset-0 rotate-6 group-hover:rotate-[20deg] transition-transform duration-500"
-                style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)", borderRadius: "4px" }}
-              />
-              <span className="relative text-xs font-black tracking-tighter leading-none" style={{ color: "#0c0c0e" }}>
-                NE
-              </span>
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className="text-sm font-bold tracking-widest uppercase text-foreground">Next Edge</span>
-              <span className="text-[10px] tracking-[0.3em] uppercase text-primary font-medium">Digital</span>
-            </div>
-          </a>
+        <CustomCursor />
+        <NoiseOverlay />
 
-          <div className="hidden md:flex items-center gap-10 text-xs font-semibold tracking-widest uppercase text-foreground/50">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                data-testid={`link-nav-${link.label.toLowerCase()}`}
-                className="relative group hover:text-foreground transition-colors duration-200"
-              >
-                {link.label}
-                <motion.span
-                  className="absolute -bottom-1 left-0 h-[1px] w-0 group-hover:w-full transition-all duration-300"
-                  style={{ background: "linear-gradient(to right, #CAA353, #F0C97A)" }}
+        {/* Scroll progress bar */}
+        <motion.div
+          className="fixed top-0 left-0 right-0 h-[2px] z-50 origin-left"
+          style={{
+            scaleX,
+            background: "linear-gradient(to right, #8B6914, #CAA353, #F0C97A)",
+            boxShadow: "0 0 8px rgba(202,163,83,0.6)",
+          }}
+        />
+
+        {/* Navbar */}
+        <nav
+          className="fixed top-0 left-0 right-0 z-40 transition-all duration-500"
+          style={{
+            background: scrolled ? "rgba(10,10,12,0.92)" : "rgba(10,10,12,0.5)",
+            backdropFilter: "blur(20px)",
+            borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent",
+          }}
+        >
+          <div className="container flex items-center justify-between h-20 px-4 md:px-6">
+            <a href="#" className="flex items-center gap-3 group" data-testid="link-logo" onClick={() => lenisRef.current?.scrollTo(0, { duration: 1.4 })}>
+              <div className="relative w-9 h-9 flex items-center justify-center">
+                <div
+                  className="absolute inset-0 rotate-6 group-hover:rotate-[20deg] transition-transform duration-500"
+                  style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)", borderRadius: "4px" }}
                 />
-              </a>
-            ))}
-            <a
-              href="#contact"
-              data-testid="button-nav-cta"
-              className="ml-4 px-5 py-2.5 text-xs font-bold tracking-widest uppercase transition-all duration-300"
-              style={{
-                background: "linear-gradient(135deg, #CAA353, #F0C97A)",
-                color: "#0c0c0e",
-                clipPath: "polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%)",
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.85"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
-            >
-              Start a Project
+                <span className="relative text-xs font-black tracking-tighter leading-none" style={{ color: "#0c0c0e" }}>
+                  NE
+                </span>
+              </div>
+              <div className="flex flex-col leading-none">
+                <span className="text-sm font-bold tracking-widest uppercase text-foreground">Next Edge</span>
+                <span className="text-[10px] tracking-[0.3em] uppercase text-primary font-medium">Digital</span>
+              </div>
             </a>
+
+            <div className="hidden md:flex items-center gap-10 text-xs font-semibold tracking-widest uppercase text-foreground/50">
+              {navLinks.map((link) => {
+                const id = link.href.replace("#", "");
+                const isActive = activeSection === id;
+                return (
+                  <button
+                    key={link.label}
+                    onClick={() => handleNavClick(link.href)}
+                    data-testid={`link-nav-${link.label.toLowerCase()}`}
+                    className="relative group transition-colors duration-200"
+                    style={{ color: isActive ? "rgba(202,163,83,1)" : undefined }}
+                  >
+                    <span className={`transition-colors duration-200 ${isActive ? "text-primary" : "hover:text-foreground"}`}>
+                      {link.label}
+                    </span>
+                    <span
+                      className="absolute -bottom-1 left-0 h-[1px] transition-all duration-300"
+                      style={{
+                        width: isActive ? "100%" : "0%",
+                        background: "linear-gradient(to right, #CAA353, #F0C97A)",
+                      }}
+                    />
+                  </button>
+                );
+              })}
+              <button
+                onClick={() => handleNavClick("#contact")}
+                data-testid="button-nav-cta"
+                className="ml-4 px-5 py-2.5 text-xs font-bold tracking-widest uppercase transition-all duration-300"
+                style={{
+                  background: "linear-gradient(135deg, #CAA353, #F0C97A)",
+                  color: "#0c0c0e",
+                  clipPath: "polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%)",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.85"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
+              >
+                Start a Project
+              </button>
+            </div>
+
+            <button
+              data-testid="button-mobile-menu"
+              className="md:hidden p-2 text-foreground/80"
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label="Toggle menu"
+            >
+              {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
 
-          <button
-            data-testid="button-mobile-menu"
-            className="md:hidden p-2 text-foreground/80"
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-label="Toggle menu"
-          >
-            {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
-
-        <AnimatePresence>
-          {menuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden overflow-hidden"
-              style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
-            >
-              <div className="container px-4 py-6 flex flex-col gap-6">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    data-testid={`link-mobile-${link.label.toLowerCase()}`}
-                    className="text-sm font-semibold tracking-widest uppercase text-foreground/60 hover:text-primary transition-colors"
-                    onClick={() => setMenuOpen(false)}
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="md:hidden overflow-hidden"
+                style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
+              >
+                <div className="container px-4 py-6 flex flex-col gap-6">
+                  {navLinks.map((link) => {
+                    const id = link.href.replace("#", "");
+                    const isActive = activeSection === id;
+                    return (
+                      <button
+                        key={link.label}
+                        onClick={() => handleNavClick(link.href)}
+                        data-testid={`link-mobile-${link.label.toLowerCase()}`}
+                        className="text-left text-sm font-semibold tracking-widest uppercase transition-colors"
+                        style={{ color: isActive ? "#CAA353" : "rgba(255,255,255,0.6)" }}
+                      >
+                        {link.label}
+                      </button>
+                    );
+                  })}
+                  <button
+                    onClick={() => handleNavClick("#contact")}
+                    data-testid="button-mobile-cta"
+                    className="w-full text-center px-5 py-3 text-xs font-bold tracking-widest uppercase rounded-sm"
+                    style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)", color: "#0c0c0e" }}
                   >
-                    {link.label}
-                  </a>
-                ))}
-                <a
-                  href="#contact"
-                  data-testid="button-mobile-cta"
-                  className="w-full text-center px-5 py-3 text-xs font-bold tracking-widest uppercase rounded-sm"
-                  style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)", color: "#0c0c0e" }}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Start a Project
-                </a>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </nav>
+                    Start a Project
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </nav>
 
-      <main>
-        <Hero />
-        <TrustedBy />
-        <Services />
-        <Stats />
-        <Process />
-        <Portfolio />
-        <Testimonials />
-        <BookCall />
-        <Contact />
-      </main>
+        <main>
+          <Hero />
+          <TrustedBy />
+          <Services />
+          <Stats />
+          <Process />
+          <Portfolio />
+          <Testimonials />
+          <FAQ />
+          <BookCall />
+          <Contact />
+        </main>
 
-      <Footer />
-      <FloatingWhatsApp />
-    </div>
+        <Footer />
+        <FloatingWhatsApp />
+        <BackToTop />
+      </div>
+    </>
   );
 }
 
