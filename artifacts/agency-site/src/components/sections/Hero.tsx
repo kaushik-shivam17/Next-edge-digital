@@ -7,10 +7,10 @@ const HEADLINE_1 = "We Build";
 const HEADLINE_2 = "Digital";
 const HEADLINE_3 = "Empires.";
 
-function SplitReveal({ text, delay = 0, className = "" }: { text: string; delay?: number; className?: string }) {
+function SplitReveal({ text, delay = 0, className = "", style }: { text: string; delay?: number; className?: string; style?: React.CSSProperties }) {
   const words = text.split(" ");
   return (
-    <span className={className}>
+    <span className={className} style={style}>
       {words.map((word, wi) => (
         <span key={wi} className="inline-block overflow-hidden mr-[0.25em] last:mr-0">
           <motion.span
