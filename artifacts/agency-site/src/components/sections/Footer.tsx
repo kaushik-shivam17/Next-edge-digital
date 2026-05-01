@@ -1,5 +1,7 @@
-import { SiInstagram, SiDribbble, SiX } from "react-icons/si";
+import { SiInstagram, SiDribbble, SiX, SiWhatsapp } from "react-icons/si";
 import { Linkedin } from "lucide-react";
+
+const WHATSAPP_URL = `https://wa.me/63980540`;
 
 const links = {
   services: [
@@ -56,6 +58,16 @@ export function Footer() {
                 className="w-9 h-9 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-foreground/40 hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all duration-300"
               >
                 <Linkedin className="w-3.5 h-3.5" />
+              </a>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                data-testid="link-social-whatsapp"
+                className="w-9 h-9 rounded-sm bg-[#25D366]/10 border border-[#25D366]/30 flex items-center justify-center text-[#25D366]/70 hover:text-[#25D366] hover:border-[#25D366]/60 hover:bg-[#25D366]/20 transition-all duration-300"
+              >
+                <SiWhatsapp className="w-3.5 h-3.5" />
               </a>
             </div>
           </div>

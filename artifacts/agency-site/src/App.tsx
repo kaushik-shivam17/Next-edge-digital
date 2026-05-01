@@ -14,6 +14,7 @@ import { Portfolio } from "./components/sections/Portfolio";
 import { Testimonials } from "./components/sections/Testimonials";
 import { Contact } from "./components/sections/Contact";
 import { Footer } from "./components/sections/Footer";
+import { FloatingWhatsApp } from "./components/sections/FloatingWhatsApp";
 
 const queryClient = new QueryClient();
 
@@ -131,6 +132,7 @@ function AgencySite() {
       </main>
 
       <Footer />
+      <FloatingWhatsApp />
     </div>
   );
 }

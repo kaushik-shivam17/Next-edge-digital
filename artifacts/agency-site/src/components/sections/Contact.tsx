@@ -6,6 +6,10 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowRight, Mail, MapPin, Clock } from "lucide-react";
+import { SiWhatsapp } from "react-icons/si";
+
+const WHATSAPP_NUMBER = "63980540";
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi! I'd like to discuss a project with Next Edge Digital.")}`;
 
 const contactDetails = [
   {
@@ -61,9 +65,27 @@ export function Contact() {
                 <span className="text-primary">Dominate</span><br />
                 Your Market?
               </h2>
-              <p className="text-foreground/50 text-lg leading-relaxed mb-12 max-w-sm">
+              <p className="text-foreground/50 text-lg leading-relaxed mb-10 max-w-sm">
                 We are selectively accepting new projects. Fill out the form and our partners will personally review your inquiry.
               </p>
+
+              {/* WhatsApp CTA */}
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid="button-contact-whatsapp"
+                className="inline-flex items-center gap-3 px-6 py-4 rounded-xl bg-[#25D366]/10 border border-[#25D366]/30 hover:bg-[#25D366]/20 hover:border-[#25D366]/60 transition-all duration-300 group mb-10"
+              >
+                <div className="w-10 h-10 rounded-full bg-[#25D366] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                  <SiWhatsapp className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold tracking-wider uppercase text-[#25D366]">Chat on WhatsApp</p>
+                  <p className="text-sm text-foreground/60 mt-0.5">Get an instant response</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-[#25D366]/60 ml-auto group-hover:translate-x-1 transition-transform" />
+              </a>
             </div>
 
             <div className="space-y-8">
@@ -183,6 +205,18 @@ export function Contact() {
                 Submit Inquiry
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
+
+              {/* WhatsApp alternative */}
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid="button-form-whatsapp"
+                className="w-full flex items-center justify-center gap-2 h-12 rounded-sm border border-[#25D366]/30 text-[#25D366] hover:bg-[#25D366]/10 transition-colors duration-200 text-sm font-semibold"
+              >
+                <SiWhatsapp className="w-4 h-4" />
+                Or message us directly on WhatsApp
+              </a>
 
               <p className="text-center text-[10px] text-foreground/25 tracking-wider">
                 We respond to all inquiries within 24 business hours. Your information is kept strictly confidential.
