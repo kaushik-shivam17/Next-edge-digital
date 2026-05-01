@@ -201,3 +201,11 @@
     letter-spacing: -0.02em;
   }
 }
+
+@utility scrollbar-hide {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

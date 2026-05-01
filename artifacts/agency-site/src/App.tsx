@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Lenis from "lenis";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -16,6 +17,8 @@ import { Contact } from "./components/sections/Contact";
 import { BookCall } from "./components/sections/BookCall";
 import { Footer } from "./components/sections/Footer";
 import { FloatingWhatsApp } from "./components/sections/FloatingWhatsApp";
+import { CustomCursor } from "./components/CustomCursor";
+import { NoiseOverlay } from "./components/NoiseOverlay";
 
 const queryClient = new QueryClient();
 
@@ -34,20 +37,68 @@ function AgencySite() {
     restDelta: 0.001,
   });
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    const raf = (time: number) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      lenis.destroy();
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground dark selection:bg-primary selection:text-primary-foreground font-sans">
+    <div
+      className="min-h-screen bg-background text-foreground dark selection:bg-primary selection:text-primary-foreground font-sans"
+      style={{ cursor: "none" }}
+    >
+      {/* Futuristic layer stack */}
+      <CustomCursor />
+      <NoiseOverlay />
+
+      {/* Scroll progress bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] bg-primary z-50 origin-left"
-        style={{ scaleX }}
+        className="fixed top-0 left-0 right-0 h-[2px] z-50 origin-left"
+        style={{
+          scaleX,
+          background: "linear-gradient(to right, #8B6914, #CAA353, #F0C97A)",
+          boxShadow: "0 0 8px rgba(202,163,83,0.6)",
+        }}
       />
 
-      <nav className="fixed top-0 left-0 right-0 z-40 bg-background/90 backdrop-blur-md border-b border-white/5">
+      {/* Navbar */}
+      <nav
+        className="fixed top-0 left-0 right-0 z-40 transition-all duration-500"
+        style={{
+          background: scrolled ? "rgba(10,10,12,0.92)" : "rgba(10,10,12,0.5)",
+          backdropFilter: "blur(20px)",
+          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent",
+        }}
+      >
         <div className="container flex items-center justify-between h-20 px-4 md:px-6">
           <a href="#" className="flex items-center gap-3 group" data-testid="link-logo">
             <div className="relative w-9 h-9 flex items-center justify-center">
-              <div className="absolute inset-0 bg-primary rounded-sm rotate-6 group-hover:rotate-12 transition-transform duration-300" />
-              <span className="relative text-xs font-black text-primary-foreground tracking-tighter leading-none">NE</span>
+              <div
+                className="absolute inset-0 rotate-6 group-hover:rotate-[20deg] transition-transform duration-500"
+                style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)", borderRadius: "4px" }}
+              />
+              <span className="relative text-xs font-black tracking-tighter leading-none" style={{ color: "#0c0c0e" }}>
+                NE
+              </span>
             </div>
             <div className="flex flex-col leading-none">
               <span className="text-sm font-bold tracking-widest uppercase text-foreground">Next Edge</span>
@@ -55,22 +106,32 @@ function AgencySite() {
             </div>
           </a>
 
-          <div className="hidden md:flex items-center gap-10 text-xs font-semibold tracking-widest uppercase text-foreground/60">
+          <div className="hidden md:flex items-center gap-10 text-xs font-semibold tracking-widest uppercase text-foreground/50">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 data-testid={`link-nav-${link.label.toLowerCase()}`}
-                className="hover:text-primary transition-colors duration-200 relative group"
+                className="relative group hover:text-foreground transition-colors duration-200"
               >
                 {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary transition-all duration-300 group-hover:w-full" />
+                <motion.span
+                  className="absolute -bottom-1 left-0 h-[1px] w-0 group-hover:w-full transition-all duration-300"
+                  style={{ background: "linear-gradient(to right, #CAA353, #F0C97A)" }}
+                />
               </a>
             ))}
             <a
               href="#contact"
               data-testid="button-nav-cta"
-              className="ml-4 px-5 py-2.5 bg-primary text-primary-foreground text-xs font-bold tracking-widest uppercase hover:bg-primary/90 transition-colors duration-200 rounded-sm"
+              className="ml-4 px-5 py-2.5 text-xs font-bold tracking-widest uppercase transition-all duration-300"
+              style={{
+                background: "linear-gradient(135deg, #CAA353, #F0C97A)",
+                color: "#0c0c0e",
+                clipPath: "polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%)",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.85"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
             >
               Start a Project
             </a>
@@ -93,7 +154,8 @@ function AgencySite() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden bg-background border-t border-white/5 overflow-hidden"
+              className="md:hidden overflow-hidden"
+              style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
             >
               <div className="container px-4 py-6 flex flex-col gap-6">
                 {navLinks.map((link) => (
@@ -101,7 +163,7 @@ function AgencySite() {
                     key={link.label}
                     href={link.href}
                     data-testid={`link-mobile-${link.label.toLowerCase()}`}
-                    className="text-sm font-semibold tracking-widest uppercase text-foreground/70 hover:text-primary transition-colors"
+                    className="text-sm font-semibold tracking-widest uppercase text-foreground/60 hover:text-primary transition-colors"
                     onClick={() => setMenuOpen(false)}
                   >
                     {link.label}
@@ -110,7 +172,8 @@ function AgencySite() {
                 <a
                   href="#contact"
                   data-testid="button-mobile-cta"
-                  className="w-full text-center px-5 py-3 bg-primary text-primary-foreground text-xs font-bold tracking-widest uppercase rounded-sm"
+                  className="w-full text-center px-5 py-3 text-xs font-bold tracking-widest uppercase rounded-sm"
+                  style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)", color: "#0c0c0e" }}
                   onClick={() => setMenuOpen(false)}
                 >
                   Start a Project

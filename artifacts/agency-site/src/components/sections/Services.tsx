@@ -1,3 +1,4 @@
+import { useRef, MouseEvent } from "react";
 import { motion } from "framer-motion";
 import { MonitorSmartphone, Share2, PenTool, TrendingUp, Compass, BarChart3 } from "lucide-react";
 
@@ -9,14 +10,16 @@ const services = [
     description:
       "Comprehensive roadmaps that align your digital presence with aggressive growth targets. Every decision is data-driven, purposeful, and built to win.",
     tags: ["Market Research", "Competitive Analysis", "Growth Planning"],
+    accent: "from-blue-500/20 to-indigo-600/5",
   },
   {
     icon: MonitorSmartphone,
     number: "02",
-    title: "Website Design & Development",
+    title: "Website Design & Dev",
     description:
       "Cinematic, high-performance web experiences engineered to convert. We obsess over every interaction until your site feels like a premium product, not a brochure.",
     tags: ["UI/UX Design", "Custom Development", "Performance Optimization"],
+    accent: "from-primary/20 to-amber-600/5",
   },
   {
     icon: Share2,
@@ -25,6 +28,7 @@ const services = [
     description:
       "We build commanding social narratives that dominate feeds, build cult-level brand followings, and turn passive scrollers into loyal customers.",
     tags: ["Content Strategy", "Community Building", "Paid Social"],
+    accent: "from-pink-500/20 to-rose-600/5",
   },
   {
     icon: PenTool,
@@ -33,6 +37,7 @@ const services = [
     description:
       "Visual systems and messaging frameworks that project authority, command premium pricing, and make your brand instantly recognizable in any market.",
     tags: ["Logo & Identity", "Brand Guidelines", "Messaging Framework"],
+    accent: "from-violet-500/20 to-purple-600/5",
   },
   {
     icon: TrendingUp,
@@ -41,6 +46,7 @@ const services = [
     description:
       "Data-driven organic acceleration that puts you in front of high-intent customers exactly when they're ready to buy. We don't chase vanity metrics.",
     tags: ["Technical SEO", "Content Marketing", "Link Acquisition"],
+    accent: "from-emerald-500/20 to-teal-600/5",
   },
   {
     icon: BarChart3,
@@ -49,8 +55,115 @@ const services = [
     description:
       "Full-funnel transparency so you always know what's working and why. Custom dashboards that turn raw data into decisions that compound over time.",
     tags: ["GA4 Setup", "Conversion Tracking", "Monthly Reporting"],
+    accent: "from-cyan-500/20 to-sky-600/5",
   },
 ];
+
+function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const rotX = ((y - cy) / cy) * -8;
+    const rotY = ((x - cx) / cx) * 8;
+    card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.02)`;
+    const glare = card.querySelector<HTMLDivElement>(".glare");
+    if (glare) {
+      glare.style.opacity = "1";
+      glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.07) 0%, transparent 60%)`;
+    }
+  };
+
+  const handleMouseLeave = () => {
+    const card = cardRef.current;
+    if (!card) return;
+    card.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)";
+    const glare = card.querySelector<HTMLDivElement>(".glare");
+    if (glare) glare.style.opacity = "0";
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: index * 0.07, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        data-testid={`card-service-${index}`}
+        className="group relative p-8 md:p-10 h-full overflow-hidden cursor-default"
+        style={{
+          background: "rgba(255,255,255,0.02)",
+          border: "1px solid rgba(255,255,255,0.06)",
+          borderRadius: "16px",
+          transition: "transform 0.1s ease, box-shadow 0.3s ease",
+          transformStyle: "preserve-3d",
+        }}
+      >
+        {/* Glare layer */}
+        <div className="glare absolute inset-0 rounded-2xl pointer-events-none opacity-0 transition-opacity duration-300 z-20" />
+
+        {/* Accent gradient */}
+        <div
+          className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${service.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
+        />
+
+        {/* Animated border on hover */}
+        <div
+          className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{ boxShadow: "inset 0 0 0 1px rgba(202,163,83,0.2)" }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10">
+          <div className="flex items-start justify-between mb-8">
+            <div
+              className="w-11 h-11 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500"
+              style={{
+                background: "rgba(202,163,83,0.08)",
+                border: "1px solid rgba(202,163,83,0.15)",
+              }}
+            >
+              <service.icon className="w-5 h-5 text-primary" />
+            </div>
+            <span
+              className="text-5xl font-black transition-colors duration-500"
+              style={{ color: "rgba(255,255,255,0.04)" }}
+            >
+              {service.number}
+            </span>
+          </div>
+
+          <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
+            {service.title}
+          </h3>
+          <p className="text-foreground/45 text-sm leading-relaxed mb-6">{service.description}</p>
+
+          <div className="flex flex-wrap gap-2">
+            {service.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-[10px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-md text-foreground/35"
+                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export function Services() {
   return (
@@ -81,44 +194,9 @@ export function Services() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5 border border-white/5 rounded-2xl overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {services.map((service, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
-              className="group p-8 md:p-10 bg-background hover:bg-card/80 transition-colors duration-500 relative overflow-hidden"
-              data-testid={`card-service-${index}`}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-              <div className="flex items-start justify-between mb-8 relative z-10">
-                <div className="w-11 h-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-primary/30 group-hover:bg-primary/10 transition-all duration-500">
-                  <service.icon className="w-5 h-5 text-primary" />
-                </div>
-                <span className="text-4xl font-black text-white/5 group-hover:text-white/10 transition-colors duration-500">
-                  {service.number}
-                </span>
-              </div>
-
-              <h3 className="text-xl font-bold mb-3 relative z-10">{service.title}</h3>
-              <p className="text-foreground/50 text-sm leading-relaxed mb-6 relative z-10">
-                {service.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2 relative z-10">
-                {service.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-[10px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-sm bg-white/5 text-foreground/40 border border-white/5"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
+            <ServiceCard key={index} service={service} index={index} />
           ))}
         </div>
       </div>
