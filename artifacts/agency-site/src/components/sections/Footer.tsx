@@ -1,7 +1,7 @@
 import { SiInstagram, SiDribbble, SiX, SiWhatsapp } from "react-icons/si";
 import { Linkedin } from "lucide-react";
 
-const WHATSAPP_URL = `https://wa.me/63980540`;
+const WHATSAPP_URL = `https://wa.me/916398054033`;
 
 const links = {
   services: [

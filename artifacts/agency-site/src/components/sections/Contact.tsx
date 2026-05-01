@@ -8,7 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ArrowRight, Mail, MapPin, Clock } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 
-const WHATSAPP_NUMBER = "63980540";
+const WHATSAPP_NUMBER = "916398054033";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi! I'd like to discuss a project with Next Edge Digital.")}`;
 
 const contactDetails = [

@@ -13,6 +13,7 @@ import { Process } from "./components/sections/Process";
 import { Portfolio } from "./components/sections/Portfolio";
 import { Testimonials } from "./components/sections/Testimonials";
 import { Contact } from "./components/sections/Contact";
+import { BookCall } from "./components/sections/BookCall";
 import { Footer } from "./components/sections/Footer";
 import { FloatingWhatsApp } from "./components/sections/FloatingWhatsApp";
 
@@ -128,6 +129,7 @@ function AgencySite() {
         <Process />
         <Portfolio />
         <Testimonials />
+        <BookCall />
         <Contact />
       </main>
 

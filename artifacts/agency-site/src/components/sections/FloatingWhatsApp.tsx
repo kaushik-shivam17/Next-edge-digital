@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SiWhatsapp } from "react-icons/si";
 import { X } from "lucide-react";
 
-const WHATSAPP_NUMBER = "63980540";
+const WHATSAPP_NUMBER = "916398054033";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 
 const QUICK_MESSAGES = [
