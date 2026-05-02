@@ -19,7 +19,6 @@ import { Contact } from "./components/sections/Contact";
 import { BookCall } from "./components/sections/BookCall";
 import { Footer } from "./components/sections/Footer";
 import { FloatingWhatsApp } from "./components/sections/FloatingWhatsApp";
-import { EagleMascot } from "./components/EagleMascot";
 import { CustomCursor } from "./components/CustomCursor";
 import { NoiseOverlay } from "./components/NoiseOverlay";
 import { BackToTop } from "./components/BackToTop";
@@ -251,7 +250,6 @@ function AgencySite() {
 
         <Footer />
         <FloatingWhatsApp />
-        <EagleMascot />
         <BackToTop />
       </div>
   );
