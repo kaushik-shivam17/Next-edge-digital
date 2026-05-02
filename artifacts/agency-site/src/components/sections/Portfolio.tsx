@@ -6,7 +6,7 @@ const projects = [
   {
     title: "Aura Fashion",
     category: "E-Commerce",
-    filter: "web",
+    filter: "ecommerce",
     tags: ["Web Design", "Shopify", "Social Media"],
     gradient: ["#7F1D1D", "#BE185D", "#4C1D95"],
     result: "+214% Online Revenue",
@@ -16,8 +16,8 @@ const projects = [
   },
   {
     title: "Nova Wealth",
-    category: "Fintech Platform",
-    filter: "web",
+    category: "Fintech",
+    filter: "fintech",
     tags: ["Web App", "Brand Identity", "SEO"],
     gradient: ["#1E3A5F", "#0E7490", "#1D4ED8"],
     result: "3x Client Acquisition",
@@ -27,8 +27,8 @@ const projects = [
   },
   {
     title: "Lumina Estates",
-    category: "Luxury Real Estate",
-    filter: "brand",
+    category: "Real Estate",
+    filter: "realestate",
     tags: ["Website", "Social Media", "Brand"],
     gradient: ["#78350F", "#B45309", "#92400E"],
     result: "+40% Avg Sale Price",
@@ -38,8 +38,8 @@ const projects = [
   },
   {
     title: "Apex Motors",
-    category: "Automotive Brand",
-    filter: "social",
+    category: "Automotive",
+    filter: "automotive",
     tags: ["Redesign", "Digital Strategy", "Social"],
     gradient: ["#064E3B", "#065F46", "#047857"],
     result: "580K New Followers",
@@ -50,7 +50,7 @@ const projects = [
   {
     title: "Orbit Media",
     category: "B2B SaaS",
-    filter: "seo",
+    filter: "saas",
     tags: ["Web Design", "SEO", "Branding"],
     gradient: ["#3B0764", "#4C1D95", "#5B21B6"],
     result: "+180% Organic Traffic",
@@ -60,8 +60,8 @@ const projects = [
   },
   {
     title: "Forge Capital",
-    category: "Investment Firm",
-    filter: "brand",
+    category: "Finance",
+    filter: "finance",
     tags: ["Brand Identity", "Web Design"],
     gradient: ["#1F2937", "#374151", "#4B5563"],
     result: "Premium Market Position",
@@ -73,10 +73,12 @@ const projects = [
 
 const filters = [
   { label: "All", value: "all" },
-  { label: "Web", value: "web" },
-  { label: "Brand", value: "brand" },
-  { label: "Social", value: "social" },
-  { label: "SEO", value: "seo" },
+  { label: "E-Commerce", value: "ecommerce" },
+  { label: "Fintech", value: "fintech" },
+  { label: "Real Estate", value: "realestate" },
+  { label: "Automotive", value: "automotive" },
+  { label: "SaaS", value: "saas" },
+  { label: "Finance", value: "finance" },
 ];
 
 function BrowserMockup({ project }: { project: typeof projects[0] }) {
