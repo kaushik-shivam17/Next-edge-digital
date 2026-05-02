@@ -9,6 +9,8 @@ const testimonials = [
     author: "Sarah Jenkins",
     role: "CMO",
     company: "Veridian Apparel",
+    location: "New York, USA",
+    flag: "🇺🇸",
     result: "+214% Revenue",
     accent: "#CAA353",
   },
@@ -18,6 +20,8 @@ const testimonials = [
     author: "David Chen",
     role: "Founder & CEO",
     company: "ScaleTech",
+    location: "Singapore",
+    flag: "🇸🇬",
     result: "3x Client Growth",
     accent: "#60A5FA",
   },
@@ -27,6 +31,8 @@ const testimonials = [
     author: "Marcus Thorne",
     role: "Principal",
     company: "Thorne Architecture",
+    location: "London, UK",
+    flag: "🇬🇧",
     result: "+40% Pricing Power",
     accent: "#A78BFA",
   },
@@ -36,6 +42,8 @@ const testimonials = [
     author: "James Harlow",
     role: "Brand Director",
     company: "Apex Motors",
+    location: "Dubai, UAE",
+    flag: "🇦🇪",
     result: "580K New Followers",
     accent: "#34D399",
   },
@@ -219,11 +227,15 @@ export function Testimonials() {
                       {t.author.split(" ").map((n) => n[0]).join("")}
                     </span>
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <div className="font-bold text-foreground">{t.author}</div>
                     <div className="text-foreground/40 text-sm mt-0.5">
                       {t.role}, {t.company}
                     </div>
+                  </div>
+                  <div className="flex items-center gap-1.5 flex-shrink-0 px-3 py-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                    <span className="text-base leading-none">{t.flag}</span>
+                    <span className="text-[10px] font-medium tracking-wide text-foreground/35 hidden sm:block">{t.location}</span>
                   </div>
                 </div>
               </motion.div>
