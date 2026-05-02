@@ -28,7 +28,7 @@ const team = [
 const milestones = [
   { icon: Award, label: "150+ Brands Transformed", sub: "Across 12 industries globally" },
   { icon: Users, label: "98% Client Retention", sub: "Most clients stay 2+ years" },
-  { icon: Globe, label: "Clients in 8 Countries", sub: "India, UAE, US, UK & more" },
+  { icon: Globe, label: "Clients on 5 Continents", sub: "US, UK, UAE, AU, SG & beyond" },
   { icon: Zap, label: "Avg. 3-Week Turnaround", sub: "Without cutting corners" },
 ];
 
@@ -61,7 +61,7 @@ export function About() {
             <p className="text-foreground/50 text-lg leading-relaxed max-w-md">
               Next Edge Digital is a remote-first studio founded in 2018. We're a tight team of strategists,
               designers, and engineers — no account managers, no middlemen. You work directly with the people
-              doing the work.
+              doing the work. Fully remote, serving clients across the globe.
             </p>
           </motion.div>
 

@@ -13,7 +13,7 @@ const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
 const contactDetails = [
   { icon: Mail, label: "General Inquiries", value: "hello@nextedgedigital.com", href: "mailto:hello@nextedgedigital.com" },
   { icon: MapPin, label: "Studio", value: "Remote-first · Serving clients globally", href: "#" },
-  { icon: Clock, label: "Response Time", value: "We respond within 24 business hours", href: "#" },
+  { icon: Clock, label: "Response Time", value: "Within 24 hrs — any time zone", href: "#" },
 ];
 
 const services = [

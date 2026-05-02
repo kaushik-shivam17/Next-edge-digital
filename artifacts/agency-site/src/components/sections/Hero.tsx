@@ -175,8 +175,8 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
             className="text-base md:text-xl text-foreground/45 mb-8 md:mb-14 max-w-2xl mx-auto leading-relaxed font-light tracking-wide"
           >
-            Next Edge Digital is an elite studio that engineers market-leading websites
-            and dominates social media for ambitious brands.{" "}
+            An elite studio engineering market-leading websites and dominating social media
+            for ambitious brands worldwide.{" "}
             <span className="text-foreground/70 font-medium">We don't do average.</span>
           </motion.p>
 

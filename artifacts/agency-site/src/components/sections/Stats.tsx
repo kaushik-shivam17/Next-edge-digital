@@ -17,10 +17,10 @@ const stats = [
     accent: "#60A5FA",
   },
   {
-    value: 7,
-    suffix: " Yrs",
-    label: "Industry Experience",
-    description: "Refined craft and proven process",
+    value: 20,
+    suffix: "+",
+    label: "Countries Served",
+    description: "Clients across 5 continents",
     accent: "#A78BFA",
   },
   {
