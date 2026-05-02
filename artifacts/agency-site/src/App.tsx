@@ -23,6 +23,7 @@ import { FloatingWhatsApp } from "./components/sections/FloatingWhatsApp";
 import { CustomCursor } from "./components/CustomCursor";
 import { NoiseOverlay } from "./components/NoiseOverlay";
 import { BackToTop } from "./components/BackToTop";
+import { FloatingPanda } from "./components/FloatingPanda";
 
 const queryClient = new QueryClient();
 
@@ -253,6 +254,7 @@ function AgencySite() {
         <Footer />
         <FloatingWhatsApp />
         <BackToTop />
+        <FloatingPanda />
       </div>
   );
 }
