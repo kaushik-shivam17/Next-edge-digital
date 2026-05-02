@@ -321,6 +321,8 @@ function ContactPrompt({ visible }: { visible: boolean }) {
   );
 }
 
+const NAV_EAGLE_SCALE = 0.46;
+
 // ─── Main Component ───────────────────────────────────────────────────────────
 export function EagleMascot() {
   const controls = useAnimation();
@@ -328,16 +330,20 @@ export function EagleMascot() {
   const [facingLeft, setFacingLeft] = useState(false);
   const [showApex, setShowApex] = useState(false);
   const [showContact, setShowContact] = useState(false);
+  const [inNavMode, setInNavMode] = useState(false);
   const [particles, setParticles] = useState<Particle[]>([]);
   const particleId = useRef(0);
 
   const posRef = useRef({ x: window.innerWidth - 148, y: 58 });
   const [cssPos, setCssPos] = useState({ x: window.innerWidth - 148, y: 58 });
   const animating = useRef(false);
+  const navMode = useRef(false);
+  const lastFullPos = useRef({ x: window.innerWidth - 148, y: 58 });
 
   const bubbleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const trailTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const navLeaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // ── Proximity detection for APEX label ──
   useEffect(() => {
@@ -361,8 +367,87 @@ export function EagleMascot() {
 
   useEffect(() => { setState("hovering"); }, []);
 
+  // ── Nav perch: glide to hovered nav link ──
+  useEffect(() => {
+    const EAGLE_W = 104 * NAV_EAGLE_SCALE; // ~48px
+    const EAGLE_H = 56 * NAV_EAGLE_SCALE;  // ~26px
+
+    const glideToLink = (el: HTMLElement) => {
+      if (animating.current) return;
+      if (navLeaveTimer.current) clearTimeout(navLeaveTimer.current);
+
+      const rect = el.getBoundingClientRect();
+      const destX = rect.left + rect.width / 2 - EAGLE_W / 2;
+      const destY = rect.top + rect.height / 2 - EAGLE_H / 2 - 6;
+
+      // Save position before entering nav for the first time
+      if (!navMode.current) {
+        lastFullPos.current = { ...posRef.current };
+        navMode.current = true;
+        setInNavMode(true);
+        setEagleState("hovering");
+        setShowApex(false);
+        setShowContact(false);
+      }
+
+      const dx = destX - posRef.current.x;
+      setFacingLeft(dx < -10);
+
+      controls.start({
+        x: destX,
+        y: destY,
+        rotate: 0,
+        scale: NAV_EAGLE_SCALE,
+        transition: { duration: 0.24, ease: [0.16, 1, 0.3, 1] },
+      }).then(() => {
+        posRef.current = { x: destX, y: destY };
+        setCssPos({ x: destX, y: destY });
+      });
+    };
+
+    const onNavLeave = () => {
+      if (!navMode.current) return;
+      if (navLeaveTimer.current) clearTimeout(navLeaveTimer.current);
+      navLeaveTimer.current = setTimeout(() => {
+        navMode.current = false;
+        setInNavMode(false);
+        const dest = lastFullPos.current;
+        controls.start({
+          x: dest.x,
+          y: dest.y,
+          scale: 1,
+          rotate: 0,
+          transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+        }).then(() => {
+          posRef.current = dest;
+          setCssPos(dest);
+          startIdle();
+        });
+      }, 110);
+    };
+
+    // Attach listeners after DOM mounts
+    const attach = () => {
+      const items = document.querySelectorAll<HTMLElement>("[data-nav-item]");
+      const container = document.querySelector<HTMLElement>("[data-nav-container]");
+      items.forEach((el) => el.addEventListener("mouseenter", () => glideToLink(el)));
+      if (container) container.addEventListener("mouseleave", onNavLeave);
+    };
+    const t = setTimeout(attach, 500);
+
+    return () => {
+      clearTimeout(t);
+      if (navLeaveTimer.current) clearTimeout(navLeaveTimer.current);
+    };
+  }, [controls, startIdle]);
+
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
+      // Exit nav mode immediately if active
+      if (navMode.current) {
+        navMode.current = false;
+        setInNavMode(false);
+      }
       if (animating.current) return;
 
       const vw = window.innerWidth, vh = window.innerHeight;
@@ -404,12 +489,13 @@ export function EagleMascot() {
         if (t >= dur * 1000) clearInterval(trailTimer.current!);
       }, step);
 
+      const fromScale = navMode.current ? NAV_EAGLE_SCALE : 1;
       controls
         .start({
           x: [posRef.current.x, midX, destX],
           y: [posRef.current.y, midY, destY],
           rotate: [0, bank, 0],
-          scale: [1, 1.07, 1],
+          scale: [fromScale, 1.07, 1],
           transition: { duration: dur, ease: [0.25, 0.46, 0.45, 0.94], times: [0, 0.43, 1] },
         })
         .then(() => {
@@ -475,7 +561,7 @@ export function EagleMascot() {
         />
 
         {/* APEX tooltip */}
-        <ApexTooltip visible={showApex && !animating.current} above={apexAbove} />
+        <ApexTooltip visible={showApex && !animating.current && !inNavMode} above={apexAbove} />
 
         {/* Contact prompt */}
         <ContactPrompt visible={showContact} />

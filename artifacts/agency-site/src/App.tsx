@@ -118,6 +118,7 @@ function AgencySite() {
 
         {/* Navbar */}
         <nav
+          data-nav-container
           className="fixed top-0 left-0 right-0 z-40 transition-all duration-500"
           style={{
             background: scrolled ? "rgba(10,10,12,0.92)" : "rgba(10,10,12,0.5)",
@@ -151,6 +152,7 @@ function AgencySite() {
                     key={link.label}
                     onClick={() => handleNavClick(link.href)}
                     data-testid={`link-nav-${link.label.toLowerCase()}`}
+                    data-nav-item
                     className="relative group transition-colors duration-200"
                     style={{ color: isActive ? "rgba(202,163,83,1)" : undefined }}
                   >
