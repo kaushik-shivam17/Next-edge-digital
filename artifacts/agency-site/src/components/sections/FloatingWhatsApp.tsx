@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SiWhatsapp } from "react-icons/si";
-import { X, ArrowRight } from "lucide-react";
+import { X, ArrowRight, icons } from "lucide-react";
 
 const WHATSAPP_NUMBER = "918218628232";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
@@ -10,7 +10,7 @@ const QUICK_MESSAGES = [
   { label: "Discuss a website project", icon: "🌐" },
   { label: "Social media management", icon: "📱" },
   { label: "Book a free strategy call", icon: "📞" },
-  { label: "Get a quote for SEO "}
+  { label: "Get a quote for SEO services", icon: "🔍"}
 ];
 
 export function FloatingWhatsApp() {
