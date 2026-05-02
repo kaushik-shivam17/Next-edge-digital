@@ -241,9 +241,9 @@ function AgencySite() {
           <Process />
           {/* <Portfolio /> */}
           <Testimonials />
-          <FAQ />
           <BookCall />
           <Contact />
+          <FAQ />
         </main>
 
         <Footer />
