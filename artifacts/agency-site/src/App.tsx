@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Lenis from "lenis";
-import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,7 +23,6 @@ import { FloatingWhatsApp } from "./components/sections/FloatingWhatsApp";
 import { CustomCursor } from "./components/CustomCursor";
 import { NoiseOverlay } from "./components/NoiseOverlay";
 import { BackToTop } from "./components/BackToTop";
-import { FloatingPanda } from "./components/FloatingPanda";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +40,7 @@ function AgencySite() {
     damping: 30,
     restDelta: 0.001,
   });
+  const scrollHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -101,13 +101,13 @@ function AgencySite() {
 
   return (
     <div
-      className="min-h-screen bg-background text-foreground dark selection:bg-primary selection:text-primary-foreground font-sans"
+      className="relative min-h-screen bg-background text-foreground dark selection:bg-primary selection:text-primary-foreground font-sans"
       style={{ cursor: "none" }}
     >
         <CustomCursor />
         <NoiseOverlay />
 
-        {/* Scroll progress bar */}
+        {/* Top scroll progress bar */}
         <motion.div
           className="fixed top-0 left-0 right-0 h-[2px] z-50 origin-left"
           style={{
@@ -116,6 +116,18 @@ function AgencySite() {
             boxShadow: "0 0 8px rgba(202,163,83,0.6)",
           }}
         />
+
+        {/* Right-side vertical scroll indicator */}
+        <div className="fixed right-0 top-0 bottom-0 w-[2px] z-40 hidden md:block" style={{ background: "rgba(255,255,255,0.04)" }}>
+          <motion.div
+            className="w-full"
+            style={{
+              height: scrollHeight,
+              background: "linear-gradient(to bottom, #8B6914, #CAA353, #F0C97A)",
+              boxShadow: "0 0 6px rgba(202,163,83,0.35)",
+            }}
+          />
+        </div>
 
         {/* Navbar */}
         <nav
@@ -254,7 +266,6 @@ function AgencySite() {
         <Footer />
         <FloatingWhatsApp />
         <BackToTop />
-        <FloatingPanda />
       </div>
   );
 }

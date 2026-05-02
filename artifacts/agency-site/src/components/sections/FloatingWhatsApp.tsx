@@ -173,6 +173,7 @@ export function FloatingWhatsApp() {
           onHoverStart={() => setHovered(true)}
           onHoverEnd={() => setHovered(false)}
           data-testid="button-whatsapp-toggle"
+          data-cursor-text="CHAT"
           aria-label="Contact us on WhatsApp"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.92 }}

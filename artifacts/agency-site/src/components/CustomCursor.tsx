@@ -1,19 +1,20 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useSpring, useMotionValue } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, useSpring, useMotionValue, AnimatePresence } from "framer-motion";
 
 export function CustomCursor() {
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
+  const cursorX = useMotionValue(-200);
+  const cursorY = useMotionValue(-200);
 
-  const springX = useSpring(cursorX, { stiffness: 800, damping: 40, mass: 0.2 });
-  const springY = useSpring(cursorY, { stiffness: 800, damping: 40, mass: 0.2 });
+  const springX = useSpring(cursorX, { stiffness: 900, damping: 42, mass: 0.15 });
+  const springY = useSpring(cursorY, { stiffness: 900, damping: 42, mass: 0.15 });
 
-  const ringX = useSpring(cursorX, { stiffness: 120, damping: 22, mass: 0.8 });
-  const ringY = useSpring(cursorY, { stiffness: 120, damping: 22, mass: 0.8 });
+  const ringX = useSpring(cursorX, { stiffness: 110, damping: 20, mass: 0.9 });
+  const ringY = useSpring(cursorY, { stiffness: 110, damping: 20, mass: 0.9 });
 
   const [clicking, setClicking] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [cursorText, setCursorText] = useState("");
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
@@ -31,32 +32,51 @@ export function CustomCursor() {
     document.addEventListener("mouseleave", onLeave);
     document.addEventListener("mouseenter", onEnter);
 
-    const interactables = document.querySelectorAll("a, button, [data-cursor-hover]");
-    const onHoverIn = () => setHovering(true);
-    const onHoverOut = () => setHovering(false);
-    interactables.forEach((el) => {
-      el.addEventListener("mouseenter", onHoverIn);
-      el.addEventListener("mouseleave", onHoverOut);
-    });
+    const attachListeners = () => {
+      const els = document.querySelectorAll<HTMLElement>(
+        "a, button, [data-cursor-hover], [data-cursor-text]"
+      );
+      const cleanups: Array<() => void> = [];
+
+      els.forEach((el) => {
+        const text = el.getAttribute("data-cursor-text") ?? "";
+        const onIn = () => { setHovering(true); setCursorText(text); };
+        const onOut = () => { setHovering(false); setCursorText(""); };
+        el.addEventListener("mouseenter", onIn);
+        el.addEventListener("mouseleave", onOut);
+        cleanups.push(() => {
+          el.removeEventListener("mouseenter", onIn);
+          el.removeEventListener("mouseleave", onOut);
+        });
+      });
+
+      return () => cleanups.forEach((fn) => fn());
+    };
+
+    let detach = attachListeners();
+    const t1 = setTimeout(() => { detach(); detach = attachListeners(); }, 1800);
+    const t2 = setTimeout(() => { detach(); detach = attachListeners(); }, 4000);
 
     return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      detach();
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mousedown", onDown);
       window.removeEventListener("mouseup", onUp);
       document.removeEventListener("mouseleave", onLeave);
       document.removeEventListener("mouseenter", onEnter);
-      interactables.forEach((el) => {
-        el.removeEventListener("mouseenter", onHoverIn);
-        el.removeEventListener("mouseleave", onHoverOut);
-      });
     };
   }, []);
 
+  const hasText = Boolean(cursorText);
+  const ringSize = hasText ? 90 : hovering ? 52 : clicking ? 18 : 34;
+
   return (
     <>
-      {/* Outer ring */}
+      {/* Trailing ring — expands and shows label text on certain hovers */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block"
+        className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:flex items-center justify-center"
         style={{
           x: ringX,
           y: ringY,
@@ -67,20 +87,43 @@ export function CustomCursor() {
       >
         <motion.div
           animate={{
-            width: hovering ? 48 : clicking ? 20 : 36,
-            height: hovering ? 48 : clicking ? 20 : 36,
-            opacity: hovering ? 0.6 : 0.35,
+            width: ringSize,
+            height: ringSize,
+            opacity: hovering ? 1 : 0.38,
+            backgroundColor: hasText ? "rgba(202,163,83,0.08)" : "transparent",
           }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
+          transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+          className="flex items-center justify-center"
           style={{
             borderRadius: "50%",
-            border: "1.5px solid rgba(202,163,83,0.8)",
-            boxShadow: hovering ? "0 0 12px rgba(202,163,83,0.4)" : "none",
+            border: hasText
+              ? "1px solid rgba(202,163,83,0.45)"
+              : "1.5px solid rgba(202,163,83,0.75)",
+            boxShadow: hovering
+              ? "0 0 28px rgba(202,163,83,0.12), inset 0 0 12px rgba(202,163,83,0.05)"
+              : "none",
+            backdropFilter: hasText ? "blur(8px)" : "none",
           }}
-        />
+        >
+          <AnimatePresence mode="wait">
+            {hasText && (
+              <motion.span
+                key={cursorText}
+                initial={{ opacity: 0, scale: 0.65, letterSpacing: "0.1em" }}
+                animate={{ opacity: 1, scale: 1, letterSpacing: "0.28em" }}
+                exit={{ opacity: 0, scale: 0.65 }}
+                transition={{ duration: 0.14, ease: "easeOut" }}
+                className="text-[9px] font-black uppercase select-none"
+                style={{ color: "#CAA353" }}
+              >
+                {cursorText}
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </motion.div>
       </motion.div>
 
-      {/* Inner dot */}
+      {/* Precise dot — disappears when ring shows label */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block"
         style={{
@@ -88,19 +131,19 @@ export function CustomCursor() {
           y: springY,
           translateX: "-50%",
           translateY: "-50%",
-          opacity: hidden ? 0 : 1,
+          opacity: hidden || hasText ? 0 : 1,
         }}
       >
         <motion.div
           animate={{
-            width: clicking ? 6 : hovering ? 8 : 5,
-            height: clicking ? 6 : hovering ? 8 : 5,
-            backgroundColor: hovering ? "rgba(202,163,83,1)" : "rgba(202,163,83,0.9)",
+            width: clicking ? 4 : hovering ? 7 : 5,
+            height: clicking ? 4 : hovering ? 7 : 5,
+            backgroundColor: "rgba(202,163,83,1)",
             boxShadow: hovering
-              ? "0 0 10px rgba(202,163,83,0.8), 0 0 20px rgba(202,163,83,0.4)"
-              : "0 0 6px rgba(202,163,83,0.5)",
+              ? "0 0 14px rgba(202,163,83,0.9), 0 0 28px rgba(202,163,83,0.35)"
+              : "0 0 7px rgba(202,163,83,0.55)",
           }}
-          transition={{ duration: 0.15, ease: "easeOut" }}
+          transition={{ duration: 0.14, ease: "easeOut" }}
           style={{ borderRadius: "50%" }}
         />
       </motion.div>

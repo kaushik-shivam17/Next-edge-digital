@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Award, Users, Clock } from "lucide-react";
+import { Magnetic } from "../Magnetic";
 import { HeroCanvas } from "../HeroCanvas";
 
 const HEADLINE_1 = "We Build";
@@ -186,74 +187,80 @@ export function Hero() {
             transition={{ duration: 0.9, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <a
-              href="#contact"
-              data-testid="button-hero-primary"
-              className="group relative inline-flex items-center gap-2 px-9 py-4 font-bold text-sm tracking-[0.15em] uppercase overflow-hidden"
-              style={{
-                background: "linear-gradient(135deg, #CAA353, #F0C97A, #CAA353)",
-                backgroundSize: "200% 100%",
-                color: "#0c0c0e",
-                clipPath: "polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)",
-              }}
-            >
-              <motion.span
-                className="absolute inset-0"
-                initial={{ x: "100%" }}
-                whileHover={{ x: 0 }}
-                transition={{ duration: 0.4, ease: "easeInOut" }}
-                style={{ background: "rgba(255,255,255,0.15)" }}
-              />
-              <span className="relative">Start a Project</span>
-              <ArrowRight className="w-4 h-4 relative group-hover:translate-x-1 transition-transform" />
-            </a>
-            <a
-              href="#work"
-              data-testid="button-hero-secondary"
-              className="group inline-flex items-center gap-2 px-9 py-4 text-foreground/60 font-semibold text-sm tracking-[0.15em] uppercase hover:text-foreground transition-all duration-300"
-              style={{
-                border: "1px solid rgba(255,255,255,0.1)",
-                clipPath: "polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)",
-                backdropFilter: "blur(8px)",
-              }}
-            >
-              View Our Work
-              <motion.span
-                animate={{ x: [0, 4, 0] }}
-                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-                className="opacity-50"
+            <Magnetic strength={0.3}>
+              <a
+                href="#contact"
+                data-testid="button-hero-primary"
+                data-cursor-text="START"
+                className="group relative inline-flex items-center gap-2 px-9 py-4 font-bold text-sm tracking-[0.15em] uppercase overflow-hidden"
+                style={{
+                  background: "linear-gradient(135deg, #CAA353, #F0C97A, #CAA353)",
+                  backgroundSize: "200% 100%",
+                  color: "#0c0c0e",
+                  clipPath: "polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)",
+                }}
               >
-                →
-              </motion.span>
-            </a>
+                <motion.span
+                  className="absolute inset-0"
+                  initial={{ x: "100%" }}
+                  whileHover={{ x: 0 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  style={{ background: "rgba(255,255,255,0.15)" }}
+                />
+                <span className="relative">Start a Project</span>
+                <ArrowRight className="w-4 h-4 relative group-hover:translate-x-1 transition-transform" />
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.25}>
+              <a
+                href="#work"
+                data-testid="button-hero-secondary"
+                data-cursor-text="VIEW"
+                className="group inline-flex items-center gap-2 px-9 py-4 text-foreground/60 font-semibold text-sm tracking-[0.15em] uppercase hover:text-foreground transition-all duration-300"
+                style={{
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  clipPath: "polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)",
+                  backdropFilter: "blur(8px)",
+                }}
+              >
+                View Our Work
+                <motion.span
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                  className="opacity-50"
+                >
+                  →
+                </motion.span>
+              </a>
+            </Magnetic>
           </motion.div>
 
-          {/* Trust badges */}
+          {/* Trust badges — icon + text, no emoji */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.4, duration: 1.2 }}
-            className="mt-16 flex flex-wrap items-center justify-center gap-4"
+            className="mt-16 flex flex-wrap items-center justify-center gap-3"
           >
             {[
-              { label: "150+ Projects Delivered", icon: "🏆" },
-              { label: "98% Client Retention", icon: "🤝" },
-              { label: "7 Years of Excellence", icon: "⭐" },
-            ].map((badge, i) => (
+              { label: "150+ Projects Delivered", Icon: Award },
+              { label: "98% Client Retention", Icon: Users },
+              { label: "7 Years of Excellence", Icon: Clock },
+            ].map(({ label, Icon }, i) => (
               <motion.div
-                key={badge.label}
+                key={label}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.5 + i * 0.12, duration: 0.6 }}
-                className="flex items-center gap-2.5 px-4 py-2 rounded-full text-[11px] tracking-[0.15em] uppercase font-semibold"
+                className="flex items-center gap-2 px-4 py-2 rounded-full text-[10px] tracking-[0.18em] uppercase font-semibold"
                 style={{
-                  background: "rgba(202,163,83,0.07)",
-                  border: "1px solid rgba(202,163,83,0.18)",
-                  color: "rgba(255,255,255,0.65)",
+                  background: "rgba(202,163,83,0.06)",
+                  border: "1px solid rgba(202,163,83,0.15)",
+                  color: "rgba(255,255,255,0.55)",
                 }}
               >
-                <span>{badge.icon}</span>
-                {badge.label}
+                <Icon className="w-3 h-3 flex-shrink-0" style={{ color: "#CAA353" }} />
+                {label}
               </motion.div>
             ))}
           </motion.div>

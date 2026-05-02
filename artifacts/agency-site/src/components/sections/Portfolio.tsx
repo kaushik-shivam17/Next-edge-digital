@@ -154,6 +154,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
       transition={{ duration: 0.5, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
       whileHover={{ y: -8, transition: { duration: 0.3 } }}
       data-testid={`card-portfolio-${index}`}
+      data-cursor-text="VIEW"
     >
       {/* Background gradient */}
       <div
