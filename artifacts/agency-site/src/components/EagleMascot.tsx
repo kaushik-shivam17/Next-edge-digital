@@ -1,402 +1,493 @@
-import { motion, useAnimation, useSpring, useTransform } from "framer-motion";
+import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState, useCallback } from "react";
 
-// ─── Eagle cry ──────────────────────────────────────────────────────────────
+// ─── Eagle cry ───────────────────────────────────────────────────────────────
 function playEagleCry() {
   try {
     const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
     const master = ctx.createGain();
-    master.gain.value = 0.18;
+    master.gain.value = 0.16;
     master.connect(ctx.destination);
 
-    // Screech oscillator
-    const o1 = ctx.createOscillator();
+    const osc1 = ctx.createOscillator();
     const g1 = ctx.createGain();
-    o1.type = "sawtooth";
-    o1.frequency.setValueAtTime(1200, ctx.currentTime);
-    o1.frequency.exponentialRampToValueAtTime(380, ctx.currentTime + 0.28);
-    o1.frequency.setValueAtTime(700, ctx.currentTime + 0.3);
-    o1.frequency.exponentialRampToValueAtTime(250, ctx.currentTime + 0.7);
+    osc1.type = "sawtooth";
+    osc1.frequency.setValueAtTime(1100, ctx.currentTime);
+    osc1.frequency.exponentialRampToValueAtTime(360, ctx.currentTime + 0.3);
+    osc1.frequency.setValueAtTime(680, ctx.currentTime + 0.32);
+    osc1.frequency.exponentialRampToValueAtTime(240, ctx.currentTime + 0.72);
     g1.gain.setValueAtTime(0, ctx.currentTime);
     g1.gain.linearRampToValueAtTime(1, ctx.currentTime + 0.03);
-    g1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.75);
-    o1.connect(g1); g1.connect(master);
-    o1.start(); o1.stop(ctx.currentTime + 0.75);
+    g1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.74);
+    osc1.connect(g1); g1.connect(master);
+    osc1.start(); osc1.stop(ctx.currentTime + 0.74);
 
-    // Texture layer
-    const o2 = ctx.createOscillator();
+    const osc2 = ctx.createOscillator();
     const g2 = ctx.createGain();
-    o2.type = "square";
-    o2.frequency.setValueAtTime(600, ctx.currentTime);
-    o2.frequency.exponentialRampToValueAtTime(190, ctx.currentTime + 0.55);
+    osc2.type = "square";
+    osc2.frequency.setValueAtTime(560, ctx.currentTime);
+    osc2.frequency.exponentialRampToValueAtTime(180, ctx.currentTime + 0.55);
     g2.gain.setValueAtTime(0, ctx.currentTime);
-    g2.gain.linearRampToValueAtTime(0.35, ctx.currentTime + 0.04);
+    g2.gain.linearRampToValueAtTime(0.3, ctx.currentTime + 0.04);
     g2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
-    o2.connect(g2); g2.connect(master);
-    o2.start(); o2.stop(ctx.currentTime + 0.6);
+    osc2.connect(g2); g2.connect(master);
+    osc2.start(); osc2.stop(ctx.currentTime + 0.6);
   } catch (_) {}
 }
 
-// ─── Particle trail ──────────────────────────────────────────────────────────
-interface Particle { id: number; x: number; y: number; size: number }
+// ─── Gold particle trail ─────────────────────────────────────────────────────
+interface Particle { id: number; x: number; y: number; r: number }
 
-function TrailParticle({ x, y, size }: Particle) {
+function Particles({ list }: { list: Particle[] }) {
   return (
-    <motion.div
-      className="fixed z-[9997] rounded-full pointer-events-none"
-      style={{ left: x, top: y, width: size, height: size, background: "radial-gradient(circle, rgba(202,163,83,0.6) 0%, rgba(202,163,83,0) 100%)" }}
-      initial={{ opacity: 0.8, scale: 1 }}
-      animate={{ opacity: 0, scale: 0.2 }}
-      transition={{ duration: 0.55, ease: "easeOut" }}
-    />
+    <>
+      {list.map((p) => (
+        <motion.div
+          key={p.id}
+          className="fixed rounded-full pointer-events-none"
+          style={{
+            left: p.x, top: p.y, width: p.r, height: p.r,
+            background: "radial-gradient(circle, rgba(202,163,83,0.55) 0%, transparent 100%)",
+            zIndex: 9996,
+          }}
+          initial={{ opacity: 0.7, scale: 1 }}
+          animate={{ opacity: 0, scale: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        />
+      ))}
+    </>
   );
 }
 
-// ─── Premium Eagle SVG ───────────────────────────────────────────────────────
+// ─── Eagle SVG — flying / hovering ───────────────────────────────────────────
 function FlyingEagle({ fast, facingLeft }: { fast: boolean; facingLeft: boolean }) {
   const flip = facingLeft ? { transform: "scaleX(-1)", transformOrigin: "50% 50%" } : {};
   return (
-    <svg width="96" height="52" viewBox="0 0 96 52" fill="none" style={flip}>
+    <svg width="104" height="56" viewBox="0 0 104 56" fill="none" style={flip}>
       <defs>
-        <linearGradient id="wgL" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#2a2a2e" />
-          <stop offset="60%" stopColor="#1a1a1e" />
-          <stop offset="100%" stopColor="#0d0d10" />
+        <linearGradient id="flWL" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#28282c" />
+          <stop offset="100%" stopColor="#0e0e10" />
         </linearGradient>
-        <linearGradient id="wgR" x1="100%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#2a2a2e" />
-          <stop offset="60%" stopColor="#1a1a1e" />
-          <stop offset="100%" stopColor="#0d0d10" />
+        <linearGradient id="flWR" x1="1" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#28282c" />
+          <stop offset="100%" stopColor="#0e0e10" />
         </linearGradient>
-        <linearGradient id="bodyG" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#252528" />
+        <linearGradient id="flBody" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#242428" />
           <stop offset="100%" stopColor="#111114" />
         </linearGradient>
-        <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#FFB020" stopOpacity="1" />
-          <stop offset="60%" stopColor="#E08800" stopOpacity="0.8" />
-          <stop offset="100%" stopColor="#CC7700" stopOpacity="0" />
+        <radialGradient id="flEye" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#FFBB33" />
+          <stop offset="55%" stopColor="#E09000" />
+          <stop offset="100%" stopColor="#C07000" stopOpacity="0" />
         </radialGradient>
-        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="2.5" result="blur" />
-          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+        <filter id="flGlow">
+          <feGaussianBlur stdDeviation="2.8" result="b" />
+          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
-        <filter id="eagleShadow" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#000" floodOpacity="0.9" />
-          <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#000" floodOpacity="0.7" />
+        <filter id="flShadow">
+          <feDropShadow dx="0" dy="5" stdDeviation="7" floodColor="#000" floodOpacity="0.92" />
+          <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#000" floodOpacity="0.6" />
         </filter>
       </defs>
 
-      <g filter="url(#eagleShadow)">
-        {/* ── LEFT WING ── */}
+      <g filter="url(#flShadow)">
+        {/* LEFT WING */}
         <motion.g
-          animate={{ rotate: fast ? [-18, 18, -18] : [-8, 8, -8] }}
-          transition={{ duration: fast ? 0.35 : 2.8, repeat: Infinity, ease: "easeInOut" }}
-          style={{ originX: "48px", originY: "30px" }}
+          style={{ originX: "52px", originY: "32px" }}
+          animate={{ rotate: fast ? [-22, 22, -22] : [-9, 9, -9] }}
+          transition={{ duration: fast ? 0.34 : 2.9, repeat: Infinity, ease: "easeInOut" }}
         >
-          {/* Main wing surface */}
-          <path d="M48 28 C38 22 26 16 14 12 C8 10 2 12 0 16 C7 16 16 18 26 22 C36 26 44 28 48 32" fill="url(#wgL)" />
-          {/* Primary feathers (finger tips) */}
-          <path d="M8 14 C4 10 0 9 0 16" fill="#151518" />
-          <path d="M14 12 C11 8 7 6 4 10" fill="#151518" />
-          <path d="M20 11 C18 7 14 5 12 8" fill="#151518" />
-          <path d="M26 10 C25 6 21 5 20 8" fill="#1a1a1e" />
-          {/* Wing covert lines for realism */}
-          <path d="M48 30 C40 26 30 22 20 18" stroke="#0a0a0d" strokeWidth="0.8" opacity="0.5" />
-          <path d="M48 31 C38 28 28 25 18 22" stroke="#2a2a2e" strokeWidth="0.6" opacity="0.3" />
+          <path d="M52 30 C42 24 30 17 16 13 C10 11 3 12 0 16 C7 17 16 19 27 23 C38 27 46 29 52 33" fill="url(#flWL)" />
+          {/* Primary feather fingers */}
+          <path d="M4 16 C2 12 0 10 0 16" fill="#121214" />
+          <path d="M11 13.5 C9 9 6 8 4 11" fill="#121214" />
+          <path d="M18 11.5 C16 7 13 6 12 9" fill="#151518" />
+          <path d="M25 10 C24 6 21 5.5 21 8" fill="#181820" />
+          {/* Covert feather lines */}
+          <path d="M52 31 C42 27 32 23 22 19" stroke="#0a0a0c" strokeWidth="0.9" opacity="0.45" />
+          <path d="M52 32 C40 29 30 26 20 22" stroke="#252528" strokeWidth="0.5" opacity="0.25" />
         </motion.g>
 
-        {/* ── RIGHT WING ── */}
+        {/* RIGHT WING */}
         <motion.g
-          animate={{ rotate: fast ? [18, -18, 18] : [8, -8, 8] }}
-          transition={{ duration: fast ? 0.35 : 2.8, repeat: Infinity, ease: "easeInOut" }}
-          style={{ originX: "48px", originY: "30px" }}
+          style={{ originX: "52px", originY: "32px" }}
+          animate={{ rotate: fast ? [22, -22, 22] : [9, -9, 9] }}
+          transition={{ duration: fast ? 0.34 : 2.9, repeat: Infinity, ease: "easeInOut" }}
         >
-          <path d="M48 28 C58 22 70 16 82 12 C88 10 94 12 96 16 C89 16 80 18 70 22 C60 26 52 28 48 32" fill="url(#wgR)" />
-          <path d="M88 14 C92 10 96 9 96 16" fill="#151518" />
-          <path d="M82 12 C85 8 89 6 92 10" fill="#151518" />
-          <path d="M76 11 C78 7 82 5 84 8" fill="#151518" />
-          <path d="M70 10 C71 6 75 5 76 8" fill="#1a1a1e" />
-          <path d="M48 30 C56 26 66 22 76 18" stroke="#0a0a0d" strokeWidth="0.8" opacity="0.5" />
-          <path d="M48 31 C58 28 68 25 78 22" stroke="#2a2a2e" strokeWidth="0.6" opacity="0.3" />
+          <path d="M52 30 C62 24 74 17 88 13 C94 11 101 12 104 16 C97 17 88 19 77 23 C66 27 58 29 52 33" fill="url(#flWR)" />
+          <path d="M100 16 C102 12 104 10 104 16" fill="#121214" />
+          <path d="M93 13.5 C95 9 98 8 100 11" fill="#121214" />
+          <path d="M86 11.5 C88 7 91 6 92 9" fill="#151518" />
+          <path d="M79 10 C80 6 83 5.5 83 8" fill="#181820" />
+          <path d="M52 31 C62 27 72 23 82 19" stroke="#0a0a0c" strokeWidth="0.9" opacity="0.45" />
+          <path d="M52 32 C64 29 74 26 84 22" stroke="#252528" strokeWidth="0.5" opacity="0.25" />
         </motion.g>
 
         {/* Body */}
-        <ellipse cx="55" cy="30" rx="12" ry="6.5" fill="url(#bodyG)" />
+        <ellipse cx="60" cy="32" rx="13" ry="7" fill="url(#flBody)" />
         {/* Tail fan */}
-        <path d="M43 32 C39 38 41 43 46 41 C47 38 48 35 50 32" fill="#151518" />
-        <path d="M44 32 C40 40 43 45 48 43 C48 39 49 36 51 32" fill="#1a1a1e" opacity="0.5" />
+        <path d="M47 35 C43 41 45 47 50 44 C51 40 52 37 54 34" fill="#121214" />
+        <path d="M49 35 C45 43 48 48 53 46 C53 41 54 38 56 34" fill="#1e1e20" opacity="0.45" />
+
         {/* Head */}
-        <circle cx="66" cy="24" r="9" fill="#1e1e22" />
-        {/* White-ish head highlight for bald eagle feel */}
-        <circle cx="66" cy="24" r="9" fill="#2a2a2e" opacity="0.4" />
-        {/* Beak */}
-        <path d="M74 22.5 L84 22 L74 25.5 C75 24.5 75 23.5 74 22.5Z" fill="#DAA520" />
-        <path d="M74 24 L80 24.5 L74 25.5Z" fill="#B8860B" />
-        {/* Eye glow */}
-        <circle cx="69" cy="21.5" r="5" fill="url(#eyeGlow)" filter="url(#glow)" opacity="0.6" />
-        <circle cx="69" cy="21.5" r="3.2" fill="#F5A623" />
-        <circle cx="69" cy="21.5" r="1.6" fill="#1a0a00" />
-        <circle cx="69.7" cy="20.9" r="0.7" fill="rgba(255,255,255,0.75)" />
-        {/* Brow ridge */}
-        <path d="M65 18.5 C67 17 70.5 17 73 18.5" stroke="#0d0d10" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+        <circle cx="72" cy="26" r="10" fill="#1e1e22" />
+        <circle cx="72" cy="26" r="10" fill="#2c2c30" opacity="0.3" />
+
+        {/* Beak — hooked tip */}
+        <path d="M81 23.5 L93 23 L81 27 C83 26 83 24.5 81 23.5Z" fill="#DAA520" />
+        <path d="M81 26 L89 26.5 L81 27.5Z" fill="#B8860B" />
+
+        {/* Eye glow bloom */}
+        <circle cx="75.5" cy="23" r="6.5" fill="url(#flEye)" filter="url(#flGlow)" opacity="0.5" />
+        {/* Iris */}
+        <circle cx="75.5" cy="23" r="3.8" fill="#F5A623" />
+        {/* Pupil */}
+        <circle cx="75.5" cy="23" r="1.8" fill="#0f0800" />
+        {/* Specular */}
+        <circle cx="76.4" cy="22.2" r="0.75" fill="rgba(255,255,255,0.8)" />
+
+        {/* Brow ridge — fierce */}
+        <path d="M70.5 19 C72.5 17.2 76 17 79 18.5" stroke="#080808" strokeWidth="1.9" strokeLinecap="round" fill="none" />
       </g>
     </svg>
   );
 }
 
+// ─── Eagle SVG — perched ─────────────────────────────────────────────────────
 function PerchedEagle() {
   return (
-    <svg width="64" height="82" viewBox="0 0 64 82" fill="none">
+    <svg width="68" height="86" viewBox="0 0 68 86" fill="none">
       <defs>
-        <linearGradient id="pBodyG" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#252528" />
-          <stop offset="100%" stopColor="#101012" />
+        <linearGradient id="pBody" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#272729" />
+          <stop offset="100%" stopColor="#0f0f11" />
         </linearGradient>
-        <radialGradient id="pEyeG" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#FFB020" />
-          <stop offset="70%" stopColor="#E08800" />
-          <stop offset="100%" stopColor="#CC7700" />
+        <linearGradient id="pWing" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#202024" />
+          <stop offset="100%" stopColor="#0d0d0f" />
+        </linearGradient>
+        <radialGradient id="pEye" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#FFBB33" />
+          <stop offset="60%" stopColor="#E09000" />
+          <stop offset="100%" stopColor="#B07000" stopOpacity="0" />
         </radialGradient>
-        <filter id="pGlow" x="-100%" y="-100%" width="300%" height="300%">
-          <feGaussianBlur stdDeviation="3" result="b" />
+        <filter id="pGlow">
+          <feGaussianBlur stdDeviation="3.5" result="b" />
           <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
         <filter id="pShadow">
-          <feDropShadow dx="0" dy="5" stdDeviation="7" floodColor="#000" floodOpacity="0.95" />
-          <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#000" floodOpacity="0.6" />
+          <feDropShadow dx="0" dy="6" stdDeviation="8" floodColor="#000" floodOpacity="0.95" />
+          <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#000" floodOpacity="0.55" />
         </filter>
-        <linearGradient id="wingFold" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#222225" />
-          <stop offset="100%" stopColor="#0e0e10" />
-        </linearGradient>
       </defs>
+
       <g filter="url(#pShadow)">
-        {/* Tail feathers layered */}
-        <path d="M22 58 C18 68 21 76 28 74 C32 72 36 68 34 58" fill="#101012" />
-        <path d="M24 58 C21 67 24 74 32 72 C35 70 36 66 34 58" fill="#151518" opacity="0.7" />
-        {/* Wing left folded — feather layers */}
-        <path d="M18 32 C10 35 8 46 11 55 C13 50 15 44 18 38" fill="url(#wingFold)" />
-        <path d="M17 35 C9 39 8 50 11 57" stroke="#1a1a1e" strokeWidth="1.2" strokeLinecap="round" fill="none" />
-        <path d="M19 35 C12 39 11 50 14 57" stroke="#0d0d10" strokeWidth="0.8" opacity="0.5" fill="none" />
-        {/* Wing right folded */}
-        <path d="M46 32 C54 35 56 46 53 55 C51 50 49 44 46 38" fill="url(#wingFold)" />
-        <path d="M47 35 C55 39 56 50 53 57" stroke="#1a1a1e" strokeWidth="1.2" strokeLinecap="round" fill="none" />
-        {/* Main body */}
-        <ellipse cx="32" cy="46" rx="14" ry="16" fill="url(#pBodyG)" />
-        {/* Breast highlight */}
-        <ellipse cx="32" cy="50" rx="7" ry="9" fill="#1e1e22" opacity="0.7" />
+        {/* Tail fan */}
+        <path d="M23 60 C19 70 22 78 30 76 C35 74 38 70 36 60" fill="#0e0e10" />
+        <path d="M25 60 C22 69 25 76 33 74 C36 71 37 67 35 60" fill="#181820" opacity="0.5" />
+
+        {/* Wing left — folded, feather layers */}
+        <path d="M19 34 C11 37 9 49 13 58 C15 52 17 44 20 38" fill="url(#pWing)" />
+        <path d="M18 37 C11 41 10 53 13 60" stroke="#1a1a1e" strokeWidth="1.1" strokeLinecap="round" fill="none" />
+        <path d="M20 38 C13 42 13 53 16 60" stroke="#0c0c0e" strokeWidth="0.7" opacity="0.4" fill="none" />
+        <path d="M17 45 C12 48 12 54 14 57" stroke="#242428" strokeWidth="0.6" opacity="0.25" fill="none" />
+
+        {/* Wing right — folded */}
+        <path d="M49 34 C57 37 59 49 55 58 C53 52 51 44 48 38" fill="url(#pWing)" />
+        <path d="M50 37 C57 41 58 53 55 60" stroke="#1a1a1e" strokeWidth="1.1" strokeLinecap="round" fill="none" />
+        <path d="M48 38 C55 42 55 53 52 60" stroke="#0c0c0e" strokeWidth="0.7" opacity="0.4" fill="none" />
+
+        {/* Body */}
+        <ellipse cx="34" cy="48" rx="15" ry="17" fill="url(#pBody)" />
+        {/* Breast texture */}
+        <ellipse cx="34" cy="52" rx="8" ry="10" fill="#1c1c20" opacity="0.55" />
+
         {/* Neck */}
-        <ellipse cx="32" cy="28" rx="7" ry="8" fill="#1e1e22" />
+        <ellipse cx="34" cy="29" rx="7.5" ry="8.5" fill="#1e1e22" />
+
         {/* Head */}
-        <circle cx="32" cy="16" r="12" fill="#202024" />
-        {/* Beak hooked */}
-        <path d="M42 15 L54 14 L42 18 C43.5 17.5 44 16.5 43 15.5Z" fill="#DAA520" />
-        <path d="M42 17 L50 17.5 L42 18.5Z" fill="#B8860B" />
-        {/* Fierce brow cast */}
-        <path d="M37 11 C39 9.2 43 9 46 10.5" stroke="#0d0d10" strokeWidth="2.2" strokeLinecap="round" fill="none" />
-        {/* Eye glow outer */}
-        <circle cx="40" cy="13" r="7" fill="url(#pEyeG)" filter="url(#pGlow)" opacity="0.45" />
-        {/* Eye iris */}
-        <circle cx="40" cy="13" r="4.5" fill="#F5A623" />
-        <circle cx="40" cy="13" r="2.2" fill="#1a0800" />
-        <circle cx="41" cy="12.2" r="0.8" fill="rgba(255,255,255,0.8)" />
+        <circle cx="34" cy="17" r="13" fill="#1f1f23" />
+        <circle cx="34" cy="17" r="13" fill="#2e2e34" opacity="0.25" />
+
+        {/* Hooked beak */}
+        <path d="M44.5 15.5 L57 15 L44.5 19 C46 18 46.5 17 45.5 15.5Z" fill="#DAA520" />
+        <path d="M44.5 18 L53 18.5 L44.5 19.5Z" fill="#A87200" />
+
+        {/* Brow ridge — deeply fierce */}
+        <path d="M39.5 12 C41.5 10 45.5 9.8 48 11.5" stroke="#070708" strokeWidth="2.4" strokeLinecap="round" fill="none" />
+
+        {/* Eye glow bloom */}
+        <circle cx="42.5" cy="13.5" r="8" fill="url(#pEye)" filter="url(#pGlow)" opacity="0.42" />
+        {/* Iris */}
+        <circle cx="42.5" cy="13.5" r="5" fill="#F5A623" />
+        {/* Pupil */}
+        <circle cx="42.5" cy="13.5" r="2.5" fill="#0f0800" />
+        {/* Specular */}
+        <circle cx="43.5" cy="12.6" r="0.9" fill="rgba(255,255,255,0.85)" />
+
         {/* Legs */}
-        <line x1="26" y1="62" x2="23" y2="73" stroke="#444" strokeWidth="2.2" strokeLinecap="round" />
-        <line x1="38" y1="62" x2="41" y2="73" stroke="#444" strokeWidth="2.2" strokeLinecap="round" />
-        {/* Talons left */}
-        <path d="M23 73 L19 78 M23 73 L22 79 M23 73 L26 78 M23 73 L27 76" stroke="#555" strokeWidth="1.8" strokeLinecap="round" />
-        {/* Talons right */}
-        <path d="M41 73 L37 78 M41 73 L40 79 M41 73 L44 78 M41 73 L45 76" stroke="#555" strokeWidth="1.8" strokeLinecap="round" />
+        <line x1="28" y1="65" x2="25" y2="76" stroke="#3a3a3e" strokeWidth="2.2" strokeLinecap="round" />
+        <line x1="40" y1="65" x2="43" y2="76" stroke="#3a3a3e" strokeWidth="2.2" strokeLinecap="round" />
+        {/* Talons — 4 per foot */}
+        <path d="M25 76 L21 81 M25 76 L24 82 M25 76 L28 81 M25 76 L29 79" stroke="#484850" strokeWidth="1.8" strokeLinecap="round" />
+        <path d="M43 76 L39 81 M43 76 L42 82 M43 76 L46 81 M43 76 L47 79" stroke="#484850" strokeWidth="1.8" strokeLinecap="round" />
       </g>
     </svg>
   );
 }
 
-// ─── Main component ──────────────────────────────────────────────────────────
+// ─── APEX Name Tooltip ────────────────────────────────────────────────────────
+function ApexTooltip({ visible, above }: { visible: boolean; above: boolean }) {
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          key="apex"
+          initial={{ opacity: 0, y: above ? 6 : -6, scale: 0.94 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: above ? 6 : -6, scale: 0.94 }}
+          transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
+          style={{ [above ? "bottom" : "top"]: "calc(100% + 10px)" }}
+        >
+          <div
+            className="flex flex-col items-center gap-px px-4 py-2.5"
+            style={{
+              background: "rgba(8, 8, 10, 0.88)",
+              backdropFilter: "blur(20px) saturate(180%)",
+              border: "1px solid rgba(202, 163, 83, 0.22)",
+              borderRadius: "6px",
+              boxShadow: "0 12px 40px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)",
+            }}
+          >
+            <span
+              className="text-[11px] font-black tracking-[0.28em] uppercase"
+              style={{ color: "#CAA353", letterSpacing: "0.28em" }}
+            >
+              APEX
+            </span>
+            <div className="w-full h-[1px] my-1" style={{ background: "rgba(202,163,83,0.15)" }} />
+            <span className="text-[9px] font-medium tracking-[0.18em] uppercase" style={{ color: "rgba(255,255,255,0.28)" }}>
+              Next Edge Mascot
+            </span>
+          </div>
+          {/* Arrow pointing toward eagle */}
+          {above ? (
+            <div className="w-0 h-0 mx-auto" style={{ borderLeft: "5px solid transparent", borderRight: "5px solid transparent", borderBottom: "5px solid rgba(202,163,83,0.22)" }} />
+          ) : (
+            <div className="w-0 h-0 mx-auto" style={{ borderLeft: "5px solid transparent", borderRight: "5px solid transparent", borderTop: "5px solid rgba(202,163,83,0.22)" }} />
+          )}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+// ─── Contact prompt ───────────────────────────────────────────────────────────
+function ContactPrompt({ visible }: { visible: boolean }) {
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          key="contact"
+          initial={{ opacity: 0, y: 8, scale: 0.92 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.92 }}
+          transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
+          style={{ bottom: "calc(100% + 10px)" }}
+        >
+          <div
+            className="flex items-center gap-2.5 px-4 py-2"
+            style={{
+              background: "rgba(8, 8, 10, 0.9)",
+              backdropFilter: "blur(24px) saturate(200%)",
+              border: "1px solid rgba(202, 163, 83, 0.3)",
+              borderRadius: "5px",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.04)",
+            }}
+          >
+            <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#CAA353", boxShadow: "0 0 6px rgba(202,163,83,0.8)" }} />
+            <span className="text-[10px] font-semibold tracking-[0.2em] uppercase" style={{ color: "rgba(255,255,255,0.65)" }}>
+              Start a project
+            </span>
+            <span className="text-[10px]" style={{ color: "rgba(202,163,83,0.7)" }}>→</span>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+// ─── Main Component ───────────────────────────────────────────────────────────
 export function EagleMascot() {
   const controls = useAnimation();
-  const [state, setState] = useState<"hovering" | "flying" | "perched">("hovering");
+  const [eagleState, setEagleState] = useState<"hovering" | "flying" | "perched">("hovering");
   const [facingLeft, setFacingLeft] = useState(false);
+  const [showApex, setShowApex] = useState(false);
+  const [showContact, setShowContact] = useState(false);
   const [particles, setParticles] = useState<Particle[]>([]);
-  const [showBubble, setShowBubble] = useState(false);
   const particleId = useRef(0);
 
-  const posRef = useRef({ x: window.innerWidth - 140, y: 64 });
-  const [cssPos, setCssPos] = useState({ x: window.innerWidth - 140, y: 64 });
+  const posRef = useRef({ x: window.innerWidth - 148, y: 58 });
+  const [cssPos, setCssPos] = useState({ x: window.innerWidth - 148, y: 58 });
   const animating = useRef(false);
+
   const bubbleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const particleInterval = useRef<ReturnType<typeof setInterval> | null>(null);
+  const trailTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const addParticles = useCallback((x: number, y: number) => {
-    const newParticles: Particle[] = Array.from({ length: 3 }, () => ({
-      id: particleId.current++,
-      x: x + Math.random() * 30 - 15,
-      y: y + Math.random() * 20 - 10,
-      size: 4 + Math.random() * 6,
-    }));
-    setParticles((p) => [...p.slice(-18), ...newParticles]);
-  }, []);
+  // ── Proximity detection for APEX label ──
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      if (animating.current) return;
+      const cx = posRef.current.x + (eagleState === "perched" ? 34 : 52);
+      const cy = posRef.current.y + (eagleState === "perched" ? 43 : 28);
+      const d = Math.hypot(e.clientX - cx, e.clientY - cy);
+      setShowApex(d < 70);
+    };
+    document.addEventListener("mousemove", onMove);
+    return () => document.removeEventListener("mousemove", onMove);
+  }, [eagleState]);
 
   const startIdle = useCallback(() => {
     if (idleTimer.current) clearTimeout(idleTimer.current);
     idleTimer.current = setTimeout(() => {
-      if (!animating.current) setState("hovering");
-    }, 1800);
+      if (!animating.current) setEagleState("hovering");
+    }, 2000);
   }, []);
 
-  useEffect(() => {
-    setState("hovering");
-  }, []);
+  useEffect(() => { setState("hovering"); }, []);
 
   useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
+    const onClick = (e: MouseEvent) => {
       if (animating.current) return;
 
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-      const destX = Math.max(12, Math.min(e.clientX - 48, vw - 112));
-      const destY = Math.max(12, Math.min(e.clientY - 46, vh - 90));
+      const vw = window.innerWidth, vh = window.innerHeight;
+      const destX = Math.max(12, Math.min(e.clientX - 52, vw - 120));
+      const destY = Math.max(12, Math.min(e.clientY - 48, vh - 92));
 
       const dx = destX - posRef.current.x;
       const dy = destY - posRef.current.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      const dist = Math.hypot(dx, dy);
       if (dist < 16) return;
 
       setFacingLeft(dx < 0);
       animating.current = true;
-      setState("flying");
-      playEagleCry();
+      setEagleState("flying");
+      setShowApex(false);
+      setShowContact(false);
       if (bubbleTimer.current) clearTimeout(bubbleTimer.current);
-      setShowBubble(false);
+      playEagleCry();
 
-      // Arc midpoint — always lifts above both start and end
-      const arcLift = Math.min(dist * 0.32, 180);
+      const arcLift = Math.min(dist * 0.3, 170);
       const midX = (posRef.current.x + destX) / 2;
       const midY = Math.min(posRef.current.y, destY) - arcLift;
-      const bank = Math.max(-28, Math.min(28, dx * 0.05));
-      const dur = Math.min(0.48 + dist / 2400, 1.15);
+      const bank = Math.max(-26, Math.min(26, dx * 0.048));
+      const dur = Math.max(0.48, Math.min(0.5 + dist / 2200, 1.1));
 
-      // Particle trail during flight
-      let elapsed = 0;
-      particleInterval.current = setInterval(() => {
-        elapsed += 80;
-        const t = Math.min(elapsed / (dur * 1000), 1);
-        // Quadratic bezier approximation for particle position
-        const px = (1 - t) * (1 - t) * posRef.current.x + 2 * (1 - t) * t * midX + t * t * destX;
-        const py = (1 - t) * (1 - t) * posRef.current.y + 2 * (1 - t) * t * midY + t * t * destY;
-        addParticles(px + 48, py + 46);
-        if (elapsed >= dur * 1000) {
-          clearInterval(particleInterval.current!);
-        }
-      }, 80);
+      // Trail along bezier
+      let t = 0;
+      const step = 90;
+      if (trailTimer.current) clearInterval(trailTimer.current);
+      trailTimer.current = setInterval(() => {
+        t += step;
+        const pct = Math.min(t / (dur * 1000), 1);
+        const px = (1 - pct) ** 2 * posRef.current.x + 2 * (1 - pct) * pct * midX + pct ** 2 * destX;
+        const py = (1 - pct) ** 2 * posRef.current.y + 2 * (1 - pct) * pct * midY + pct ** 2 * destY;
+        setParticles((prev) => [
+          ...prev.slice(-16),
+          { id: particleId.current++, x: px + 40 + (Math.random() - 0.5) * 20, y: py + 30 + (Math.random() - 0.5) * 14, r: 3 + Math.random() * 5 },
+        ]);
+        if (t >= dur * 1000) clearInterval(trailTimer.current!);
+      }, step);
 
       controls
         .start({
           x: [posRef.current.x, midX, destX],
           y: [posRef.current.y, midY, destY],
           rotate: [0, bank, 0],
-          scale: [1, 1.08, 1],
-          transition: { duration: dur, ease: [0.25, 0.46, 0.45, 0.94], times: [0, 0.42, 1] },
+          scale: [1, 1.07, 1],
+          transition: { duration: dur, ease: [0.25, 0.46, 0.45, 0.94], times: [0, 0.43, 1] },
         })
         .then(() => {
           posRef.current = { x: destX, y: destY };
           setCssPos({ x: destX, y: destY });
-          setState("perched");
+          setEagleState("perched");
 
-          // Landing settle
           controls
             .start({
-              y: [destY, destY - 12, destY + 4, destY - 2, destY],
-              transition: { duration: 0.45, ease: "easeOut" },
+              y: [destY, destY - 14, destY + 5, destY - 3, destY],
+              scale: [1, 1, 1, 1, 1],
+              transition: { duration: 0.44, ease: "easeOut" },
             })
             .then(() => {
               animating.current = false;
               const t = e.target as HTMLElement;
-              const isCtaClick =
-                t.closest("button") || t.closest("a") ||
-                t.closest("input") || t.closest("textarea") ||
-                t.closest("#contact");
-              if (isCtaClick) {
-                setShowBubble(true);
-                bubbleTimer.current = setTimeout(() => setShowBubble(false), 3500);
+              const isAction = t.closest("button") || t.closest("a") || t.closest("input") || t.closest("textarea") || t.closest("#contact");
+              if (isAction) {
+                setShowContact(true);
+                bubbleTimer.current = setTimeout(() => setShowContact(false), 3800);
               }
               startIdle();
             });
         });
     };
 
-    document.addEventListener("click", handleClick);
+    document.addEventListener("click", onClick);
     return () => {
-      document.removeEventListener("click", handleClick);
+      document.removeEventListener("click", onClick);
       if (bubbleTimer.current) clearTimeout(bubbleTimer.current);
       if (idleTimer.current) clearTimeout(idleTimer.current);
-      if (particleInterval.current) clearInterval(particleInterval.current);
+      if (trailTimer.current) clearInterval(trailTimer.current);
     };
-  }, [controls, addParticles, startIdle]);
+  }, [controls, startIdle]);
 
-  // Remove old particles
-  useEffect(() => {
-    const t = setTimeout(() => {
-      setParticles((p) => p.filter((_, i) => i > p.length - 20));
-    }, 700);
-    return () => clearTimeout(t);
-  }, [particles]);
+  function setState(s: "hovering" | "flying" | "perched") { setEagleState(s); }
+
+  const apexAbove = cssPos.y > 80;
 
   return (
     <>
-      {/* Particle trail */}
-      {particles.map((p) => <TrailParticle key={p.id} {...p} />)}
+      <Particles list={particles} />
 
       <motion.div
         className="fixed z-[9998] pointer-events-none select-none"
         style={{ left: 0, top: 0, x: cssPos.x, y: cssPos.y }}
         animate={controls}
       >
-        {/* Glow aura under eagle */}
+        {/* Subtle ground glow */}
         <div
-          className="absolute rounded-full pointer-events-none"
           style={{
-            width: state === "perched" ? 40 : 80,
-            height: state === "perched" ? 20 : 30,
+            position: "absolute",
+            bottom: -8,
             left: "50%",
-            bottom: -6,
             transform: "translateX(-50%)",
-            background: "radial-gradient(ellipse, rgba(202,163,83,0.18) 0%, transparent 70%)",
-            filter: "blur(6px)",
-            transition: "all 0.5s ease",
+            width: eagleState === "perched" ? 44 : 88,
+            height: eagleState === "perched" ? 18 : 24,
+            background: "radial-gradient(ellipse, rgba(202,163,83,0.12) 0%, transparent 70%)",
+            filter: "blur(8px)",
+            transition: "all 0.6s ease",
+            pointerEvents: "none",
           }}
         />
 
-        {/* Speech bubble */}
-        {showBubble && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.65, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            className="absolute -top-12 left-1/2 -translate-x-1/2 whitespace-nowrap px-3.5 py-2 rounded-full text-[11px] font-black tracking-wide"
-            style={{
-              background: "linear-gradient(135deg, #CAA353 0%, #F0C97A 100%)",
-              color: "#0c0c0e",
-              boxShadow: "0 4px 24px rgba(202,163,83,0.5), 0 0 0 1px rgba(202,163,83,0.3)",
-            }}
-          >
-            Let's connect! 🎯
-            <div
-              className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0"
-              style={{ borderLeft: "5px solid transparent", borderRight: "5px solid transparent", borderTop: "6px solid #CAA353" }}
-            />
-          </motion.div>
-        )}
+        {/* APEX tooltip */}
+        <ApexTooltip visible={showApex && !animating.current} above={apexAbove} />
 
-        {/* Eagle */}
+        {/* Contact prompt */}
+        <ContactPrompt visible={showContact} />
+
+        {/* Eagle body — idle hover float */}
         <motion.div
-          animate={state === "perched" ? {} : { y: [0, -4, 0] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          animate={eagleState !== "flying" ? { y: [0, -5, 0] } : {}}
+          transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
         >
-          {state === "perched"
+          {eagleState === "perched"
             ? <PerchedEagle />
-            : <FlyingEagle fast={state === "flying"} facingLeft={facingLeft} />
+            : <FlyingEagle fast={eagleState === "flying"} facingLeft={facingLeft} />
           }
         </motion.div>
       </motion.div>
