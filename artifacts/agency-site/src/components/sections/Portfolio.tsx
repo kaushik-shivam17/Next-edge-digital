@@ -4,8 +4,8 @@ import { ArrowUpRight, ArrowRight } from "lucide-react";
 
 const projects = [
   {
-    title: "Aura Fashion",
-    category: "E-Commerce",
+    title: "E-Commerce",
+    category: "Fashion & Retail",
     filter: "ecommerce",
     tags: ["Web Design", "Shopify", "Social Media"],
     gradient: ["#7F1D1D", "#BE185D", "#4C1D95"],
@@ -15,8 +15,8 @@ const projects = [
     ui: { nav: 3, hero: true, blocks: [4, 3] },
   },
   {
-    title: "Nova Wealth",
-    category: "Fintech",
+    title: "Fintech",
+    category: "Wealth Management",
     filter: "fintech",
     tags: ["Web App", "Brand Identity", "SEO"],
     gradient: ["#1E3A5F", "#0E7490", "#1D4ED8"],
@@ -26,8 +26,8 @@ const projects = [
     ui: { nav: 4, hero: true, blocks: [3, 4] },
   },
   {
-    title: "Lumina Estates",
-    category: "Real Estate",
+    title: "Real Estate",
+    category: "Luxury Property",
     filter: "realestate",
     tags: ["Website", "Social Media", "Brand"],
     gradient: ["#78350F", "#B45309", "#92400E"],
@@ -37,8 +37,8 @@ const projects = [
     ui: { nav: 3, hero: true, blocks: [2, 4] },
   },
   {
-    title: "Apex Motors",
-    category: "Automotive",
+    title: "Automotive",
+    category: "Auto & Mobility",
     filter: "automotive",
     tags: ["Redesign", "Digital Strategy", "Social"],
     gradient: ["#064E3B", "#065F46", "#047857"],
@@ -48,8 +48,8 @@ const projects = [
     ui: { nav: 5, hero: true, blocks: [3, 3] },
   },
   {
-    title: "Orbit Media",
-    category: "B2B SaaS",
+    title: "B2B SaaS",
+    category: "Tech & Software",
     filter: "saas",
     tags: ["Web Design", "SEO", "Branding"],
     gradient: ["#3B0764", "#4C1D95", "#5B21B6"],
@@ -59,8 +59,8 @@ const projects = [
     ui: { nav: 4, hero: true, blocks: [4, 2] },
   },
   {
-    title: "Forge Capital",
-    category: "Finance",
+    title: "Finance",
+    category: "Investment & Capital",
     filter: "finance",
     tags: ["Brand Identity", "Web Design"],
     gradient: ["#1F2937", "#374151", "#4B5563"],
