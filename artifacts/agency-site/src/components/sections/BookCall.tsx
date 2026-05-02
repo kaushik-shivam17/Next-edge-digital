@@ -174,7 +174,7 @@ export function BookCall() {
             ))}
           </div>
           <p className="text-xs text-foreground/30 tracking-wide">
-            5.0 rating · 150+ brands transformed · New York based, globally deployed
+            5.0 rating · 150+ brands transformed · Remote-first, globally deployed
           </p>
         </motion.div>
       </div>

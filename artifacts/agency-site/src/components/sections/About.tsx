@@ -49,7 +49,7 @@ export function About() {
             transition={{ duration: 0.7 }}
           >
             <p className="text-xs font-semibold tracking-[0.3em] uppercase text-primary mb-4">The Studio</p>
-            <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-[0.92] mb-6">
+            <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-[0.9] mb-6">
               Real People.<br />
               <span
                 className="text-transparent bg-clip-text"
@@ -176,7 +176,6 @@ export function About() {
         >
           <p
             className="text-xl md:text-2xl font-light leading-relaxed text-foreground/70 max-w-2xl mx-auto italic"
-            style={{ fontStyle: "italic" }}
           >
             "We don't take on 30 clients at a time. We take on the right ones, go all in, and build
             something that outlasts the campaign."
