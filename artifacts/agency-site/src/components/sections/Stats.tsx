@@ -3,10 +3,10 @@ import { motion, useInView } from "framer-motion";
 
 const stats = [
   {
-    value: 150,
+    value: 20,
     suffix: "+",
     label: "Projects Delivered",
-    description: "Across 12 industries worldwide",
+    description: "Across multiple industries worldwide",
     accent: "#CAA353",
   },
   {
@@ -17,18 +17,17 @@ const stats = [
     accent: "#60A5FA",
   },
   {
-    value: 20,
+    value: 2,
     suffix: "+",
     label: "Countries Served",
-    description: "Clients across 5 continents",
+    description: "Clients across continents",
     accent: "#A78BFA",
   },
   {
-    value: 12,
-    suffix: "M+",
-    prefix: "$",
-    label: "Revenue Generated",
-    description: "Measurable business impact",
+    value: 5,
+    suffix: "+",
+    label: "Years Experience",
+    description: "Delivering results since 2020",
     accent: "#34D399",
   },
 ];

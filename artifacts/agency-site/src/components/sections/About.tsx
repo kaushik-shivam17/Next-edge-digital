@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Award, Users, Globe, Zap } from "lucide-react";
 
 const milestones = [
-  { icon: Award, label: "150+ Brands Transformed", sub: "Across 12 industries globally" },
+  { icon: Award, label: "20+ Brands Transformed", sub: "Across multiple industries globally" },
   { icon: Users, label: "98% Client Retention", sub: "Most clients stay 2+ years" },
   { icon: Globe, label: "Clients on 5 Continents", sub: "US, UK, UAE, AU, SG & beyond" },
   { icon: Zap, label: "Avg. 3-Week Turnaround", sub: "Without cutting corners" },
