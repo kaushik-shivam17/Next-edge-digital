@@ -250,7 +250,7 @@ export function BookCall() {
               ))}
             </div>
             <p className="text-xs text-foreground/30 tracking-wide">
-              5.0 rating · 20+ brands transformed · 2+ countries served
+              5.0 rating · 42+ brands transformed · 3+ countries served
             </p>
           </motion.div>
         </div>
