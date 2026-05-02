@@ -19,7 +19,7 @@ export function Footer() {
     <footer className="bg-card/30 border-t border-white/5 relative z-10">
       <div className="container px-4 md:px-6">
         {/* Top section */}
-        <div className="py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div className="py-10 md:py-16 grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-6">
@@ -46,18 +46,18 @@ export function Footer() {
                   href={href}
                   aria-label={label}
                   data-testid={`link-social-${label.toLowerCase().replace(/[^a-z]/g, "")}`}
-                  className="w-9 h-9 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-foreground/40 hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all duration-300"
+                  className="w-11 h-11 md:w-9 md:h-9 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-foreground/40 hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all duration-300"
                 >
-                  <Icon className="w-3.5 h-3.5" />
+                  <Icon className="w-4 h-4 md:w-3.5 md:h-3.5" />
                 </a>
               ))}
               <a
                 href="#"
                 aria-label="LinkedIn"
                 data-testid="link-social-linkedin"
-                className="w-9 h-9 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-foreground/40 hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all duration-300"
+                className="w-11 h-11 md:w-9 md:h-9 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-foreground/40 hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all duration-300"
               >
-                <Linkedin className="w-3.5 h-3.5" />
+                <Linkedin className="w-4 h-4 md:w-3.5 md:h-3.5" />
               </a>
               <a
                 href={WHATSAPP_URL}
@@ -65,9 +65,9 @@ export function Footer() {
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
                 data-testid="link-social-whatsapp"
-                className="w-9 h-9 rounded-sm bg-[#25D366]/10 border border-[#25D366]/30 flex items-center justify-center text-[#25D366]/70 hover:text-[#25D366] hover:border-[#25D366]/60 hover:bg-[#25D366]/20 transition-all duration-300"
+                className="w-11 h-11 md:w-9 md:h-9 rounded-sm bg-[#25D366]/10 border border-[#25D366]/30 flex items-center justify-center text-[#25D366]/70 hover:text-[#25D366] hover:border-[#25D366]/60 hover:bg-[#25D366]/20 transition-all duration-300"
               >
-                <SiWhatsapp className="w-3.5 h-3.5" />
+                <SiWhatsapp className="w-4 h-4 md:w-3.5 md:h-3.5" />
               </a>
             </div>
           </div>

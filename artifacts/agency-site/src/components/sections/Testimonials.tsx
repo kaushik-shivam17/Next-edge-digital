@@ -104,12 +104,12 @@ export function Testimonials() {
   };
 
   return (
-    <section className="py-32 relative bg-background border-t border-white/5 z-10 overflow-hidden">
+    <section className="py-16 md:py-32 relative bg-background border-t border-white/5 z-10 overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_100%,rgba(45,100,255,0.05),transparent)]" />
 
       <div className="container px-4 md:px-6 relative z-10">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-20">
+        <div className="text-center max-w-2xl mx-auto mb-10 md:mb-20">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

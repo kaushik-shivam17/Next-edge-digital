@@ -228,10 +228,10 @@ export function Portfolio() {
     <section
       id="work"
       ref={sectionRef}
-      className="py-32 bg-background relative z-10 border-t border-white/5 overflow-hidden"
+      className="py-16 md:py-32 bg-background relative z-10 border-t border-white/5 overflow-hidden"
     >
-      <motion.div style={{ y: headerY, opacity: headerOpacity }} className="container px-4 md:px-6 mb-10">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-10">
+      <motion.div style={{ y: headerY, opacity: headerOpacity }} className="container px-4 md:px-6 mb-6 md:mb-10">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-5 md:gap-8 mb-6 md:mb-10">
           <div>
             <p className="text-xs font-semibold tracking-[0.3em] uppercase text-primary mb-4">Our Work</p>
             <h2 className="text-4xl md:text-6xl font-black tracking-tight">Selected Projects</h2>

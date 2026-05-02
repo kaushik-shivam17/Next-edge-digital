@@ -209,7 +209,7 @@ export function Stats() {
   const inView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   return (
-    <section ref={sectionRef} className="py-28 relative z-10 overflow-hidden">
+    <section ref={sectionRef} className="py-14 md:py-28 relative z-10 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(202,163,83,0.05),transparent)]" />
@@ -258,7 +258,7 @@ export function Stats() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex items-center justify-center gap-3 mb-16"
+          className="flex items-center justify-center gap-3 mb-8 md:mb-16"
         >
           <div className="h-px flex-1 max-w-24 bg-gradient-to-r from-transparent to-white/10" />
           <span className="text-[9px] tracking-[0.4em] uppercase text-foreground/25 font-medium">

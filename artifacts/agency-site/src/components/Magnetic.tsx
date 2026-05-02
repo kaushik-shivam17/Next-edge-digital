@@ -5,9 +5,10 @@ interface MagneticProps {
   children: React.ReactNode;
   strength?: number;
   style?: React.CSSProperties;
+  className?: string;
 }
 
-export function Magnetic({ children, strength = 0.38, style }: MagneticProps) {
+export function Magnetic({ children, strength = 0.38, style, className }: MagneticProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
@@ -34,6 +35,7 @@ export function Magnetic({ children, strength = 0.38, style }: MagneticProps) {
       onMouseLeave={onMouseLeave}
       animate={{ x: pos.x, y: pos.y }}
       transition={{ type: "spring", stiffness: 220, damping: 18, mass: 0.4 }}
+      className={className}
       style={{ display: "inline-flex", ...style }}
     >
       {children}

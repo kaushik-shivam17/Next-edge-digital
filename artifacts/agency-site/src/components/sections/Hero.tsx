@@ -77,7 +77,7 @@ export function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   return (
-    <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section ref={ref} className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-20">
       {/* Canvas constellation */}
       <HeroCanvas />
 
@@ -121,7 +121,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-12"
+            className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-5 md:mb-12"
             style={{
               background: "rgba(202,163,83,0.06)",
               border: "1px solid rgba(202,163,83,0.2)",
@@ -143,7 +143,7 @@ export function Hero() {
           </motion.div>
 
           {/* Headline */}
-          <h1 className="text-[clamp(3.2rem,9.5vw,8rem)] font-black tracking-tight leading-[0.88] mb-8">
+          <h1 className="text-[clamp(2rem,8.5vw,8rem)] font-black tracking-tight leading-[0.88] mb-5 md:mb-8">
             <span className="block text-foreground">
               <SplitReveal text={HEADLINE_1} delay={0.4} />
             </span>
@@ -173,7 +173,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.85, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg md:text-xl text-foreground/45 mb-14 max-w-2xl mx-auto leading-relaxed font-light tracking-wide"
+            className="text-base md:text-xl text-foreground/45 mb-8 md:mb-14 max-w-2xl mx-auto leading-relaxed font-light tracking-wide"
           >
             Next Edge Digital is an elite studio that engineers market-leading websites
             and dominates social media for ambitious brands.{" "}
@@ -185,14 +185,14 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4"
           >
-            <Magnetic strength={0.3}>
+            <Magnetic strength={0.3} className="w-full sm:w-auto">
               <a
                 href="#contact"
                 data-testid="button-hero-primary"
                 data-cursor-text="START"
-                className="group relative inline-flex items-center gap-2 px-9 py-4 font-bold text-sm tracking-[0.15em] uppercase overflow-hidden"
+                className="group relative inline-flex items-center justify-center gap-2 w-full sm:w-auto px-9 py-4 font-bold text-sm tracking-[0.15em] uppercase overflow-hidden"
                 style={{
                   background: "linear-gradient(135deg, #CAA353, #F0C97A, #CAA353)",
                   backgroundSize: "200% 100%",
@@ -211,12 +211,12 @@ export function Hero() {
                 <ArrowRight className="w-4 h-4 relative group-hover:translate-x-1 transition-transform" />
               </a>
             </Magnetic>
-            <Magnetic strength={0.25}>
+            <Magnetic strength={0.25} className="w-full sm:w-auto">
               <a
                 href="#work"
                 data-testid="button-hero-secondary"
                 data-cursor-text="VIEW"
-                className="group inline-flex items-center gap-2 px-9 py-4 text-foreground/60 font-semibold text-sm tracking-[0.15em] uppercase hover:text-foreground transition-all duration-300"
+                className="group inline-flex items-center justify-center gap-2 w-full sm:w-auto px-9 py-4 text-foreground/60 font-semibold text-sm tracking-[0.15em] uppercase hover:text-foreground transition-all duration-300"
                 style={{
                   border: "1px solid rgba(255,255,255,0.1)",
                   clipPath: "polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)",
@@ -240,7 +240,7 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.4, duration: 1.2 }}
-            className="mt-16 flex flex-wrap items-center justify-center gap-3"
+            className="mt-8 md:mt-16 flex flex-wrap items-center justify-center gap-2 md:gap-3"
           >
             {[
               { label: "150+ Projects Delivered", Icon: Award },

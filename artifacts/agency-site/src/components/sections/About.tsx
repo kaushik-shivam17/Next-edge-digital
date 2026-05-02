@@ -34,14 +34,14 @@ const milestones = [
 
 export function About() {
   return (
-    <section id="about" className="py-32 relative z-10 border-t border-white/5 overflow-hidden">
+    <section id="about" className="py-16 md:py-32 relative z-10 border-t border-white/5 overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_30%_50%,rgba(202,163,83,0.04),transparent)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_80%_60%,rgba(45,100,255,0.04),transparent)]" />
 
       <div className="container px-4 md:px-6 relative z-10">
 
         {/* Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24 items-end">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 mb-12 md:mb-24 items-end">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}

@@ -97,11 +97,11 @@ function FAQItem({ faq, index }: { faq: typeof faqs[0]; index: number }) {
 
 export function FAQ() {
   return (
-    <section className="py-32 relative bg-background z-10 border-t border-white/5 overflow-hidden">
+    <section className="py-16 md:py-32 relative bg-background z-10 border-t border-white/5 overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_60%,rgba(202,163,83,0.04),transparent)]" />
 
       <div className="container px-4 md:px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-24 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 md:gap-16 lg:gap-24 items-start">
           {/* Left sticky header */}
           <div className="lg:col-span-2 lg:sticky lg:top-28">
             <motion.p

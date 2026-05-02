@@ -109,11 +109,11 @@ export function Process() {
   const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <section id="process" ref={sectionRef} className="py-32 bg-card/10 border-t border-white/5 relative z-10 overflow-hidden">
+    <section id="process" ref={sectionRef} className="py-16 md:py-32 bg-card/10 border-t border-white/5 relative z-10 overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_50%_at_50%_0%,rgba(45,100,255,0.05),transparent)]" />
 
       <div className="container px-4 md:px-6 relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-20">
+        <div className="text-center max-w-2xl mx-auto mb-10 md:mb-20">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

@@ -87,18 +87,18 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-32 relative bg-card/10 z-10 border-t border-white/5 overflow-hidden">
+    <section id="contact" className="py-16 md:py-32 relative bg-card/10 z-10 border-t border-white/5 overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,rgba(45,100,255,0.04),transparent)]" />
 
       <div className="container px-4 md:px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-24">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 md:gap-16 lg:gap-24">
           {/* Left side */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="lg:col-span-2 flex flex-col justify-between"
+            className="lg:col-span-2 flex flex-col justify-between order-2 lg:order-1"
           >
             <div>
               <p className="text-xs font-semibold tracking-[0.3em] uppercase text-primary mb-4">Get In Touch</p>
@@ -152,7 +152,7 @@ export function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="lg:col-span-3"
+            className="lg:col-span-3 order-1 lg:order-2"
           >
             <div
               className="bg-card p-8 md:p-12 rounded-2xl border border-white/5 relative overflow-hidden"

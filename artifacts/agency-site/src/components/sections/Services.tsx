@@ -167,9 +167,9 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
 
 export function Services() {
   return (
-    <section id="services" className="py-32 relative bg-background z-10">
+    <section id="services" className="py-16 md:py-32 relative bg-background z-10">
       <div className="container px-4 md:px-6">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-20 gap-6 md:gap-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

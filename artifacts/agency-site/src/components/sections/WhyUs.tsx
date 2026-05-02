@@ -34,12 +34,12 @@ const reasons = [
 
 export function WhyUs() {
   return (
-    <section className="py-24 relative z-10 border-t border-white/5 overflow-hidden">
+    <section className="py-12 md:py-24 relative z-10 border-t border-white/5 overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_50%,rgba(202,163,83,0.04),transparent)]" />
 
       <div className="container px-4 md:px-6 relative z-10">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-14">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8 md:mb-14">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

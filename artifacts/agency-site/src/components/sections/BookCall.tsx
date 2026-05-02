@@ -24,7 +24,7 @@ const perks = [
 
 export function BookCall() {
   return (
-    <section className="py-32 relative z-10 overflow-hidden border-t border-white/5">
+    <section className="py-16 md:py-32 relative z-10 overflow-hidden border-t border-white/5">
       <div className="absolute inset-0 bg-background" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_100%,rgba(202,163,83,0.07),transparent)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_50%_0%,rgba(45,100,255,0.06),transparent)]" />
@@ -39,7 +39,7 @@ export function BookCall() {
 
       <div className="container px-4 md:px-6 relative z-10">
         {/* Headline */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-8 md:mb-16">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -79,7 +79,7 @@ export function BookCall() {
         </div>
 
         {/* Perks row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 md:mb-14">
           {perks.map((perk, i) => (
             <motion.div
               key={i}
@@ -120,7 +120,7 @@ export function BookCall() {
             target="_blank"
             rel="noopener noreferrer"
             data-testid="button-book-calendar"
-            className="group inline-flex items-center gap-3 px-8 py-5 rounded-xl font-bold text-sm tracking-wide transition-all duration-300 shadow-lg hover:scale-[1.02]"
+            className="group inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-5 rounded-xl font-bold text-sm tracking-wide transition-all duration-300 shadow-lg hover:scale-[1.02]"
             style={{
               background: "linear-gradient(135deg, #CAA353, #F0C97A)",
               color: "#0c0c0e",
@@ -138,7 +138,7 @@ export function BookCall() {
           <a
             href="#contact"
             data-testid="button-book-whatsapp"
-            className="group inline-flex items-center gap-3 px-8 py-5 rounded-xl font-semibold text-sm tracking-wide transition-all duration-300"
+            className="group inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-5 rounded-xl font-semibold text-sm tracking-wide transition-all duration-300"
             style={{
               background: "rgba(255,255,255,0.04)",
               border: "1px solid rgba(255,255,255,0.1)",
