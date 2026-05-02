@@ -39,10 +39,10 @@ function Particles({ list }: { list: Particle[] }) {
 function SoaringEagle({ size = 1 }: { size?: number }) {
   return (
     <svg
-      width={110 * size} height={82 * size}
+      width={62 * size} height={46 * size}
       viewBox="0 0 110 82"
       fill="#0a0a0c"
-      style={{ filter: "drop-shadow(0 5px 18px rgba(0,0,0,0.95)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))" }}
+      style={{ filter: "drop-shadow(0 3px 10px rgba(0,0,0,0.9)) drop-shadow(0 1px 4px rgba(202,163,83,0.08))" }}
     >
       {/* ─ HEAD ─ */}
       <ellipse cx="55" cy="14" rx="11" ry="13" />
@@ -91,8 +91,8 @@ function SoaringEagle({ size = 1 }: { size?: number }) {
 function BankingEagle({ facingLeft }: { facingLeft: boolean }) {
   const flip = facingLeft ? { transform: "scaleX(-1)", transformOrigin: "50% 50%" } : {};
   return (
-    <svg width="108" height="58" viewBox="0 0 108 58" fill="#0a0a0c"
-      style={{ ...flip, filter: "drop-shadow(0 5px 18px rgba(0,0,0,0.95)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))" }}>
+    <svg width="68" height="36" viewBox="0 0 108 58" fill="#0a0a0c"
+      style={{ ...flip, filter: "drop-shadow(0 3px 10px rgba(0,0,0,0.9)) drop-shadow(0 1px 4px rgba(202,163,83,0.08))" }}>
       {/* ─ UPPER WING ─ */}
       <path d="M54 26 C44 20 30 13 16 8 C8 5 2 4 0 9 C6 10 14 13 24 17 C36 22 46 26 54 30" />
       {/* Upper feather fingers */}
@@ -130,8 +130,8 @@ function BankingEagle({ facingLeft }: { facingLeft: boolean }) {
 // Bold black silhouette — sitting upright
 function PerchedEagle() {
   return (
-    <svg width="72" height="90" viewBox="0 0 72 90" fill="#0a0a0c"
-      style={{ filter: "drop-shadow(0 6px 20px rgba(0,0,0,0.95)) drop-shadow(0 2px 6px rgba(0,0,0,0.7))" }}>
+    <svg width="40" height="50" viewBox="0 0 72 90" fill="#0a0a0c"
+      style={{ filter: "drop-shadow(0 3px 10px rgba(0,0,0,0.9)) drop-shadow(0 1px 4px rgba(202,163,83,0.08))" }}>
       {/* TAIL */}
       <path d="M 22 62 C 18 73 21 82 28 80 L 36 74 L 44 80 C 51 82 54 73 50 62 Z" />
       {/* WING LEFT */}
@@ -204,8 +204,8 @@ function ApexTooltip({ visible, above }: { visible: boolean; above: boolean }) {
 }
 
 // ─── Main ────────────────────────────────────────────────────────────────────
-const NAV_SCALE = 0.44;
-const LOCK_DURATION = 5000; // 5 seconds
+const NAV_SCALE = 0.72;   // eagle is already small, so nav shrink is subtle
+const LOCK_DURATION = 5000;
 
 export function EagleMascot() {
   const controls = useAnimation();
@@ -228,8 +228,8 @@ export function EagleMascot() {
   const trailTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // ── Helpers ──
-  const clampX = (x: number) => Math.max(10, Math.min(x, window.innerWidth - 120));
-  const clampY = (y: number) => Math.max(10, Math.min(y, window.innerHeight - 100));
+  const clampX = (x: number) => Math.max(10, Math.min(x, window.innerWidth - 80));
+  const clampY = (y: number) => Math.max(10, Math.min(y, window.innerHeight - 60));
 
   const addParticles = useCallback((x: number, y: number) => {
     setParticles((p) => [
@@ -351,8 +351,8 @@ export function EagleMascot() {
     const onClick = (e: MouseEvent) => {
       if (modeRef.current === "nav") return;
 
-      const destX = clampX(e.clientX - 54);
-      const destY = clampY(e.clientY - 42);
+      const destX = clampX(e.clientX - 34);
+      const destY = clampY(e.clientY - 18);
 
       // Clear existing patrol
       if (patrolTimer.current) clearTimeout(patrolTimer.current);
@@ -388,8 +388,8 @@ export function EagleMascot() {
 
   // ── Nav hover ──
   useEffect(() => {
-    const EAGLE_W = 108 * NAV_SCALE;
-    const EAGLE_H = 58 * NAV_SCALE;
+    const EAGLE_W = 68 * NAV_SCALE;
+    const EAGLE_H = 36 * NAV_SCALE;
 
     const glideToLink = (el: HTMLElement) => {
       if (patrolTimer.current) clearTimeout(patrolTimer.current);
@@ -444,9 +444,9 @@ export function EagleMascot() {
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
       if (modeRef.current === "nav") return setShowApex(false);
-      const cx = posRef.current.x + (visual === "perched" ? 36 : 55);
-      const cy = posRef.current.y + (visual === "perched" ? 45 : 30);
-      setShowApex(Math.hypot(e.clientX - cx, e.clientY - cy) < 72);
+      const cx = posRef.current.x + (visual === "perched" ? 20 : 34);
+      const cy = posRef.current.y + (visual === "perched" ? 25 : 18);
+      setShowApex(Math.hypot(e.clientX - cx, e.clientY - cy) < 55);
     };
     document.addEventListener("mousemove", onMove);
     return () => document.removeEventListener("mousemove", onMove);
@@ -465,22 +465,22 @@ export function EagleMascot() {
       >
         {/* Ground glow */}
         <div style={{
-          position: "absolute", bottom: -6, left: "50%", transform: "translateX(-50%)",
-          width: visual === "perched" ? 40 : 80, height: visual === "perched" ? 16 : 22,
-          background: "radial-gradient(ellipse, rgba(202,163,83,0.1) 0%, transparent 70%)",
-          filter: "blur(8px)", transition: "all 0.5s ease", pointerEvents: "none",
+          position: "absolute", bottom: -4, left: "50%", transform: "translateX(-50%)",
+          width: visual === "perched" ? 26 : 46, height: visual === "perched" ? 10 : 14,
+          background: "radial-gradient(ellipse, rgba(202,163,83,0.12) 0%, transparent 70%)",
+          filter: "blur(6px)", transition: "all 0.5s ease", pointerEvents: "none",
         }} />
 
         {/* Countdown ring when locked */}
         {mode === "locked" && (
           <motion.div
-            className="absolute inset-0 pointer-events-none"
-            style={{ left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: 56, height: 56 }}
+            className="absolute pointer-events-none"
+            style={{ left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: 40, height: 40 }}
           >
-            <svg width="56" height="56" viewBox="0 0 56 56" style={{ position: "absolute", top: -6, left: -6 }}>
-              <motion.circle cx="28" cy="28" r="24" fill="none" stroke="rgba(202,163,83,0.25)"
-                strokeWidth="1.5" strokeDasharray="150" strokeDashoffset="0"
-                animate={{ strokeDashoffset: 150 }}
+            <svg width="40" height="40" viewBox="0 0 40 40" style={{ position: "absolute", top: -4, left: -4 }}>
+              <motion.circle cx="20" cy="20" r="17" fill="none" stroke="rgba(202,163,83,0.3)"
+                strokeWidth="1.2" strokeDasharray="106" strokeDashoffset="0"
+                animate={{ strokeDashoffset: 106 }}
                 transition={{ duration: LOCK_DURATION / 1000, ease: "linear" }} />
             </svg>
           </motion.div>
@@ -491,8 +491,8 @@ export function EagleMascot() {
 
         {/* Eagle */}
         <motion.div
-          animate={visual === "soaring" ? { y: [0, -6, 0] } : {}}
-          transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+          animate={visual === "soaring" ? { y: [0, -4, 0] } : {}}
+          transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
         >
           {visual === "perched" && <PerchedEagle />}
           {visual === "banking" && <BankingEagle facingLeft={facingLeft} />}
