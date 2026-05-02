@@ -23,9 +23,10 @@ export function HeroCanvas() {
 
     let animId: number;
     const particles: Particle[] = [];
-    const CONNECTION_DIST = 140;
-    const MOUSE_DIST = 180;
-    const COUNT = 90;
+    const isMobile = window.innerWidth < 768;
+    const CONNECTION_DIST = isMobile ? 90 : 140;
+    const MOUSE_DIST = isMobile ? 0 : 180;
+    const COUNT = isMobile ? 30 : 90;
 
     const resize = () => {
       canvas.width = canvas.offsetWidth;

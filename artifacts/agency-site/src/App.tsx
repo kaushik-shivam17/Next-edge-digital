@@ -44,9 +44,22 @@ function AgencySite() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const [isHoverDevice, setIsHoverDevice] = useState(false);
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
+    setIsHoverDevice(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
+  }, []);
+
+  useEffect(() => {
+    const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    if (isTouch) {
+      return () => window.removeEventListener("scroll", onScroll);
+    }
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -59,9 +72,6 @@ function AgencySite() {
       requestAnimationFrame(raf);
     };
     requestAnimationFrame(raf);
-
-    const onScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
       lenis.destroy();
@@ -102,9 +112,9 @@ function AgencySite() {
   return (
     <div
       className="relative min-h-screen bg-background text-foreground dark selection:bg-primary selection:text-primary-foreground font-sans"
-      style={{ cursor: "none" }}
+      style={{ cursor: isHoverDevice ? "none" : "auto" }}
     >
-        <CustomCursor />
+        {isHoverDevice && <CustomCursor />}
         <NoiseOverlay />
 
         {/* Top scroll progress bar */}
@@ -200,11 +210,11 @@ function AgencySite() {
 
             <button
               data-testid="button-mobile-menu"
-              className="md:hidden p-2 text-foreground/80"
+              className="md:hidden p-3 -mr-1 text-foreground/80 touch-manipulation"
               onClick={() => setMenuOpen((v) => !v)}
               aria-label="Toggle menu"
             >
-              {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
 
