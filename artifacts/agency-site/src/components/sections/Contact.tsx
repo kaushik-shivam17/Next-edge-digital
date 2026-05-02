@@ -33,10 +33,25 @@ const budgets = [
   "Let's Discuss",
 ];
 
+const countries = [
+  "United States", "United Kingdom", "United Arab Emirates", "Australia",
+  "Singapore", "Canada", "India", "Germany", "France", "Netherlands",
+  "Saudi Arabia", "Qatar", "Kuwait", "Bahrain", "Oman",
+  "New Zealand", "South Africa", "Nigeria", "Kenya",
+  "Malaysia", "Indonesia", "Philippines", "Thailand",
+  "Pakistan", "Bangladesh", "Sri Lanka",
+  "Ireland", "Spain", "Italy", "Sweden", "Norway", "Denmark",
+  "Switzerland", "Belgium", "Portugal", "Poland",
+  "Brazil", "Mexico", "Argentina", "Colombia",
+  "Japan", "South Korea", "China", "Hong Kong", "Taiwan",
+  "Other",
+];
+
 type FormData = {
   name: string;
   company: string;
   email: string;
+  country: string;
   service: string;
   budget: string;
   message: string;
@@ -56,7 +71,7 @@ export function Contact() {
   const [direction, setDirection] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState<FormData>({
-    name: "", company: "", email: "", service: "", budget: "", message: "",
+    name: "", company: "", email: "", country: "", service: "", budget: "", message: "",
   });
 
   const update = (key: keyof FormData, value: string) =>
@@ -181,7 +196,7 @@ export function Contact() {
                       </p>
                     </div>
                     <button
-                      onClick={() => { setSubmitted(false); setStep(0); setFormData({ name: "", company: "", email: "", service: "", budget: "", message: "" }); }}
+                      onClick={() => { setSubmitted(false); setStep(0); setFormData({ name: "", company: "", email: "", country: "", service: "", budget: "", message: "" }); }}
                       className="text-xs font-semibold tracking-widest uppercase text-foreground/30 hover:text-foreground/60 transition-colors"
                     >
                       Submit Another
@@ -252,6 +267,28 @@ export function Contact() {
                               <div className="space-y-2">
                                 <Label htmlFor="email" className="text-[10px] font-bold tracking-[0.2em] uppercase text-foreground/40">Email Address</Label>
                                 <Input id="email" type="email" required value={formData.email} onChange={(e) => update("email", e.target.value)} placeholder="john@company.com" data-testid="input-email" className="bg-background/60 border-white/10 h-12 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 transition-colors" />
+                              </div>
+                              <div className="space-y-2">
+                                <Label htmlFor="country" className="text-[10px] font-bold tracking-[0.2em] uppercase text-foreground/40">Country / Region <span className="text-foreground/20 normal-case tracking-normal font-normal">(optional)</span></Label>
+                                <select
+                                  id="country"
+                                  value={formData.country}
+                                  onChange={(e) => update("country", e.target.value)}
+                                  data-testid="select-country"
+                                  className="w-full h-12 rounded-sm px-3 text-sm transition-colors outline-none"
+                                  style={{
+                                    background: "rgba(9,9,11,0.6)",
+                                    border: formData.country ? "1px solid rgba(202,163,83,0.5)" : "1px solid rgba(255,255,255,0.1)",
+                                    color: formData.country ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.2)",
+                                  }}
+                                  onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(202,163,83,0.5)"; }}
+                                  onBlur={(e) => { e.currentTarget.style.borderColor = formData.country ? "rgba(202,163,83,0.5)" : "rgba(255,255,255,0.1)"; }}
+                                >
+                                  <option value="" disabled style={{ color: "rgba(255,255,255,0.3)", background: "#09090b" }}>Select your country…</option>
+                                  {countries.map((c) => (
+                                    <option key={c} value={c} style={{ color: "white", background: "#09090b" }}>{c}</option>
+                                  ))}
+                                </select>
                               </div>
                             </motion.div>
                           )}
