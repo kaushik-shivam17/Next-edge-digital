@@ -114,9 +114,11 @@ export function BookCall() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          {/* Primary: Calendar booking */}
+          {/* Primary: WhatsApp booking */}
           <a
-            href="#contact"
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             data-testid="button-book-calendar"
             className="group inline-flex items-center gap-3 px-8 py-5 rounded-xl font-bold text-sm tracking-wide transition-all duration-300 shadow-lg hover:scale-[1.02]"
             style={{
@@ -132,29 +134,27 @@ export function BookCall() {
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
 
-          {/* Secondary: WhatsApp */}
+          {/* Secondary: Send Brief */}
           <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#contact"
             data-testid="button-book-whatsapp"
             className="group inline-flex items-center gap-3 px-8 py-5 rounded-xl font-semibold text-sm tracking-wide transition-all duration-300"
             style={{
-              background: "rgba(37,211,102,0.08)",
-              border: "1px solid rgba(37,211,102,0.25)",
-              color: "#25D366",
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              color: "rgba(255,255,255,0.6)",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "rgba(37,211,102,0.15)";
-              (e.currentTarget as HTMLElement).style.borderColor = "rgba(37,211,102,0.5)";
+              (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.07)";
+              (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.9)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.background = "rgba(37,211,102,0.08)";
-              (e.currentTarget as HTMLElement).style.borderColor = "rgba(37,211,102,0.25)";
+              (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)";
+              (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)";
             }}
           >
             <SiWhatsapp className="w-4 h-4" />
-            Message on WhatsApp
+            Send a Project Brief
           </a>
         </motion.div>
 

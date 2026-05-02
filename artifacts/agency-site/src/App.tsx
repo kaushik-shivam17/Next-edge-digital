@@ -12,6 +12,7 @@ import { Services } from "./components/sections/Services";
 import { Stats } from "./components/sections/Stats";
 import { Process } from "./components/sections/Process";
 import { Portfolio } from "./components/sections/Portfolio";
+import { About } from "./components/sections/About";
 import { Testimonials } from "./components/sections/Testimonials";
 import { FAQ } from "./components/sections/FAQ";
 import { WhyUs } from "./components/sections/WhyUs";
@@ -28,7 +29,7 @@ const queryClient = new QueryClient();
 const navLinks = [
   { label: "Work", href: "#work" },
   { label: "Services", href: "#services" },
-  { label: "Process", href: "#process" },
+  { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -69,7 +70,7 @@ function AgencySite() {
 
   // Intersection Observer for active nav section
   useEffect(() => {
-    const sectionIds = ["work", "services", "process", "contact"];
+    const sectionIds = ["work", "services", "about", "contact"];
     const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {
@@ -237,11 +238,12 @@ function AgencySite() {
         <main>
           <Hero />
           <TrustedBy />
+          <Portfolio />
           <WhyUs />
           <Services />
+          <About />
           <Stats />
           <Process />
-          {/* <Portfolio /> */}
           <Testimonials />
           <BookCall />
           <Contact />

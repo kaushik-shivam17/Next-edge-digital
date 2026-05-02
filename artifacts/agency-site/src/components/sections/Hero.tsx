@@ -131,11 +131,14 @@ export function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
             </span>
-            <ScrambleText
-              text="CURRENTLY ACCEPTING NEW CLIENTS"
-              delay={0.6}
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
               className="text-[11px] font-bold tracking-[0.25em] text-primary"
-            />
+            >
+              CURRENTLY ACCEPTING NEW CLIENTS
+            </motion.span>
           </motion.div>
 
           {/* Headline */}
