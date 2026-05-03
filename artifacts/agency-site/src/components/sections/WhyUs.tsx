@@ -14,21 +14,21 @@ const reasons = [
     title: "Speed Without Sacrifice",
     description:
       "Most agencies take 6 months. We deliver market-ready work in weeks — without cutting corners on quality or strategy.",
-    accent: "#60A5FA",
+    accent: "#CAA353",
   },
   {
     icon: LineChart,
     title: "Full-Funnel Thinking",
     description:
       "We don't just hand off a website. We engineer the entire digital ecosystem — from first impression to repeat purchase.",
-    accent: "#A78BFA",
+    accent: "#CAA353",
   },
   {
     icon: HeartHandshake,
     title: "Genuine Partnership",
     description:
       "You get direct access to senior strategists — not account managers reading from scripts. Your success is our reputation.",
-    accent: "#34D399",
+    accent: "#CAA353",
   },
 ];
 

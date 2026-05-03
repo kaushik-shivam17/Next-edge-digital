@@ -10,7 +10,7 @@ const services = [
     description:
       "Comprehensive roadmaps that align your digital presence with aggressive growth targets. Every decision is data-driven, purposeful, and built to win.",
     tags: ["Market Research", "Competitive Analysis", "Growth Planning"],
-    accent: "from-blue-500/20 to-indigo-600/5",
+    accent: "from-primary/15 to-amber-600/5",
   },
   {
     icon: MonitorSmartphone,
@@ -19,7 +19,7 @@ const services = [
     description:
       "Cinematic, high-performance web experiences engineered to convert. We obsess over every interaction until your site feels like a premium product, not a brochure.",
     tags: ["UI/UX Design", "Custom Development", "Performance Optimization"],
-    accent: "from-primary/20 to-amber-600/5",
+    accent: "from-primary/15 to-amber-600/5",
   },
   {
     icon: Share2,
@@ -28,7 +28,7 @@ const services = [
     description:
       "We build commanding social narratives that dominate feeds, build cult-level brand followings, and turn passive scrollers into loyal customers.",
     tags: ["Content Strategy", "Community Building", "Paid Social"],
-    accent: "from-pink-500/20 to-rose-600/5",
+    accent: "from-primary/15 to-amber-600/5",
   },
   {
     icon: PenTool,
@@ -37,7 +37,7 @@ const services = [
     description:
       "Visual systems and messaging frameworks that project authority, command premium pricing, and make your brand instantly recognizable in any market.",
     tags: ["Logo & Identity", "Brand Guidelines", "Messaging Framework"],
-    accent: "from-violet-500/20 to-purple-600/5",
+    accent: "from-primary/15 to-amber-600/5",
   },
   {
     icon: TrendingUp,
@@ -46,7 +46,7 @@ const services = [
     description:
       "Data-driven organic acceleration that puts you in front of high-intent customers exactly when they're ready to buy. We don't chase vanity metrics.",
     tags: ["Technical SEO", "Content Marketing", "Link Acquisition"],
-    accent: "from-emerald-500/20 to-teal-600/5",
+    accent: "from-primary/15 to-amber-600/5",
   },
   {
     icon: BarChart3,
@@ -55,7 +55,7 @@ const services = [
     description:
       "Full-funnel transparency so you always know what's working and why. Custom dashboards that turn raw data into decisions that compound over time.",
     tags: ["GA4 Setup", "Conversion Tracking", "Monthly Reporting"],
-    accent: "from-cyan-500/20 to-sky-600/5",
+    accent: "from-primary/15 to-amber-600/5",
   },
 ];
 

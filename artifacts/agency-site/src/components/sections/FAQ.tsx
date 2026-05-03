@@ -26,7 +26,7 @@ const faqs = [
   {
     question: "How are projects priced?",
     answer:
-      "Every engagement is scoped individually. After your discovery call, we build a custom proposal outlining exactly what you'll get and what it costs. Projects typically range from $3,500 for focused deliverables to $25,000+ for full-service engagements. No surprises, no hidden fees.",
+      "We publish transparent starting prices. Web Maintenance starts from ₹5,000/month (approx. $60/month), and a full Website Build starts from ₹8,000 (approx. $97). Custom retainers for full-service partnerships are scoped after a discovery call. All pricing is confirmed in writing before any work begins — no surprises, no hidden fees.",
   },
   {
     question: "Do you offer ongoing support after launch?",

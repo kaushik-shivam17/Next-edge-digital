@@ -23,7 +23,7 @@ const testimonials = [
     location: "Bengaluru, India",
     flag: "🇮🇳",
     result: "-60% Cost Per Lead",
-    accent: "#F472B6",
+    accent: "#CAA353",
   },
   {
     quote:
@@ -34,7 +34,7 @@ const testimonials = [
     location: "Singapore",
     flag: "🇸🇬",
     result: "3x Enterprise Deals",
-    accent: "#60A5FA",
+    accent: "#CAA353",
   },
   {
     quote:
@@ -45,7 +45,7 @@ const testimonials = [
     location: "Dubai, UAE",
     flag: "🇦🇪",
     result: "580K Followers",
-    accent: "#34D399",
+    accent: "#CAA353",
   },
   {
     quote:
@@ -56,7 +56,7 @@ const testimonials = [
     location: "Delhi, India",
     flag: "🇮🇳",
     result: "₹4.2Cr Deal Closed",
-    accent: "#A78BFA",
+    accent: "#CAA353",
   },
   {
     quote:
@@ -67,7 +67,7 @@ const testimonials = [
     location: "London, UK",
     flag: "🇬🇧",
     result: "+40% Project Fees",
-    accent: "#F59E0B",
+    accent: "#CAA353",
   },
 ];
 

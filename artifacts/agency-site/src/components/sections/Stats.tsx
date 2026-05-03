@@ -14,21 +14,21 @@ const stats = [
     suffix: "%",
     label: "Client Retention Rate",
     description: "Clients who stay, grow, and scale",
-    accent: "#60A5FA",
+    accent: "#CAA353",
   },
   {
     value: 3,
     suffix: "+",
     label: "Countries Served",
     description: "Clients across continents",
-    accent: "#A78BFA",
+    accent: "#CAA353",
   },
   {
     value: 6,
     suffix: "+",
     label: "Years Experience",
     description: "Delivering results since 2019",
-    accent: "#34D399",
+    accent: "#CAA353",
   },
 ];
 
