@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Lenis from "lenis";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Menu, X } from "lucide-react";
@@ -261,6 +262,7 @@ function App() {
       <TooltipProvider>
         <AgencySite />
         <Toaster />
+        <Analytics />
       </TooltipProvider>
     </QueryClientProvider>
   );
