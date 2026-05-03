@@ -457,7 +457,7 @@ export function Pricing() {
         />
 
         {/* ── Plans grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 divide-y divide-white/5 md:divide-y-0">
           {plans.map((plan, i) => (
             <PlanCard
               key={plan.id}

@@ -596,6 +596,10 @@ export function Portfolio() {
           <span className="ml-auto text-[10px] text-foreground/25 tracking-widest uppercase hidden md:block">
             Drag to explore →
           </span>
+          <span className="ml-auto text-[10px] text-foreground/25 tracking-widest uppercase flex items-center gap-1.5 md:hidden">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            Swipe to explore
+          </span>
         </div>
       </motion.div>
 

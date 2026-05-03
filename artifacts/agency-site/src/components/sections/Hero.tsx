@@ -13,20 +13,19 @@ function SplitReveal({ text, delay = 0, className = "", style }: { text: string;
   return (
     <span className={className} style={style}>
       {words.map((word, wi) => (
-        <span key={wi} className="inline-block overflow-hidden mr-[0.25em] last:mr-0">
-          <motion.span
-            className="inline-block"
-            initial={{ y: "110%", opacity: 0 }}
-            animate={{ y: "0%", opacity: 1 }}
-            transition={{
-              duration: 0.9,
-              ease: [0.16, 1, 0.3, 1],
-              delay: delay + wi * 0.08,
-            }}
-          >
-            {word}
-          </motion.span>
-        </span>
+        <motion.span
+          key={wi}
+          className="inline-block mr-[0.25em] last:mr-0"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.75,
+            ease: [0.16, 1, 0.3, 1],
+            delay: delay + wi * 0.08,
+          }}
+        >
+          {word}
+        </motion.span>
       ))}
     </span>
   );
@@ -143,30 +142,29 @@ export function Hero() {
           </motion.div>
 
           {/* Headline */}
-          <h1 className="text-[clamp(2rem,8.5vw,8rem)] font-black tracking-tight leading-[0.88] mb-5 md:mb-8">
-            <span className="block text-foreground">
-              <SplitReveal text={HEADLINE_1} delay={0.25} />
-            </span>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.85, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="text-[clamp(2rem,8.5vw,8rem)] font-black tracking-tight leading-[0.88] mb-5 md:mb-8"
+          >
+            <span className="block text-foreground">{HEADLINE_1}</span>
             <span className="block">
-              <SplitReveal
-                text={HEADLINE_2}
-                delay={0.35}
+              <span
                 className="text-transparent bg-clip-text"
-                style={{
-                  backgroundImage: "linear-gradient(135deg, #CAA353 0%, #F0C97A 40%, #CAA353 70%, #8B6914 100%)",
-                } as React.CSSProperties}
-              />
+                style={{ backgroundImage: "linear-gradient(135deg, #CAA353 0%, #F0C97A 40%, #CAA353 70%, #8B6914 100%)" }}
+              >
+                {HEADLINE_2}
+              </span>
               {" "}
-              <SplitReveal
-                text={HEADLINE_3}
-                delay={0.45}
+              <span
                 className="text-transparent bg-clip-text"
-                style={{
-                  backgroundImage: "linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.7) 100%)",
-                } as React.CSSProperties}
-              />
+                style={{ backgroundImage: "linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.7) 100%)" }}
+              >
+                {HEADLINE_3}
+              </span>
             </span>
-          </h1>
+          </motion.h1>
 
           {/* Subline */}
           <motion.p

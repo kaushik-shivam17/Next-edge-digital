@@ -173,12 +173,12 @@ export function AiAssistant() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 280, damping: 26 }}
-            className="fixed bottom-6 left-6 z-50 flex flex-col w-[90vw] max-w-[360px] rounded-2xl overflow-hidden"
+            className="fixed bottom-6 left-3 right-3 sm:left-6 sm:right-auto sm:w-[90vw] sm:max-w-[360px] z-50 flex flex-col rounded-2xl overflow-hidden"
             style={{
               background: "rgba(12,12,14,0.97)",
               border: "1px solid rgba(202,163,83,0.2)",
               boxShadow: "0 24px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)",
-              height: "520px",
+              height: "min(520px, calc(100dvh - 100px))",
               backdropFilter: "blur(20px)",
             }}
           >
