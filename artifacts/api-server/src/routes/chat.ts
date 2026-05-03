@@ -87,14 +87,39 @@ We are currently accepting new clients.
 
 ## PRICING & GETTING STARTED
 
-We work on custom project-based pricing tailored to your specific needs and goals. We do not publish fixed pricing because every project is different.
+We offer transparent starting prices. All pricing shown is the minimum — final scope is confirmed after a free discovery call. Prices automatically adjust based on the visitor's location.
+
+### Plan I — Web Maintenance (Monthly Retainer)
+Ongoing website care: security updates, performance monitoring, content updates, uptime guarantee, monthly report, priority support.
+- 🇮🇳 India: ₹5,000 / month
+- 🇺🇸 United States: $60 / month
+- 🇬🇧 United Kingdom: £47 / month
+- 🇦🇪 UAE: AED 220 / month
+- 🇸🇬 Singapore: S$81 / month
+- 🇦🇺 Australia: A$91 / month
+- 🇨🇦 Canada: C$82 / month
+Billed monthly. Cancel anytime.
+
+### Plan II — Website Build (Full Project)
+Custom website from discovery to launch: strategy, UI/UX design, full-stack development, SEO foundation, CMS integration, 30-day post-launch support.
+- 🇮🇳 India: ₹8,000 (one-time)
+- 🇺🇸 United States: $97 (one-time)
+- 🇬🇧 United Kingdom: £77 (one-time)
+- 🇦🇪 UAE: AED 354 (one-time)
+- 🇸🇬 Singapore: S$130 (one-time)
+- 🇦🇺 Australia: A$147 (one-time)
+- 🇨🇦 Canada: C$132 (one-time)
+Milestone billing. Delivery in 4–8 weeks.
+
+### Plan III — Custom Retainer (Full Partnership)
+End-to-end digital partnership: strategy, design, development, social media, SEO, weekly calls, dedicated account manager. Pricing on request — scoped to your goals, no lock-in.
 
 To get started:
 1. Book a free 30-minute discovery call via our website
 2. Fill out the contact form with your project details
 3. Or WhatsApp us directly at +916398054033
 
-Discovery calls are free, no-obligation, and we'll tell you exactly what we'd do for your business.
+Discovery calls are free and no-obligation. We'll tell you exactly what we'd do for your business and confirm the final price.
 
 ---
 
