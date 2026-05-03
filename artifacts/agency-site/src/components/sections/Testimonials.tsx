@@ -5,47 +5,69 @@ import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 const testimonials = [
   {
     quote:
-      "Next Edge Digital completely overhauled our digital presence. Within 6 months of launching the new platform and social strategy, our direct-to-consumer revenue increased by 214%. They don't just build websites — they build businesses.",
-    author: "Sarah Jenkins",
-    role: "CMO",
-    company: "Veridian Apparel",
-    location: "New York, USA",
-    flag: "🇺🇸",
-    result: "+214% Revenue",
+      "Next Edge Digital rebuilt our entire Shopify store and took over our Instagram and Meta ads. In 5 months, our monthly orders went from 800 to nearly 2,600. I was skeptical at first — now I tell every founder I know to call them before anyone else.",
+    author: "Rahul Sharma",
+    role: "Co-Founder",
+    company: "Kova Skincare",
+    location: "Mumbai, India",
+    flag: "🇮🇳",
+    result: "+214% Orders",
     accent: "#CAA353",
   },
   {
     quote:
-      "Working with the Next Edge team feels like having an elite internal studio. Their strategic thinking and flawless execution positioned our software as the premium choice in a saturated market. The ROI has been extraordinary.",
+      "We were burning money on ads that weren't converting. Next Edge audited everything, rebuilt our landing pages, and restructured our funnel. Our cost per acquisition dropped by 60% in the first 8 weeks. The team is sharp, fast, and genuinely cares.",
+    author: "Priya Mehta",
+    role: "Head of Growth",
+    company: "NestFin",
+    location: "Bengaluru, India",
+    flag: "🇮🇳",
+    result: "-60% Cost Per Lead",
+    accent: "#F472B6",
+  },
+  {
+    quote:
+      "Working with Next Edge feels like having an elite in-house team. They rebranded ScaleTech end-to-end — website, pitch deck, LinkedIn presence. Within a quarter we closed two enterprise contracts we'd been chasing for over a year. Exceptional work.",
     author: "David Chen",
     role: "Founder & CEO",
     company: "ScaleTech",
     location: "Singapore",
     flag: "🇸🇬",
-    result: "3x Client Growth",
+    result: "3x Enterprise Deals",
     accent: "#60A5FA",
   },
   {
     quote:
-      "They commanded our rebrand with absolute precision. The attention to detail in everything — from the brand identity to the social content — allowed us to raise our project fees by 40% without losing a single client. World-class.",
-    author: "Marcus Thorne",
-    role: "Principal",
-    company: "Thorne Architecture",
-    location: "London, UK",
-    flag: "🇬🇧",
-    result: "+40% Pricing Power",
-    accent: "#A78BFA",
-  },
-  {
-    quote:
-      "Our social media following went from 12K to over 580K followers in eight months. The content strategy they developed gave us a distinct voice that no competitor could replicate. Phenomenal team, phenomenal results.",
+      "Our Instagram went from 14K to 580K followers in 8 months. But more importantly, the content actually drives showroom walk-ins now. Next Edge understood our brand voice immediately and executed without hand-holding. Rare and valuable.",
     author: "James Harlow",
     role: "Brand Director",
     company: "Apex Motors",
     location: "Dubai, UAE",
     flag: "🇦🇪",
-    result: "580K New Followers",
+    result: "580K Followers",
     accent: "#34D399",
+  },
+  {
+    quote:
+      "They redesigned our property listings portal and built a targeted content strategy around luxury buyers. Our average enquiry quality shot up dramatically and we closed a ₹4.2 Cr deal from an Instagram DM within two months of launch.",
+    author: "Arjun Kapoor",
+    role: "Director",
+    company: "Prestige Landbase",
+    location: "Delhi, India",
+    flag: "🇮🇳",
+    result: "₹4.2Cr Deal Closed",
+    accent: "#A78BFA",
+  },
+  {
+    quote:
+      "We rebranded our architecture firm with Next Edge and raised our project fees by 40% the same year. Clients started coming to us — not the other way around. The website and brand positioning they built is simply in a different league.",
+    author: "Marcus Thorne",
+    role: "Principal Architect",
+    company: "Thorne Studio",
+    location: "London, UK",
+    flag: "🇬🇧",
+    result: "+40% Project Fees",
+    accent: "#F59E0B",
   },
 ];
 
