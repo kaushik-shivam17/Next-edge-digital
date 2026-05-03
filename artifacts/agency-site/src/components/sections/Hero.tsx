@@ -141,11 +141,11 @@ export function Hero() {
             </motion.span>
           </motion.div>
 
-          {/* Headline */}
+          {/* Headline — starts visible for LCP, subtle y-only lift */}
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 1, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.85, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.7, delay: 0, ease: [0.16, 1, 0.3, 1] }}
             className="text-[clamp(2rem,8.5vw,8rem)] font-black tracking-tight leading-[0.88] mb-5 md:mb-8"
           >
             <span className="block text-foreground">{HEADLINE_1}</span>
