@@ -12,6 +12,7 @@ const projects = [
     result: "+214% Online Revenue",
     year: "2024",
     slug: "aurafashion.com",
+    photo: "https://market-resized.envatousercontent.com/previews/files/514154043/Preview_screenshots/04_Category_Product.png?w=590&h=300&cf_fit=crop&crop=top&format=auto&q=85&s=46f89e681ba7c30a6f5ee28fe8876b4aac9d266d8b2d9519c4ad6c1fea140041",
   },
   {
     title: "Fintech",
@@ -22,6 +23,7 @@ const projects = [
     result: "3x Client Acquisition",
     year: "2024",
     slug: "novawealth.io",
+    photo: "https://cdn.prod.website-files.com/5e8e816d43060db856099187/6751dc989b7707e15032e025_6751d3c478272fd875108466_dark-theme-dashboard-webflow-template.png",
   },
   {
     title: "Real Estate",
@@ -32,6 +34,7 @@ const projects = [
     result: "+40% Avg Sale Price",
     year: "2023",
     slug: "luminaestates.co",
+    photo: "https://images.pexels.com/photos/31737859/pexels-photo-31737859/free-photo-of-modern-luxurious-home-exterior-at-night.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
   },
   {
     title: "Automotive",
@@ -42,6 +45,7 @@ const projects = [
     result: "580K New Followers",
     year: "2023",
     slug: "apexmotors.com",
+    photo: "https://plus.unsplash.com/premium_photo-1686730540270-93f2c33351b6?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZGFyayUyMGNhcnxlbnwwfHwwfHx8MA%3D%3D",
   },
   {
     title: "B2B SaaS",
@@ -52,6 +56,7 @@ const projects = [
     result: "+180% Organic Traffic",
     year: "2024",
     slug: "orbitmedia.io",
+    photo: "https://adminlte.io/wp-content/uploads/2026/03/saas-vault-v2.jpg",
   },
   {
     title: "Finance",
@@ -62,6 +67,7 @@ const projects = [
     result: "Premium Market Position",
     year: "2024",
     slug: "forgecapital.com",
+    photo: "https://plus.unsplash.com/premium_photo-1664476845274-27c2dabdd7f0?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dHJhZGluZ3xlbnwwfHwwfHx8MA%3D%3D",
   },
 ];
 
@@ -439,6 +445,15 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
       <div
         className="absolute inset-0"
         style={{ background: `linear-gradient(135deg, ${project.gradient[0]}, ${project.gradient[1]}, ${project.gradient[2]})` }}
+      />
+
+      {/* Real photo layer */}
+      <img
+        src={project.photo}
+        alt={project.title}
+        className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+        style={{ opacity: 0.45, mixBlendMode: "luminosity" }}
+        loading="lazy"
       />
 
       {/* Industry mockup */}
