@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { Wrench, Globe, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
+import { ArrowUpRight, Check, MapPin } from "lucide-react";
 
 type Currency = {
   code: string;
@@ -11,50 +11,96 @@ type Currency = {
 };
 
 const currencies: Record<string, Currency> = {
-  IN: { code: "INR", symbol: "₹", maintenance: "2,50,000", website: "6,65,000", locale: "en-IN" },
-  US: { code: "USD", symbol: "$", maintenance: "3,000",    website: "8,000",    locale: "en-US" },
-  GB: { code: "GBP", symbol: "£", maintenance: "2,400",    website: "6,400",    locale: "en-GB" },
-  AE: { code: "AED", symbol: "AED", maintenance: "11,000", website: "29,400",   locale: "en-AE" },
-  SG: { code: "SGD", symbol: "S$", maintenance: "4,100",   website: "10,800",   locale: "en-SG" },
-  AU: { code: "AUD", symbol: "A$", maintenance: "4,600",   website: "12,200",   locale: "en-AU" },
-  CA: { code: "CAD", symbol: "C$", maintenance: "4,100",   website: "10,900",   locale: "en-CA" },
-  DEFAULT: { code: "USD", symbol: "$", maintenance: "3,000", website: "8,000",  locale: "en-US" },
+  IN:      { code: "INR", symbol: "₹",   maintenance: "2,50,000", website: "6,65,000", locale: "en-IN" },
+  US:      { code: "USD", symbol: "$",   maintenance: "3,000",    website: "8,000",    locale: "en-US" },
+  GB:      { code: "GBP", symbol: "£",   maintenance: "2,400",    website: "6,400",    locale: "en-GB" },
+  AE:      { code: "AED", symbol: "AED ", maintenance: "11,000",  website: "29,400",   locale: "en-AE" },
+  SG:      { code: "SGD", symbol: "S$",  maintenance: "4,100",    website: "10,800",   locale: "en-SG" },
+  AU:      { code: "AUD", symbol: "A$",  maintenance: "4,600",    website: "12,200",   locale: "en-AU" },
+  CA:      { code: "CAD", symbol: "C$",  maintenance: "4,100",    website: "10,900",   locale: "en-CA" },
+  DEFAULT: { code: "USD", symbol: "$",   maintenance: "3,000",    website: "8,000",    locale: "en-US" },
 };
 
+const countryNames: Record<string, string> = {
+  IN: "India", US: "United States", GB: "United Kingdom",
+  AE: "UAE", SG: "Singapore", AU: "Australia", CA: "Canada",
+};
+
+function useCurrency() {
+  const [currency, setCurrency] = useState<Currency>(currencies.DEFAULT);
+  const [country, setCountry]   = useState<string>("US");
+  const [loading, setLoading]   = useState(true);
+
+  useEffect(() => {
+    fetch("https://ipapi.co/json/")
+      .then((r) => r.json())
+      .then((d) => {
+        const c = d.country_code || "US";
+        setCountry(c);
+        setCurrency(currencies[c] ?? currencies.DEFAULT);
+      })
+      .catch(() => setCurrency(currencies.DEFAULT))
+      .finally(() => setLoading(false));
+  }, []);
+
+  return { currency, country, loading };
+}
+
+/* ─── Animated shimmer border wrapper ─────────────────────────────────── */
+function ShimmerBorder({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="relative rounded-[28px] p-px overflow-hidden" style={{ isolation: "isolate" }}>
+      {/* rotating conic gradient that creates the shimmer */}
+      <motion.div
+        className="absolute inset-0 rounded-[28px]"
+        style={{
+          background:
+            "conic-gradient(from 0deg, #8B6914 0%, #CAA353 20%, #F0C97A 40%, #CAA353 60%, #8B6914 80%, #CAA353 100%)",
+        }}
+        animate={{ rotate: 360 }}
+        transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+      />
+      {/* inner mask */}
+      <div
+        className="relative rounded-[27px] overflow-hidden z-10"
+        style={{ background: "#0d0d10" }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Plan data ────────────────────────────────────────────────────────── */
 const plans = [
   {
-    id: "maintenance",
-    icon: Wrench,
-    label: "Web Maintenance",
-    tag: "Most Popular",
-    tagColor: "from-primary to-amber-400",
+    id:       "maintenance",
+    idx:      "01",
+    label:    "Web Maintenance",
+    sub:      "Monthly Care Plan",
     description:
-      "Full-spectrum website care — performance monitoring, security patches, content updates, speed optimisation, and monthly analytics reporting.",
+      "Full-spectrum website care — security patches, performance monitoring, content updates, and monthly reporting.",
     features: [
       "Monthly security & CMS updates",
       "Core Web Vitals monitoring",
       "Content & copy updates",
       "Uptime monitoring (99.9% SLA)",
       "Monthly performance report",
-      "Priority support (48-hr response)",
+      "Priority 48-hr support",
     ],
-    accent: "from-primary/20 to-amber-600/5",
-    glow: "rgba(202,163,83,0.18)",
-    border: "rgba(202,163,83,0.35)",
     priceKey: "maintenance" as const,
-    suffix: "/ mo",
-    note: "Billed monthly · Cancel anytime",
-    cta: "Get Maintenance Plan",
-    highlighted: true,
+    suffix:   "/ month",
+    note:     "Billed monthly · Cancel anytime",
+    cta:      "Get Started",
+    featured: false,
   },
   {
-    id: "website",
-    icon: Globe,
-    label: "Website Build",
-    tag: "Full Project",
-    tagColor: "from-blue-500 to-indigo-500",
+    id:       "website",
+    idx:      "02",
+    label:    "Website Build",
+    sub:      "Full Design & Development",
     description:
-      "Custom-engineered, conversion-focused websites from discovery through launch — design, development, SEO foundation, and handoff training.",
+      "Cinematic, conversion-engineered websites built from discovery to launch — with design, dev, SEO foundation, and post-launch support.",
     features: [
       "Discovery & strategy workshop",
       "Custom UI/UX design (Figma)",
@@ -63,23 +109,19 @@ const plans = [
       "CMS integration & training",
       "30-day post-launch support",
     ],
-    accent: "from-blue-500/15 to-indigo-600/5",
-    glow: "rgba(99,102,241,0.15)",
-    border: "rgba(99,102,241,0.3)",
     priceKey: "website" as const,
-    suffix: "one-time",
-    note: "Timeline: 4–8 weeks · Milestone billing",
-    cta: "Start Your Project",
-    highlighted: false,
+    suffix:   "one-time",
+    note:     "4–8 week delivery · Milestone billing",
+    cta:      "Start a Project",
+    featured: true,
   },
   {
-    id: "custom",
-    icon: Sparkles,
-    label: "Custom Retainer",
-    tag: "Tailored",
-    tagColor: "from-emerald-500 to-teal-500",
+    id:       "custom",
+    idx:      "03",
+    label:    "Custom Retainer",
+    sub:      "Full-Service Partnership",
     description:
-      "Full-service digital partnership for ambitious brands — strategy, design, development, social, SEO, and analytics under one roof.",
+      "End-to-end digital partnership — strategy, design, development, social, SEO, and reporting all under one roof.",
     features: [
       "Dedicated account manager",
       "Unlimited design requests",
@@ -88,261 +130,409 @@ const plans = [
       "SEO & content strategy",
       "Weekly strategy calls",
     ],
-    accent: "from-emerald-500/15 to-teal-600/5",
-    glow: "rgba(16,185,129,0.12)",
-    border: "rgba(16,185,129,0.25)",
     priceKey: null,
-    suffix: "",
-    note: "Scoped to your goals · No lock-in",
-    cta: "Request a Quote",
-    highlighted: false,
+    suffix:   "",
+    note:     "Scoped to your goals · No lock-in",
+    cta:      "Request a Quote",
+    featured: false,
   },
 ];
 
-function useCurrency() {
-  const [currency, setCurrency] = useState<Currency>(currencies.DEFAULT);
-  const [country, setCountry] = useState<string>("US");
-  const [loading, setLoading] = useState(true);
+/* ─── Side card ────────────────────────────────────────────────────────── */
+function SideCard({
+  plan,
+  currency,
+  loading,
+  delay,
+  side,
+}: {
+  plan: typeof plans[0];
+  currency: Currency;
+  loading: boolean;
+  delay: number;
+  side: "left" | "right";
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    fetch("https://ipapi.co/json/")
-      .then((r) => r.json())
-      .then((data) => {
-        const code: string = data.country_code || "US";
-        setCountry(code);
-        setCurrency(currencies[code] ?? currencies.DEFAULT);
-      })
-      .catch(() => {
-        setCurrency(currencies.DEFAULT);
-      })
-      .finally(() => setLoading(false));
-  }, []);
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const x = e.clientX - r.left, y = e.clientY - r.top;
+    const cx = r.width / 2, cy = r.height / 2;
+    el.style.transform = `perspective(800px) rotateX(${((y - cy) / cy) * -5}deg) rotateY(${((x - cx) / cx) * 5}deg)`;
+  };
+  const handleLeave = () => {
+    if (cardRef.current) cardRef.current.style.transform = "perspective(800px) rotateX(0) rotateY(0)";
+  };
 
-  return { currency, country, loading };
-}
+  const amount = plan.priceKey ? currency[plan.priceKey] : null;
 
-function PriceDisplay({ plan, currency, loading }: { plan: typeof plans[0]; currency: Currency; loading: boolean }) {
-  if (!plan.priceKey) {
-    return (
-      <div className="mb-8">
-        <p className="text-4xl font-black tracking-tight text-foreground">Let's Talk</p>
-        <p className="text-foreground/40 text-sm mt-1">Custom scope & pricing</p>
-      </div>
-    );
-  }
-
-  const amount = currency[plan.priceKey];
-
-  return (
-    <div className="mb-2">
-      <div className="flex items-end gap-2">
-        <span className="text-lg font-semibold text-foreground/50 mb-1">from</span>
-        <span
-          className="text-4xl md:text-5xl font-black tracking-tight"
-          style={{
-            background: plan.highlighted
-              ? "linear-gradient(135deg, #CAA353, #F0C97A)"
-              : "linear-gradient(135deg, #fff, rgba(255,255,255,0.7))",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            filter: loading ? "blur(8px)" : "none",
-            transition: "filter 0.3s ease",
-          }}
-        >
-          {loading ? "—" : `${currency.symbol}${amount}`}
-        </span>
-      </div>
-      <p className="text-foreground/40 text-sm mt-1">
-        {plan.suffix}&nbsp;
-        {!loading && <span className="text-foreground/25">· {currency.code}</span>}
-      </p>
-    </div>
-  );
-}
-
-function PricingCard({ plan, currency, loading, index }: { plan: typeof plans[0]; currency: Currency; loading: boolean; index: number }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, x: side === "left" ? -40 : 40 }}
+      whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      className="relative flex flex-col h-full"
+      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
+      className="flex flex-col h-full"
     >
-      {plan.highlighted && (
-        <div
-          className="absolute -inset-px rounded-3xl pointer-events-none z-0"
-          style={{
-            background: "linear-gradient(135deg, rgba(202,163,83,0.4), rgba(240,201,122,0.1), transparent 60%)",
-          }}
-        />
-      )}
-
       <div
-        className="relative flex flex-col h-full rounded-3xl p-8 md:p-10 z-10 overflow-hidden"
+        ref={cardRef}
+        onMouseMove={handleMove}
+        onMouseLeave={handleLeave}
+        className="flex flex-col h-full p-8 md:p-10 rounded-3xl overflow-hidden"
         style={{
-          background: plan.highlighted
-            ? "rgba(202,163,83,0.05)"
-            : "rgba(255,255,255,0.02)",
-          border: `1px solid ${plan.border}`,
-          boxShadow: `0 0 40px ${plan.glow}`,
+          background: "rgba(255,255,255,0.025)",
+          border: "1px solid rgba(255,255,255,0.07)",
+          transition: "transform 0.15s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease",
+          transformStyle: "preserve-3d",
         }}
       >
-        {/* Accent gradient */}
-        <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${plan.accent} opacity-40 pointer-events-none`} />
+        {/* Index */}
+        <span
+          className="text-[80px] font-black leading-none mb-4 select-none"
+          style={{ color: "rgba(255,255,255,0.04)" }}
+        >
+          {plan.idx}
+        </span>
 
-        {/* Content */}
-        <div className="relative z-10 flex flex-col h-full">
-          {/* Header */}
-          <div className="flex items-start justify-between mb-6">
-            <div
-              className="w-12 h-12 rounded-2xl flex items-center justify-center"
-              style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.08)",
-              }}
-            >
-              <plan.icon className="w-5 h-5 text-primary" />
+        {/* Label */}
+        <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-foreground/30 mb-1">{plan.sub}</p>
+        <h3 className="text-2xl font-black tracking-tight text-foreground mb-4">{plan.label}</h3>
+
+        {/* Divider */}
+        <div className="w-full h-px mb-6" style={{ background: "rgba(255,255,255,0.06)" }} />
+
+        {/* Price */}
+        {amount ? (
+          <div className="mb-1">
+            <div className="flex items-baseline gap-2">
+              <span className="text-xs text-foreground/30 mb-1">from</span>
+              <span
+                className="text-4xl font-black tracking-tight text-foreground"
+                style={{
+                  filter: loading ? "blur(10px)" : "none",
+                  transition: "filter 0.4s ease",
+                }}
+              >
+                {currency.symbol}{amount}
+              </span>
             </div>
-
-            <span
-              className={`text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full bg-gradient-to-r ${plan.tagColor} text-white`}
-            >
-              {plan.tag}
-            </span>
+            <p className="text-foreground/25 text-xs mt-1">{plan.suffix} · {currency.code}</p>
           </div>
+        ) : (
+          <div className="mb-1">
+            <p className="text-3xl font-black tracking-tight text-foreground">Let's Talk</p>
+            <p className="text-foreground/25 text-xs mt-1">Custom scope & pricing</p>
+          </div>
+        )}
 
-          <h3 className="text-xl font-bold mb-2">{plan.label}</h3>
-          <p className="text-foreground/45 text-sm leading-relaxed mb-8">{plan.description}</p>
+        <p className="text-foreground/25 text-[11px] mt-1 mb-8">{plan.note}</p>
 
-          {/* Price */}
-          <PriceDisplay plan={plan} currency={currency} loading={loading} />
+        {/* Features */}
+        <ul className="space-y-0 flex-1 mb-8">
+          {plan.features.map((f, i) => (
+            <li
+              key={f}
+              className="flex items-center gap-3 py-3"
+              style={{ borderBottom: i < plan.features.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none" }}
+            >
+              <Check className="w-3.5 h-3.5 shrink-0 text-foreground/25" />
+              <span className="text-sm text-foreground/50">{f}</span>
+            </li>
+          ))}
+        </ul>
 
-          {/* Note */}
-          <p className="text-foreground/30 text-xs mb-8">{plan.note}</p>
-
-          {/* Features */}
-          <ul className="space-y-3 mb-10 flex-1">
-            {plan.features.map((f) => (
-              <li key={f} className="flex items-start gap-3">
-                <CheckCircle2
-                  className="w-4 h-4 mt-0.5 shrink-0"
-                  style={{ color: plan.highlighted ? "#CAA353" : "rgba(255,255,255,0.35)" }}
-                />
-                <span className="text-sm text-foreground/60">{f}</span>
-              </li>
-            ))}
-          </ul>
-
-          {/* CTA */}
-          <a
-            href="#contact"
-            className="group flex items-center justify-center gap-2 w-full py-4 rounded-2xl text-sm font-bold tracking-wider uppercase transition-all duration-300"
-            style={
-              plan.highlighted
-                ? {
-                    background: "linear-gradient(135deg, #CAA353, #F0C97A)",
-                    color: "#0c0c0e",
-                  }
-                : {
-                    background: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    color: "rgba(255,255,255,0.8)",
-                  }
-            }
-            onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.85"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
-          >
-            {plan.cta}
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-          </a>
-        </div>
+        {/* CTA */}
+        <a
+          href="#contact"
+          className="group flex items-center justify-between w-full px-6 py-4 rounded-2xl text-sm font-bold tracking-wider uppercase transition-all duration-300"
+          style={{
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            color: "rgba(255,255,255,0.6)",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "rgba(202,163,83,0.08)";
+            e.currentTarget.style.borderColor = "rgba(202,163,83,0.25)";
+            e.currentTarget.style.color = "#CAA353";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+            e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+            e.currentTarget.style.color = "rgba(255,255,255,0.6)";
+          }}
+        >
+          {plan.cta}
+          <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+        </a>
       </div>
     </motion.div>
   );
 }
 
-const countryNames: Record<string, string> = {
-  IN: "India", US: "United States", GB: "United Kingdom",
-  AE: "UAE", SG: "Singapore", AU: "Australia", CA: "Canada",
-};
-
-export function Pricing() {
-  const { currency, country, loading } = useCurrency();
+/* ─── Featured center card ─────────────────────────────────────────────── */
+function FeaturedCard({ plan, currency, loading }: { plan: typeof plans[0]; currency: Currency; loading: boolean }) {
+  const amount = plan.priceKey ? currency[plan.priceKey] : null;
 
   return (
-    <section id="pricing" className="py-16 md:py-32 relative bg-background z-10">
-      <div className="container px-4 md:px-6">
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+      className="relative z-10 md:-mt-6 md:-mb-6 flex flex-col"
+    >
+      {/* "Most popular" badge above card */}
+      <div className="flex justify-center mb-4">
+        <div
+          className="flex items-center gap-2 px-4 py-1.5 rounded-full"
+          style={{
+            background: "rgba(202,163,83,0.12)",
+            border: "1px solid rgba(202,163,83,0.3)",
+          }}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+          <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-primary">Flagship Service</span>
+        </div>
+      </div>
 
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-20 gap-6 md:gap-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="max-w-xl"
-          >
-            <p className="text-xs font-semibold tracking-[0.3em] uppercase text-primary mb-4">Investment</p>
-            <h2 className="text-4xl md:text-6xl font-black tracking-tight">
-              Transparent<br />Pricing
-            </h2>
-          </motion.div>
+      <ShimmerBorder>
+        <div
+          className="relative flex flex-col h-full p-8 md:p-12 overflow-hidden"
+          style={{ background: "linear-gradient(160deg, #111113 0%, #0d0d10 60%)" }}
+        >
+          {/* Background gold orb */}
+          <div
+            className="absolute -top-20 -right-20 w-64 h-64 rounded-full pointer-events-none"
+            style={{
+              background: "radial-gradient(circle, rgba(202,163,83,0.12) 0%, transparent 70%)",
+            }}
+          />
+          <div
+            className="absolute -bottom-20 -left-20 w-48 h-48 rounded-full pointer-events-none"
+            style={{
+              background: "radial-gradient(circle, rgba(202,163,83,0.07) 0%, transparent 70%)",
+            }}
+          />
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="flex flex-col gap-3"
-          >
-            <p className="text-foreground/50 max-w-md text-lg leading-relaxed">
-              No surprises. No padded agency rates. Just honest pricing that reflects the value we deliver.
-            </p>
-
-            {/* Geo badge */}
-            <div
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full self-start"
+          {/* Content */}
+          <div className="relative z-10 flex flex-col h-full">
+            {/* Index */}
+            <span
+              className="text-[100px] font-black leading-none mb-2 select-none"
               style={{
-                background: "rgba(202,163,83,0.08)",
-                border: "1px solid rgba(202,163,83,0.2)",
+                background: "linear-gradient(135deg, rgba(202,163,83,0.15), transparent)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
               }}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              <span className="text-xs text-primary font-medium">
-                {loading
-                  ? "Detecting your location…"
-                  : `Showing prices in ${currency.code} for ${countryNames[country] ?? "your region"}`}
-              </span>
-            </div>
+              {plan.idx}
+            </span>
+
+            {/* Label */}
+            <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-primary/70 mb-1">{plan.sub}</p>
+            <h3
+              className="text-3xl md:text-4xl font-black tracking-tight mb-4"
+              style={{
+                background: "linear-gradient(135deg, #fff 50%, rgba(255,255,255,0.6))",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              {plan.label}
+            </h3>
+            <p className="text-foreground/40 text-sm leading-relaxed mb-8 max-w-xs">{plan.description}</p>
+
+            {/* Divider */}
+            <div
+              className="w-full h-px mb-8"
+              style={{ background: "linear-gradient(to right, rgba(202,163,83,0.4), transparent)" }}
+            />
+
+            {/* Price — hero display */}
+            {amount && (
+              <div className="mb-2">
+                <p className="text-xs text-foreground/40 tracking-widest uppercase mb-2">Starting from</p>
+                <div className="flex items-end gap-3 flex-wrap">
+                  <span
+                    className="text-6xl md:text-7xl font-black tracking-tight leading-none"
+                    style={{
+                      background: "linear-gradient(135deg, #CAA353 0%, #F0C97A 50%, #CAA353 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      filter: loading ? "blur(12px)" : "none",
+                      transition: "filter 0.5s ease",
+                    }}
+                  >
+                    {currency.symbol}{amount}
+                  </span>
+                </div>
+                <div className="flex items-center gap-3 mt-3">
+                  <span className="text-foreground/35 text-sm">{plan.suffix}</span>
+                  {!loading && (
+                    <span
+                      className="text-[10px] font-bold tracking-widest uppercase px-2 py-0.5 rounded"
+                      style={{ background: "rgba(202,163,83,0.1)", color: "#CAA353", border: "1px solid rgba(202,163,83,0.2)" }}
+                    >
+                      {currency.code}
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
+
+            <p className="text-foreground/25 text-[11px] mt-2 mb-10">{plan.note}</p>
+
+            {/* Features */}
+            <ul className="space-y-0 flex-1 mb-10">
+              {plan.features.map((f, i) => (
+                <li
+                  key={f}
+                  className="flex items-center gap-4 py-3.5"
+                  style={{ borderBottom: i < plan.features.length - 1 ? "1px solid rgba(202,163,83,0.08)" : "none" }}
+                >
+                  <div
+                    className="w-5 h-5 rounded-full flex items-center justify-center shrink-0"
+                    style={{ background: "rgba(202,163,83,0.12)", border: "1px solid rgba(202,163,83,0.25)" }}
+                  >
+                    <Check className="w-2.5 h-2.5 text-primary" />
+                  </div>
+                  <span className="text-sm text-foreground/65 font-medium">{f}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA */}
+            <a
+              href="#contact"
+              className="group relative flex items-center justify-between w-full px-8 py-5 rounded-2xl text-sm font-black tracking-widest uppercase overflow-hidden transition-all duration-300"
+              style={{
+                background: "linear-gradient(135deg, #CAA353, #F0C97A)",
+                color: "#0c0c0e",
+                boxShadow: "0 0 40px rgba(202,163,83,0.25), inset 0 1px 0 rgba(255,255,255,0.3)",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 0 60px rgba(202,163,83,0.4), inset 0 1px 0 rgba(255,255,255,0.3)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 0 40px rgba(202,163,83,0.25), inset 0 1px 0 rgba(255,255,255,0.3)"; }}
+            >
+              {plan.cta}
+              <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+            </a>
+          </div>
+        </div>
+      </ShimmerBorder>
+    </motion.div>
+  );
+}
+
+/* ─── Section ──────────────────────────────────────────────────────────── */
+export function Pricing() {
+  const { currency, country, loading } = useCurrency();
+  const [left, center, right] = plans;
+
+  return (
+    <section id="pricing" className="py-16 md:py-40 relative overflow-hidden bg-background z-10">
+
+      {/* Ambient background glows */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(ellipse, rgba(202,163,83,0.05) 0%, transparent 70%)" }}
+      />
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{ background: "linear-gradient(to right, transparent, rgba(202,163,83,0.2), transparent)" }}
+      />
+      <div
+        className="absolute bottom-0 left-0 right-0 h-px"
+        style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent)" }}
+      />
+
+      <div className="container px-4 md:px-6 relative z-10">
+
+        {/* Header */}
+        <div className="max-w-3xl mx-auto text-center mb-16 md:mb-24">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-xs font-semibold tracking-[0.35em] uppercase text-primary mb-5"
+          >
+            Investment
+          </motion.p>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.05 }}
+            className="text-5xl md:text-7xl font-black tracking-tight mb-6"
+          >
+            Transparent
+            <br />
+            <span
+              style={{
+                background: "linear-gradient(135deg, #CAA353, #F0C97A)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              Pricing
+            </span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="text-foreground/45 text-lg leading-relaxed mb-8"
+          >
+            No padded agency rates. No surprises. Just honest pricing built
+            for ambitious brands worldwide.
+          </motion.p>
+
+          {/* Geo pill */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
+            style={{
+              background: "rgba(202,163,83,0.07)",
+              border: "1px solid rgba(202,163,83,0.18)",
+            }}
+          >
+            <MapPin className="w-3 h-3 text-primary" />
+            <span className="text-xs text-primary/80 font-medium">
+              {loading
+                ? "Detecting your location…"
+                : `Prices shown in ${currency.code} · ${countryNames[country] ?? "Global"}`}
+            </span>
+            {!loading && <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />}
           </motion.div>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {plans.map((plan, index) => (
-            <PricingCard
-              key={plan.id}
-              plan={plan}
-              currency={currency}
-              loading={loading}
-              index={index}
-            />
-          ))}
+        {/* Cards grid — side cards align to center card height */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 items-center">
+          <SideCard plan={left}  currency={currency} loading={loading} delay={0}    side="left"  />
+          <FeaturedCard          currency={currency} loading={loading} plan={center} />
+          <SideCard plan={right} currency={currency} loading={loading} delay={0.05} side="right" />
         </div>
 
-        {/* Footer note */}
+        {/* Footer footnote */}
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className="text-center text-foreground/25 text-xs mt-10 max-w-xl mx-auto leading-relaxed"
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="text-center text-foreground/20 text-xs mt-14 max-w-lg mx-auto leading-loose tracking-wide"
         >
-          All prices are starting points. Final scope is determined after a free discovery call.
-          We work with clients across India, UAE, Singapore, UK, and the US — pricing adapts to your market.
+          All prices are starting points — final scope is confirmed after a free discovery call.
+          <br />
+          We serve clients in India, UAE, Singapore, UK, US, and beyond.
         </motion.p>
-
       </div>
     </section>
   );
