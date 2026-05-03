@@ -12,7 +12,6 @@ const projects = [
     result: "+214% Online Revenue",
     year: "2024",
     slug: "aurafashion.com",
-    ui: { nav: 3, hero: true, blocks: [4, 3] },
   },
   {
     title: "Fintech",
@@ -23,7 +22,6 @@ const projects = [
     result: "3x Client Acquisition",
     year: "2024",
     slug: "novawealth.io",
-    ui: { nav: 4, hero: true, blocks: [3, 4] },
   },
   {
     title: "Real Estate",
@@ -34,7 +32,6 @@ const projects = [
     result: "+40% Avg Sale Price",
     year: "2023",
     slug: "luminaestates.co",
-    ui: { nav: 3, hero: true, blocks: [2, 4] },
   },
   {
     title: "Automotive",
@@ -45,7 +42,6 @@ const projects = [
     result: "580K New Followers",
     year: "2023",
     slug: "apexmotors.com",
-    ui: { nav: 5, hero: true, blocks: [3, 3] },
   },
   {
     title: "B2B SaaS",
@@ -56,7 +52,6 @@ const projects = [
     result: "+180% Organic Traffic",
     year: "2024",
     slug: "orbitmedia.io",
-    ui: { nav: 4, hero: true, blocks: [4, 2] },
   },
   {
     title: "Finance",
@@ -67,7 +62,6 @@ const projects = [
     result: "Premium Market Position",
     year: "2024",
     slug: "forgecapital.com",
-    ui: { nav: 3, hero: true, blocks: [2, 3] },
   },
 ];
 
@@ -81,7 +75,320 @@ const filters = [
   { label: "Finance", value: "finance" },
 ];
 
-function BrowserMockup({ project }: { project: typeof projects[0] }) {
+function EcommerceMockup() {
+  return (
+    <div className="flex flex-col h-full px-3 pt-2 gap-2">
+      {/* Nav */}
+      <div className="flex items-center justify-between">
+        <div className="h-2 w-14 rounded-full bg-white/60" />
+        <div className="flex gap-2">
+          <div className="h-1.5 w-8 rounded-full bg-white/30" />
+          <div className="h-1.5 w-8 rounded-full bg-white/30" />
+          <div className="h-1.5 w-8 rounded-full bg-white/30" />
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="h-4 w-4 rounded-full border border-white/30" />
+          <div className="h-4 w-4 rounded-full border border-white/30" />
+        </div>
+      </div>
+      {/* Hero banner */}
+      <div className="h-14 rounded-lg bg-white/10 flex items-center px-3 gap-3 border border-white/10">
+        <div className="flex flex-col gap-1 flex-1">
+          <div className="h-1.5 w-20 rounded-full bg-white/60" />
+          <div className="h-1 w-14 rounded-full bg-white/30" />
+          <div className="mt-1 h-3.5 w-12 rounded bg-white/50" />
+        </div>
+        <div className="w-12 h-10 rounded-md bg-white/15 border border-white/15" />
+      </div>
+      {/* Product grid */}
+      <div className="grid grid-cols-3 gap-2 flex-1">
+        {[
+          { h: "h-12", price: "$89", label: "Noir Coat" },
+          { h: "h-10", price: "$124", label: "Silk Dress" },
+          { h: "h-14", price: "$56", label: "Linen Set" },
+        ].map((p, i) => (
+          <div key={i} className="flex flex-col gap-1 rounded-lg overflow-hidden bg-white/5 border border-white/10 p-1.5">
+            <div className={`${p.h} rounded bg-white/15 w-full`} />
+            <div className="h-1 w-3/4 rounded-full bg-white/40" />
+            <div className="h-1 w-1/2 rounded-full bg-white/60" />
+            <div className="h-2.5 w-full rounded bg-white/25 mt-auto" />
+          </div>
+        ))}
+      </div>
+      {/* Bottom bar */}
+      <div className="flex gap-2 pb-1">
+        <div className="flex-1 h-3 rounded bg-white/20" />
+        <div className="w-8 h-3 rounded bg-white/10" />
+      </div>
+    </div>
+  );
+}
+
+function FintechMockup() {
+  return (
+    <div className="flex h-full">
+      {/* Sidebar */}
+      <div className="w-10 flex flex-col items-center py-3 gap-3 border-r border-white/10 bg-white/5">
+        <div className="w-5 h-5 rounded bg-white/30" />
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="w-4 h-4 rounded bg-white/15" />
+        ))}
+      </div>
+      {/* Main */}
+      <div className="flex-1 px-3 py-2 flex flex-col gap-2">
+        <div className="h-1.5 w-20 rounded-full bg-white/50" />
+        {/* Balance card */}
+        <div className="rounded-lg bg-white/10 border border-white/15 px-3 py-2 flex items-center justify-between">
+          <div className="flex flex-col gap-1">
+            <div className="h-1 w-12 rounded-full bg-white/30" />
+            <div className="h-2.5 w-20 rounded-full bg-white/70" />
+            <div className="flex gap-1 mt-0.5">
+              <div className="h-1.5 w-8 rounded-full bg-green-400/50" />
+              <div className="h-1.5 w-5 rounded-full bg-white/20" />
+            </div>
+          </div>
+          {/* Mini chart */}
+          <div className="flex items-end gap-0.5 h-8">
+            {[3, 5, 4, 7, 5, 8, 6, 9].map((h, i) => (
+              <div key={i} className="w-1.5 rounded-t-sm" style={{ height: `${h * 4}px`, background: i === 7 ? "rgba(96,165,250,0.8)" : "rgba(255,255,255,0.2)" }} />
+            ))}
+          </div>
+        </div>
+        {/* Stat row */}
+        <div className="grid grid-cols-3 gap-1.5">
+          {[["$12.4K", "Income"], ["$3.2K", "Spent"], ["92%", "Goal"]].map(([val, label], i) => (
+            <div key={i} className="rounded-md bg-white/5 border border-white/10 px-2 py-1.5">
+              <div className="h-2 w-8 rounded-full bg-white/60 mb-0.5" />
+              <div className="h-1 w-6 rounded-full bg-white/25" />
+            </div>
+          ))}
+        </div>
+        {/* Transaction rows */}
+        {[...Array(3)].map((_, i) => (
+          <div key={i} className="flex items-center gap-2 py-1 border-b border-white/5">
+            <div className="w-4 h-4 rounded-full bg-white/15 flex-shrink-0" />
+            <div className="flex-1 h-1.5 rounded-full bg-white/25" />
+            <div className="h-1.5 w-8 rounded-full bg-white/40" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function RealEstateMockup() {
+  return (
+    <div className="flex flex-col h-full px-3 pt-2 gap-2">
+      {/* Nav */}
+      <div className="flex items-center justify-between mb-0.5">
+        <div className="h-2 w-16 rounded-full bg-white/60" />
+        <div className="flex gap-1.5">
+          {[...Array(3)].map((_, i) => <div key={i} className="h-1.5 w-7 rounded-full bg-white/25" />)}
+        </div>
+        <div className="h-4 w-14 rounded-full bg-white/30" />
+      </div>
+      {/* Hero property */}
+      <div className="h-20 rounded-xl bg-white/10 border border-white/10 relative overflow-hidden flex items-end p-2">
+        {/* Fake building silhouette */}
+        <div className="absolute inset-0 flex items-end justify-center gap-1 px-2">
+          <div className="w-8 h-12 bg-white/10 rounded-t-sm" />
+          <div className="w-12 h-16 bg-white/15 rounded-t-md" />
+          <div className="w-8 h-10 bg-white/10 rounded-t-sm" />
+          <div className="w-6 h-14 bg-white/12 rounded-t-sm" />
+        </div>
+        <div className="relative z-10 flex items-center gap-2 w-full">
+          <div className="flex-1 flex flex-col gap-0.5">
+            <div className="h-2 w-16 rounded-full bg-white/80" />
+            <div className="h-1.5 w-10 rounded-full bg-white/40" />
+          </div>
+          <div className="h-5 w-14 rounded-lg bg-white/30 border border-white/20" />
+        </div>
+      </div>
+      {/* Stats row */}
+      <div className="flex gap-2">
+        {[["3 BHK", "Beds"], ["2", "Baths"], ["1,800", "sq.ft"]].map(([v, l], i) => (
+          <div key={i} className="flex-1 rounded-lg bg-white/8 border border-white/10 p-1.5 flex flex-col items-center gap-0.5">
+            <div className="h-2 w-7 rounded-full bg-white/60" />
+            <div className="h-1 w-5 rounded-full bg-white/25" />
+          </div>
+        ))}
+      </div>
+      {/* Listing cards */}
+      <div className="grid grid-cols-2 gap-2 flex-1">
+        {[{ price: "₹3.8Cr", type: "Villa" }, { price: "₹1.2Cr", type: "Apt." }].map((item, i) => (
+          <div key={i} className="rounded-lg bg-white/8 border border-white/10 overflow-hidden flex flex-col">
+            <div className="h-10 bg-white/10" />
+            <div className="p-1.5 flex flex-col gap-0.5">
+              <div className="h-1.5 w-10 rounded-full bg-white/60" />
+              <div className="h-1 w-8 rounded-full bg-white/30" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function AutomotiveMockup() {
+  return (
+    <div className="flex flex-col h-full">
+      {/* Nav */}
+      <div className="flex items-center justify-between px-3 py-2">
+        <div className="h-2 w-12 rounded-full bg-white/70" />
+        <div className="flex gap-2">
+          {[...Array(4)].map((_, i) => <div key={i} className="h-1.5 w-7 rounded-full bg-white/25" />)}
+        </div>
+        <div className="h-4 w-12 rounded-full bg-white/35" />
+      </div>
+      {/* Full-width car hero */}
+      <div className="relative flex-1 flex flex-col items-center justify-center px-3 pb-2">
+        {/* Car SVG silhouette */}
+        <svg viewBox="0 0 200 80" className="w-full max-h-24 opacity-70" fill="none">
+          {/* Body */}
+          <path d="M20 52 L35 35 L55 28 L100 24 L145 28 L168 35 L180 52 L178 58 L22 58 Z" fill="rgba(255,255,255,0.25)" stroke="rgba(255,255,255,0.4)" strokeWidth="1"/>
+          {/* Roof */}
+          <path d="M55 28 L70 18 L130 18 L145 28" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" strokeWidth="0.8"/>
+          {/* Windshield */}
+          <path d="M70 18 L75 28 L125 28 L130 18 Z" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5"/>
+          {/* Front wheel */}
+          <circle cx="55" cy="60" r="10" fill="rgba(0,0,0,0.5)" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5"/>
+          <circle cx="55" cy="60" r="5" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.3)" strokeWidth="1"/>
+          {/* Rear wheel */}
+          <circle cx="145" cy="60" r="10" fill="rgba(0,0,0,0.5)" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5"/>
+          <circle cx="145" cy="60" r="5" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.3)" strokeWidth="1"/>
+          {/* Headlight */}
+          <ellipse cx="176" cy="46" rx="4" ry="3" fill="rgba(255,240,150,0.5)" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5"/>
+          {/* Grill */}
+          <rect x="170" y="50" width="10" height="4" rx="1" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5"/>
+        </svg>
+        {/* Model & price */}
+        <div className="flex items-center justify-between w-full mt-1">
+          <div className="flex flex-col gap-0.5">
+            <div className="h-2.5 w-20 rounded-full bg-white/70" />
+            <div className="h-1.5 w-14 rounded-full bg-white/35" />
+          </div>
+          <div className="h-5 w-16 rounded-full bg-white/20 border border-white/30" />
+        </div>
+        {/* Spec chips */}
+        <div className="flex gap-1.5 w-full mt-2">
+          {["AWD", "450HP", "0–100 in 3.8s"].map((s, i) => (
+            <div key={i} className="h-4 px-2 rounded-full bg-white/10 border border-white/20 flex items-center">
+              <div className="h-1 rounded-full bg-white/50" style={{ width: `${s.length * 3.5}px` }} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SaaSMockup() {
+  return (
+    <div className="flex h-full">
+      {/* Sidebar */}
+      <div className="w-10 flex flex-col items-center py-3 gap-2.5 border-r border-white/10 bg-white/4">
+        <div className="w-5 h-5 rounded bg-white/40" />
+        <div className="w-full h-px bg-white/10 my-0.5" />
+        {[...Array(5)].map((_, i) => (
+          <div key={i} className="w-4 h-4 rounded" style={{ background: i === 0 ? "rgba(167,139,250,0.5)" : "rgba(255,255,255,0.1)" }} />
+        ))}
+      </div>
+      {/* Main */}
+      <div className="flex-1 px-2.5 py-2 flex flex-col gap-1.5 overflow-hidden">
+        <div className="flex items-center justify-between">
+          <div className="h-1.5 w-16 rounded-full bg-white/50" />
+          <div className="h-4 w-12 rounded bg-white/20" />
+        </div>
+        {/* KPI cards */}
+        <div className="grid grid-cols-3 gap-1.5">
+          {[["24.8K", "+12%", "Users"], ["$8.4K", "+28%", "MRR"], ["4.2%", "-0.3%", "Churn"]].map(([v, d, l], i) => (
+            <div key={i} className="rounded-lg border border-white/10 bg-white/5 p-1.5">
+              <div className="h-2 w-8 rounded-full bg-white/60 mb-0.5" />
+              <div className="h-1.5 w-6 rounded-full mb-1" style={{ background: i === 2 ? "rgba(248,113,113,0.6)" : "rgba(74,222,128,0.6)" }} />
+              <div className="h-1 w-5 rounded-full bg-white/20" />
+            </div>
+          ))}
+        </div>
+        {/* Bar chart */}
+        <div className="rounded-lg border border-white/10 bg-white/5 p-2 flex-1">
+          <div className="h-1 w-14 rounded-full bg-white/35 mb-2" />
+          <div className="flex items-end gap-1 h-12">
+            {[4, 6, 5, 8, 7, 9, 7, 10, 8, 11, 9, 12].map((h, i) => (
+              <div key={i} className="flex-1 rounded-t-sm" style={{ height: `${h * 4}px`, background: i === 11 ? "rgba(167,139,250,0.8)" : "rgba(255,255,255,0.15)" }} />
+            ))}
+          </div>
+        </div>
+        {/* Table rows */}
+        <div className="flex flex-col gap-1">
+          {[...Array(2)].map((_, i) => (
+            <div key={i} className="flex items-center gap-2 py-1 border-b border-white/5">
+              <div className="w-3 h-3 rounded-full bg-white/20" />
+              <div className="flex-1 h-1.5 rounded-full bg-white/20" />
+              <div className="w-8 h-1.5 rounded-full bg-white/35" />
+              <div className="w-5 h-3 rounded bg-white/15" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FinanceMockup() {
+  return (
+    <div className="flex flex-col h-full px-3 pt-2 gap-2">
+      {/* Nav */}
+      <div className="flex items-center justify-between">
+        <div className="h-2 w-14 rounded-full bg-white/60" />
+        <div className="flex gap-2">
+          {[...Array(3)].map((_, i) => <div key={i} className="h-1.5 w-8 rounded-full bg-white/25" />)}
+        </div>
+        <div className="h-5 w-5 rounded-full bg-white/30" />
+      </div>
+      {/* Portfolio value */}
+      <div className="rounded-xl border border-white/10 bg-white/5 p-2.5">
+        <div className="h-1 w-14 rounded-full bg-white/30 mb-1" />
+        <div className="h-3 w-24 rounded-full bg-white/70 mb-1" />
+        <div className="flex items-center gap-1.5">
+          <div className="h-1.5 w-12 rounded-full bg-green-400/50" />
+          <div className="h-1.5 w-8 rounded-full bg-white/20" />
+        </div>
+        {/* Line chart */}
+        <div className="mt-2 h-12 relative">
+          <svg viewBox="0 0 180 40" className="w-full h-full" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="fin-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="rgba(255,255,255,0.15)" />
+                <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+              </linearGradient>
+            </defs>
+            <path d="M0 32 L20 28 L40 25 L60 22 L80 20 L100 18 L120 14 L140 12 L160 8 L180 5" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" fill="none"/>
+            <path d="M0 32 L20 28 L40 25 L60 22 L80 20 L100 18 L120 14 L140 12 L160 8 L180 5 L180 40 L0 40 Z" fill="url(#fin-grad)"/>
+          </svg>
+        </div>
+      </div>
+      {/* Asset allocation */}
+      <div className="h-1 w-full rounded-full bg-white/10 overflow-hidden flex">
+        {[[45, "rgba(255,255,255,0.5)"], [25, "rgba(255,255,255,0.25)"], [20, "rgba(255,255,255,0.15)"], [10, "rgba(255,255,255,0.08)"]].map(([w, c], i) => (
+          <div key={i} style={{ width: `${w}%`, background: c as string }} />
+        ))}
+      </div>
+      {/* Asset rows */}
+      <div className="flex flex-col gap-1.5 flex-1">
+        {[["Equities", "45%", "+8.2%"], ["Bonds", "25%", "+2.4%"], ["Gold", "20%", "+4.1%"]].map(([name, alloc, ret], i) => (
+          <div key={i} className="flex items-center gap-2 px-1">
+            <div className="w-2 h-2 rounded-sm bg-white/40" />
+            <div className="flex-1 h-1.5 rounded-full bg-white/20" />
+            <div className="h-1.5 w-6 rounded-full bg-white/35" />
+            <div className="h-1.5 w-8 rounded-full bg-green-400/40" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function IndustryMockup({ filter, slug }: { filter: string; slug: string }) {
   return (
     <div className="absolute inset-0 flex flex-col pointer-events-none">
       {/* Browser chrome */}
@@ -99,47 +406,17 @@ function BrowserMockup({ project }: { project: typeof projects[0] }) {
           style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.08)" }}
         >
           <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "rgba(50,210,90,0.6)" }} />
-          <span className="text-[8px] text-white/25 tracking-wide truncate font-mono">{project.slug}</span>
+          <span className="text-[8px] text-white/25 tracking-wide truncate font-mono">{slug}</span>
         </div>
       </div>
-
-      {/* Simulated page content */}
-      <div className="flex-1 relative overflow-hidden opacity-25">
-        {/* Simulated nav */}
-        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/10">
-          <div className="w-4 h-1.5 rounded-full bg-white/60" />
-          <div className="flex-1" />
-          {Array.from({ length: project.ui.nav }).map((_, i) => (
-            <div key={i} className="w-6 h-1 rounded-full bg-white/30" />
-          ))}
-          <div className="w-8 h-3 rounded-sm bg-white/40" />
-        </div>
-
-        {/* Simulated hero */}
-        {project.ui.hero && (
-          <div className="px-4 py-3 flex flex-col gap-1.5">
-            <div className="h-2.5 rounded-sm w-2/3 bg-white/50" />
-            <div className="h-1.5 rounded-sm w-full bg-white/25" />
-            <div className="h-1.5 rounded-sm w-4/5 bg-white/25" />
-            <div className="mt-1 flex gap-2">
-              <div className="h-4 w-14 rounded-sm bg-white/40" />
-              <div className="h-4 w-14 rounded-sm bg-white/20" />
-            </div>
-          </div>
-        )}
-
-        {/* Simulated content blocks row 1 */}
-        <div className="px-4 grid gap-1.5 mt-1" style={{ gridTemplateColumns: `repeat(${project.ui.blocks[0]}, 1fr)` }}>
-          {Array.from({ length: project.ui.blocks[0] }).map((_, i) => (
-            <div key={i} className="h-10 rounded-md bg-white/10" />
-          ))}
-        </div>
-        {/* Simulated content blocks row 2 */}
-        <div className="px-4 grid gap-1.5 mt-1.5" style={{ gridTemplateColumns: `repeat(${project.ui.blocks[1]}, 1fr)` }}>
-          {Array.from({ length: project.ui.blocks[1] }).map((_, i) => (
-            <div key={i} className="h-8 rounded-md bg-white/10" />
-          ))}
-        </div>
+      {/* Industry-specific content */}
+      <div className="flex-1 overflow-hidden opacity-[0.35]">
+        {filter === "ecommerce"  && <EcommerceMockup />}
+        {filter === "fintech"    && <FintechMockup />}
+        {filter === "realestate" && <RealEstateMockup />}
+        {filter === "automotive" && <AutomotiveMockup />}
+        {filter === "saas"       && <SaaSMockup />}
+        {filter === "finance"    && <FinanceMockup />}
       </div>
     </div>
   );
@@ -164,8 +441,8 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
         style={{ background: `linear-gradient(135deg, ${project.gradient[0]}, ${project.gradient[1]}, ${project.gradient[2]})` }}
       />
 
-      {/* Browser mockup */}
-      <BrowserMockup project={project} />
+      {/* Industry mockup */}
+      <IndustryMockup filter={project.filter} slug={project.slug} />
 
       {/* Bottom gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
