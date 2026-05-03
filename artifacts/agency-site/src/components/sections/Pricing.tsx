@@ -198,33 +198,38 @@ function PlanCard({
               >
                 Starting from
               </p>
-              <p
-                className="font-bold leading-none mb-3"
+              <div
+                className="flex items-end gap-2 flex-wrap"
                 style={{
-                  fontFamily: "'Syne', sans-serif",
-                  fontSize: "clamp(2.5rem, 5vw, 4rem)",
-                  color: plan.featured ? "#fff" : "rgba(255,255,255,0.85)",
-                  letterSpacing: "-0.02em",
                   filter: loading ? "blur(10px)" : "none",
                   transition: "filter 0.4s ease",
                 }}
               >
-                {currency.symbol}{amount}
-              </p>
-              <p
-                className="text-xs"
-                style={{ color: "rgba(255,255,255,0.25)", fontFamily: "'Inter', sans-serif" }}
-              >
-                {plan.period}
-                {!loading && (
-                  <span
-                    className="ml-2 px-1.5 py-0.5 rounded text-[10px] font-semibold tracking-wider"
-                    style={{ background: "rgba(202,163,83,0.1)", color: "#CAA353" }}
+                <p
+                  className="font-bold leading-none"
+                  style={{
+                    fontFamily: "'Syne', sans-serif",
+                    fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                    color: plan.featured ? "#fff" : "rgba(255,255,255,0.85)",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  {currency.symbol}{amount}
+                </p>
+                {plan.period && (
+                  <p
+                    className="text-sm pb-1.5"
+                    style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Inter', sans-serif" }}
                   >
-                    {currency.code}
-                  </span>
+                    / {plan.period}
+                  </p>
                 )}
-              </p>
+              </div>
+              {!loading && (
+                <p className="text-[11px] mt-2" style={{ color: "rgba(255,255,255,0.2)", fontFamily: "'Inter', sans-serif" }}>
+                  {currency.code}
+                </p>
+              )}
             </>
           ) : (
             <>
