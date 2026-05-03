@@ -11,6 +11,25 @@ interface Message {
 const MAX_INPUT_LENGTH = 2000;
 const MAX_HISTORY = 20;
 
+function TypingDots() {
+  return (
+    <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1">
+        {[0, 1, 2].map((i) => (
+          <motion.span
+            key={i}
+            className="block w-1.5 h-1.5 rounded-full"
+            style={{ background: "#CAA353" }}
+            animate={{ y: [0, -4, 0], opacity: [0.4, 1, 0.4] }}
+            transition={{ duration: 0.7, repeat: Infinity, delay: i * 0.15, ease: "easeInOut" }}
+          />
+        ))}
+      </div>
+      <span className="text-[11px] text-white/30 tracking-wide">Edge is typing…</span>
+    </div>
+  );
+}
+
 const SUGGESTED = [
   "What services do you offer?",
   "How much does a project cost?",
@@ -244,9 +263,15 @@ export function AiAssistant() {
                         : { background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.85)", border: "1px solid rgba(255,255,255,0.07)", borderBottomLeftRadius: "6px" }
                     }
                   >
-                    {renderContent(msg.content)}
-                    {msg.streaming && (
-                      <span className="inline-block w-1.5 h-4 ml-0.5 rounded-sm align-middle animate-pulse" style={{ background: "#CAA353" }} />
+                    {msg.streaming && msg.content === "" ? (
+                      <TypingDots />
+                    ) : (
+                      <>
+                        {renderContent(msg.content)}
+                        {msg.streaming && (
+                          <span className="inline-block w-1.5 h-4 ml-0.5 rounded-sm align-middle animate-pulse" style={{ background: "#CAA353" }} />
+                        )}
+                      </>
                     )}
                   </div>
                 </motion.div>
