@@ -18,6 +18,7 @@ import { FAQ } from "./components/sections/FAQ";
 import { WhyUs } from "./components/sections/WhyUs";
 import { Contact } from "./components/sections/Contact";
 import { BookCall } from "./components/sections/BookCall";
+import { Pricing } from "./components/sections/Pricing";
 import { Footer } from "./components/sections/Footer";
 import { FloatingWhatsApp } from "./components/sections/FloatingWhatsApp";
 import { CustomCursor } from "./components/CustomCursor";
@@ -30,6 +31,7 @@ const queryClient = new QueryClient();
 const navLinks = [
   { label: "Work", href: "#work" },
   { label: "Services", href: "#services" },
+  { label: "Pricing", href: "#pricing" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
@@ -274,6 +276,7 @@ function AgencySite() {
           <Portfolio />
           <WhyUs />
           <Services />
+          <Pricing />
           <About />
           <Stats />
           <Process />
