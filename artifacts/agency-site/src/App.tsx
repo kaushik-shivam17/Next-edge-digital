@@ -114,10 +114,17 @@ function AgencySite() {
 
   return (
     <div
-      className="site-enter relative min-h-screen bg-background text-foreground dark selection:bg-primary selection:text-primary-foreground font-sans"
+      className="relative min-h-screen bg-background text-foreground dark selection:bg-primary selection:text-primary-foreground font-sans"
       style={{ cursor: isHoverDevice ? "none" : "auto" }}
     >
+        {/* Fixed floating elements are siblings of the animated wrapper — never inside a transformed parent */}
         {isHoverDevice && <CustomCursor />}
+        <FloatingWhatsApp />
+        <AiAssistant />
+        <BackToTop />
+
+        {/* Animated content wrapper — opacity only, no transform, so fixed children above are unaffected */}
+        <div className="site-enter">
         <NoiseOverlay />
 
         {/* Top scroll progress bar */}
@@ -277,9 +284,7 @@ function AgencySite() {
         </main>
 
         <Footer />
-        <FloatingWhatsApp />
-        <AiAssistant />
-        <BackToTop />
+        </div>
       </div>
   );
 }
