@@ -6,7 +6,7 @@ const faqs = [
   {
     question: "How long does a typical website project take?",
     answer:
-      "Most of our website projects are delivered within 4–8 weeks, depending on scope. Simple brochure sites can be done in 3 weeks, while complex web apps or e-commerce platforms may take 10–12 weeks. We always share a clear timeline before we begin.",
+      "Most of our website projects are delivered within 30–60 days, depending on scope. Simple brochure sites can be done in 21 days, while complex web apps or e-commerce platforms may take 70–90 days. We always share a clear timeline before we begin.",
   },
   {
     question: "What industries do you specialize in?",

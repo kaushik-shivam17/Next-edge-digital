@@ -9,7 +9,7 @@ const steps = [
     title: "Discover & Define",
     description:
       "We immerse ourselves in your business, market, and competition. Every strategy we build starts with clarity on where you are and relentless ambition for where you're going.",
-    duration: "Week 1",
+    duration: "Days 1–7",
     deliverable: "Strategy Document",
   },
   {
@@ -18,7 +18,7 @@ const steps = [
     title: "Strategize & Design",
     description:
       "We craft a bespoke digital blueprint — brand-aligned, performance-optimized, and built to convert. You'll see a vision that makes you proud before a single line of code is written.",
-    duration: "Weeks 2–3",
+    duration: "Days 8–21",
     deliverable: "Design Prototype",
   },
   {
@@ -27,7 +27,7 @@ const steps = [
     title: "Build & Refine",
     description:
       "Our engineers and designers work in lockstep to bring your vision to life with precision. Iterative reviews and real-time collaboration mean zero surprises at launch.",
-    duration: "Weeks 4–6",
+    duration: "Days 22–42",
     deliverable: "Live Staging Build",
   },
   {
@@ -36,7 +36,7 @@ const steps = [
     title: "Launch & Scale",
     description:
       "We deploy, monitor, and amplify. Post-launch is where most agencies disappear — we accelerate. Ongoing optimization ensures your digital presence compounds over time.",
-    duration: "Week 7+",
+    duration: "Day 43+",
     deliverable: "Launch & Growth Plan",
   },
 ];

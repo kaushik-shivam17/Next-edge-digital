@@ -73,11 +73,11 @@ We are currently accepting new clients.
 
 ## OUR PROCESS
 
-1. **Discovery** (Week 1-2) — Deep dive into your business, market, competitors, and goals. We define the exact strategy that will give you the edge.
+1. **Discovery** (Days 1–14) — Deep dive into your business, market, competitors, and goals. We define the exact strategy that will give you the edge.
 
-2. **Strategy & Design** (Week 2-4) — We architect the solution and design every pixel with conversion in mind. No templates. No shortcuts.
+2. **Strategy & Design** (Days 8–21) — We architect the solution and design every pixel with conversion in mind. No templates. No shortcuts.
 
-3. **Build & Integrate** (Week 4-8) — Our engineers bring the designs to life with clean, scalable code and seamless integrations.
+3. **Build & Integrate** (Days 22–56) — Our engineers bring the designs to life with clean, scalable code and seamless integrations.
 
 4. **Launch & Optimise** (Ongoing) — We launch, monitor, and continuously optimise for maximum performance and ROI.
 
@@ -123,7 +123,7 @@ Custom website from discovery to launch: strategy, UI/UX design, full-stack deve
 - 🇸🇬 Singapore: S$130 (one-time)
 - 🇦🇺 Australia: A$147 (one-time)
 - 🇨🇦 Canada: C$132 (one-time)
-Milestone billing. Delivery in 4–8 weeks.
+Milestone billing. Delivery in 30–60 days.
 
 ### Plan III — Custom Retainer (Full Partnership)
 End-to-end digital partnership: strategy, design, development, social media, SEO, weekly calls, dedicated account manager. Pricing on request — scoped to your goals, no lock-in.
@@ -141,7 +141,7 @@ Discovery calls are free and no-obligation. We'll tell you exactly what we'd do 
 
 **Do you work with startups?** Yes, we love ambitious startups with big visions. Some of our best work has been with early-stage companies that needed to establish strong market presence.
 
-**How long does a project take?** Website projects typically take 4-8 weeks. Social media management and SEO are ongoing engagements. We'll give you a precise timeline during the discovery call.
+**How long does a project take?** Website projects typically take 30–60 days. Simple sites can be done in 21 days; complex platforms may take 70–90 days. Social media management and SEO are ongoing engagements. We'll give you a precise timeline during the discovery call.
 
 **Do you offer ongoing support?** Yes, all projects include a post-launch support period, and we offer ongoing retainer packages for continued optimization and management.
 
