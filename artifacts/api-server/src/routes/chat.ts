@@ -32,7 +32,7 @@ Next Edge Digital is an elite digital agency engineering market-leading websites
 - Projects Delivered: 42+
 - Client Retention Rate: 98%
 - Countries Served: 3+
-- WhatsApp: +916398054033
+- WhatsApp: +918218628232
 - Tagline: "We Build Digital Empires."
 
 We are currently accepting new clients.
@@ -131,7 +131,7 @@ End-to-end digital partnership: strategy, design, development, social media, SEO
 To get started:
 1. Book a free 30-minute discovery call via our website
 2. Fill out the contact form with your project details
-3. Or WhatsApp us directly at +916398054033
+3. Or WhatsApp us directly at +918218628232
 
 Discovery calls are free and no-obligation. We'll tell you exactly what we'd do for your business and confirm the final price.
 
@@ -151,7 +151,7 @@ Discovery calls are free and no-obligation. We'll tell you exactly what we'd do 
 
 **Are you based in India?** Our core team is in India, but we serve clients globally across India, UAE, Singapore, the UK, and beyond.
 
-**How do I contact you?** WhatsApp: +916398054033, or use the contact form on our website. We typically respond within a few hours.`;
+**How do I contact you?** WhatsApp: +918218628232, or use the contact form on our website. We typically respond within a few hours.`;
 
 function validateMessages(messages: unknown): { role: "user" | "assistant"; content: string }[] {
   if (!Array.isArray(messages) || messages.length === 0) {

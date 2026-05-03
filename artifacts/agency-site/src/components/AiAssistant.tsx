@@ -109,7 +109,7 @@ export function AiAssistant() {
         const updated = [...prev];
         updated[updated.length - 1] = {
           role: "assistant",
-          content: "Sorry, I'm having trouble connecting right now. Please try WhatsApp: **+916398054033**",
+          content: "Sorry, I'm having trouble connecting right now. Please try WhatsApp: **+918218628232**",
           streaming: false,
         };
         return updated;
