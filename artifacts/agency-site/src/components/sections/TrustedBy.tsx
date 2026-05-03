@@ -62,15 +62,14 @@ export function TrustedBy() {
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-        <motion.div
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 38, repeat: Infinity, ease: "linear" }}
+        <div
           className="flex shrink-0 gap-3 items-center"
+          style={{ animation: "marquee-scroll 42s linear infinite", willChange: "transform" }}
         >
           {[...brands, ...brands].map((brand, i) => (
             <BrandBadge key={i} brand={brand} />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

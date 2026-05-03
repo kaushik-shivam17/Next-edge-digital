@@ -20,7 +20,7 @@ export function About() {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 md:mb-20"
         >
@@ -29,7 +29,7 @@ export function About() {
               key={i}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: 0.1 + i * 0.07 }}
               className="p-5 rounded-2xl group"
               style={{
@@ -53,7 +53,7 @@ export function About() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7, delay: 0.2 }}
           className="p-10 rounded-2xl text-center"
           style={{

@@ -43,7 +43,7 @@ export function WhyUs() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6 }}
           >
             <p className="text-xs font-semibold tracking-[0.3em] uppercase text-primary mb-3">Why Next Edge</p>
@@ -60,7 +60,7 @@ export function WhyUs() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6, delay: 0.15 }}
             className="text-foreground/50 max-w-sm text-base leading-relaxed"
           >
@@ -75,7 +75,7 @@ export function WhyUs() {
               key={i}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
               className="group relative p-7 rounded-2xl overflow-hidden"
               style={{

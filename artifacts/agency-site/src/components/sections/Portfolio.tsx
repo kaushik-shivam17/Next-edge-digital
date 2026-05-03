@@ -602,7 +602,7 @@ export function Portfolio() {
       {/* Horizontal scroll track */}
       <div
         className="flex gap-5 overflow-x-auto pl-[max(1rem,calc((100vw-1280px)/2+1rem))] pr-8 pb-6 scrollbar-hide"
-        style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch" }}
+        style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch", willChange: "scroll-position" }}
       >
         <AnimatePresence mode="popLayout">
           {filtered.map((project, index) => (

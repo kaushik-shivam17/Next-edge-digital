@@ -92,7 +92,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, delay: index * 0.07, ease: [0.16, 1, 0.3, 1] }}
     >
       <div
@@ -105,8 +105,9 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           background: "rgba(255,255,255,0.02)",
           border: "1px solid rgba(255,255,255,0.06)",
           borderRadius: "16px",
-          transition: "transform 0.1s ease, box-shadow 0.3s ease",
+          transition: "transform 0.12s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease",
           transformStyle: "preserve-3d",
+          willChange: "transform",
         }}
       >
         {/* Glare layer */}

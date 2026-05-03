@@ -61,9 +61,11 @@ function AgencySite() {
     }
 
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.08,
       smoothWheel: true,
+      wheelMultiplier: 0.85,
+      touchMultiplier: 1.5,
+      infinite: false,
     });
     lenisRef.current = lenis;
 
@@ -111,7 +113,7 @@ function AgencySite() {
 
   return (
     <div
-      className="relative min-h-screen bg-background text-foreground dark selection:bg-primary selection:text-primary-foreground font-sans"
+      className="site-enter relative min-h-screen bg-background text-foreground dark selection:bg-primary selection:text-primary-foreground font-sans"
       style={{ cursor: isHoverDevice ? "none" : "auto" }}
     >
         {isHoverDevice && <CustomCursor />}
