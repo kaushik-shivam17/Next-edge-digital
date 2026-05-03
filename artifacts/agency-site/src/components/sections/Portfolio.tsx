@@ -432,68 +432,101 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
   return (
     <motion.div
       layout
-      className="group relative flex-shrink-0 w-[300px] md:w-[380px] h-[460px] rounded-2xl overflow-hidden cursor-pointer"
+      className="group relative flex-shrink-0 w-[300px] md:w-[400px] h-[500px] rounded-3xl overflow-hidden cursor-pointer"
       initial={{ opacity: 0, x: 60 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, scale: 0.92 }}
       transition={{ duration: 0.5, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -8, transition: { duration: 0.3 } }}
+      whileHover={{ y: -10, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } }}
       data-testid={`card-portfolio-${index}`}
       data-cursor-text="VIEW"
+      style={{ border: "1px solid rgba(255,255,255,0.07)" }}
     >
-      {/* Background gradient */}
+      {/* Gold border glow on hover */}
       <div
-        className="absolute inset-0"
-        style={{ background: `linear-gradient(135deg, ${project.gradient[0]}, ${project.gradient[1]}, ${project.gradient[2]})` }}
+        className="absolute inset-0 rounded-3xl z-30 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{ boxShadow: "inset 0 0 0 1.5px rgba(202,163,83,0.55), 0 0 60px rgba(202,163,83,0.12)" }}
       />
 
-      {/* Real photo layer */}
+      {/* Deep gradient base */}
+      <div
+        className="absolute inset-0"
+        style={{ background: `linear-gradient(160deg, ${project.gradient[0]}cc, ${project.gradient[1]}99, ${project.gradient[2]}cc)` }}
+      />
+
+      {/* Photo — full color, strong presence */}
       <img
         src={project.photo}
         alt={project.title}
-        className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-        style={{ opacity: 0.45, mixBlendMode: "luminosity" }}
+        className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
+        style={{ opacity: 0.6 }}
         loading="lazy"
       />
 
-      {/* Industry mockup */}
-      <IndustryMockup filter={project.filter} slug={project.slug} />
+      {/* Cinematic vignette — heavy at bottom, clear at top */}
+      <div className="absolute inset-0" style={{
+        background: "linear-gradient(to top, #000000 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.05) 100%)"
+      }} />
 
-      {/* Bottom gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+      {/* Noise grain texture */}
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
+        style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")" }}
+      />
 
-      {/* Top right hover arrow */}
-      <div className="absolute top-10 right-5 z-10">
-        <div
-          className="w-9 h-9 rounded-full flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
-          style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.2)" }}
+      {/* ── TOP BAR ── */}
+      <div className="absolute top-5 left-5 right-5 z-20 flex items-center justify-between">
+        {/* Year pill */}
+        <span
+          className="text-[9px] font-bold tracking-[0.3em] uppercase px-2.5 py-1 rounded-full"
+          style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.5)" }}
         >
-          <ArrowUpRight className="w-4 h-4 text-white" />
+          {project.year}
+        </span>
+
+        {/* Arrow button */}
+        <div
+          className="w-9 h-9 rounded-full flex items-center justify-center translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400"
+          style={{ background: "rgba(202,163,83,0.2)", backdropFilter: "blur(8px)", border: "1px solid rgba(202,163,83,0.4)" }}
+        >
+          <ArrowUpRight className="w-4 h-4" style={{ color: "#F0C97A" }} />
         </div>
       </div>
 
-      {/* Result badge on hover */}
-      <div className="absolute top-1/2 -translate-y-1/2 left-5 z-10">
+      {/* ── RESULT BADGE (centre, always present) ── */}
+      <div className="absolute top-1/2 -translate-y-8 left-0 right-0 flex justify-center z-20 pointer-events-none">
         <div
-          className="px-3 py-1.5 rounded-lg text-xs font-bold tracking-wide opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
-          style={{ background: "rgba(202,163,83,0.2)", backdropFilter: "blur(8px)", border: "1px solid rgba(202,163,83,0.4)", color: "#F0C97A" }}
+          className="px-4 py-2 rounded-xl text-xs font-bold tracking-widest uppercase translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400"
+          style={{ background: "rgba(202,163,83,0.15)", backdropFilter: "blur(12px)", border: "1px solid rgba(202,163,83,0.5)", color: "#F0C97A", letterSpacing: "0.18em" }}
         >
           {project.result}
         </div>
       </div>
 
-      {/* Bottom content */}
-      <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
-        <p className="text-[10px] font-semibold tracking-[0.25em] uppercase text-white/40 mb-2">{project.category}</p>
-        <h3 className="text-2xl font-black text-white mb-4 group-hover:text-primary transition-colors duration-300">
+      {/* ── BOTTOM CONTENT ── */}
+      <div className="absolute bottom-0 left-0 right-0 p-7 z-20">
+        {/* Category */}
+        <p
+          className="text-[9px] font-bold tracking-[0.35em] uppercase mb-2.5"
+          style={{ color: "#CAA353" }}
+        >
+          {project.category}
+        </p>
+
+        {/* Title */}
+        <h3 className="text-3xl font-black text-white mb-5 leading-tight tracking-tight group-hover:text-white transition-colors duration-300">
           {project.title}
         </h3>
+
+        {/* Divider */}
+        <div className="w-8 h-px mb-4" style={{ background: "rgba(202,163,83,0.4)" }} />
+
+        {/* Tags */}
         <div className="flex flex-wrap gap-1.5">
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="text-[10px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-md"
-              style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.5)" }}
+              className="text-[9px] font-semibold tracking-widest uppercase px-2.5 py-1 rounded-full"
+              style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.45)" }}
             >
               {tag}
             </span>
@@ -582,7 +615,7 @@ export function Portfolio() {
         {/* View all CTA card */}
         <motion.a
           href="#contact"
-          className="flex-shrink-0 w-[220px] h-[460px] rounded-2xl flex flex-col items-center justify-center gap-4 group"
+          className="flex-shrink-0 w-[220px] h-[500px] rounded-3xl flex flex-col items-center justify-center gap-4 group"
           style={{ background: "rgba(202,163,83,0.04)", border: "1px solid rgba(202,163,83,0.15)" }}
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
