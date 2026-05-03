@@ -14,14 +14,14 @@ type Currency = {
 // Base prices: ₹3,000/month maintenance · ₹8,000 one-time website build
 // All other currencies converted at live approximate rates from INR
 const currencies: Record<string, Currency> = {
-  IN:      { code: "INR", symbol: "₹",    maintenance: "3,000",  website: "8,000"  },
-  US:      { code: "USD", symbol: "$",    maintenance: "36",     website: "97"     },
-  GB:      { code: "GBP", symbol: "£",    maintenance: "29",     website: "77"     },
-  AE:      { code: "AED", symbol: "AED ", maintenance: "132",    website: "354"    },
-  SG:      { code: "SGD", symbol: "S$",   maintenance: "49",     website: "130"    },
-  AU:      { code: "AUD", symbol: "A$",   maintenance: "55",     website: "147"    },
-  CA:      { code: "CAD", symbol: "C$",   maintenance: "49",     website: "132"    },
-  DEFAULT: { code: "USD", symbol: "$",    maintenance: "36",     website: "97"     },
+  IN:      { code: "INR", symbol: "₹",    maintenance: "5,000",  website: "8,000"  },
+  US:      { code: "USD", symbol: "$",    maintenance: "60",     website: "97"     },
+  GB:      { code: "GBP", symbol: "£",    maintenance: "47",     website: "77"     },
+  AE:      { code: "AED", symbol: "AED ", maintenance: "220",    website: "354"    },
+  SG:      { code: "SGD", symbol: "S$",   maintenance: "81",     website: "130"    },
+  AU:      { code: "AUD", symbol: "A$",   maintenance: "91",     website: "147"    },
+  CA:      { code: "CAD", symbol: "C$",   maintenance: "82",     website: "132"    },
+  DEFAULT: { code: "USD", symbol: "$",    maintenance: "60",     website: "97"     },
 };
 
 const countryNames: Record<string, string> = {
