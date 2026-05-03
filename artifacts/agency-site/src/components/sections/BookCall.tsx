@@ -26,6 +26,7 @@ const perks = [
 const timeZones = [
   { label: "New York", tz: "America/New_York", flag: "🇺🇸" },
   { label: "London", tz: "Europe/London", flag: "🇬🇧" },
+  { label: "India", tz: "Asia/Kolkata", flag: "🇮🇳" },
   { label: "Dubai", tz: "Asia/Dubai", flag: "🇦🇪" },
   { label: "Singapore", tz: "Asia/Singapore", flag: "🇸🇬" },
 ];
