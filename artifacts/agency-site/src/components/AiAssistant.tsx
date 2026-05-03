@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Sparkles, ChevronRight, Loader2 } from "lucide-react";
+import { X, Send, Sparkles, ChevronRight, Loader2, RotateCcw } from "lucide-react";
 
 interface Message {
   role: "user" | "assistant";
@@ -256,13 +256,27 @@ export function AiAssistant() {
                   </div>
                 </div>
               </div>
-              <button
-                onClick={() => setOpen(false)}
-                className="w-7 h-7 rounded-lg flex items-center justify-center transition-colors"
-                style={{ background: "rgba(255,255,255,0.06)" }}
-              >
-                <X className="w-3.5 h-3.5 text-white/50" />
-              </button>
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => {
+                    setMessages([{ role: "assistant", content: GREETING }]);
+                    setShowSuggested(true);
+                    setInput("");
+                  }}
+                  title="Restart conversation"
+                  className="w-7 h-7 rounded-lg flex items-center justify-center transition-colors"
+                  style={{ background: "rgba(255,255,255,0.06)" }}
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-white/50" />
+                </button>
+                <button
+                  onClick={() => setOpen(false)}
+                  className="w-7 h-7 rounded-lg flex items-center justify-center transition-colors"
+                  style={{ background: "rgba(255,255,255,0.06)" }}
+                >
+                  <X className="w-3.5 h-3.5 text-white/50" />
+                </button>
+              </div>
             </div>
 
             {/* Messages */}
