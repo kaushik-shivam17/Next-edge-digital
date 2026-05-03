@@ -14,7 +14,7 @@ const perks = [
   {
     icon: Globe,
     title: "Any Time Zone",
-    description: "We work with clients across the US, UK, UAE, and Asia-Pacific. We flex our schedule around yours.",
+    description: "We work with clients across India, UAE, and Singapore. We flex our schedule around yours.",
   },
   {
     icon: ShieldCheck,

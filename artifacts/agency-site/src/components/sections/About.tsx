@@ -4,7 +4,7 @@ import { Award, Users, Globe, Zap } from "lucide-react";
 const milestones = [
   { icon: Award, label: "42+ Brands Transformed", sub: "Across multiple industries globally" },
   { icon: Users, label: "98% Client Retention", sub: "Most clients stay 2+ years" },
-  { icon: Globe, label: "Clients on 5 Continents", sub: "US, UK, UAE, AU, SG & beyond" },
+  { icon: Globe, label: "Clients in 3+ Countries", sub: "India, UAE & Singapore" },
   { icon: Zap, label: "Avg. 3-Week Turnaround", sub: "Without cutting corners" },
 ];
 
