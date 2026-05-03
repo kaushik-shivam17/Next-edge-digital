@@ -1,16 +1,16 @@
 import { motion } from "framer-motion";
 
 const brands = [
-  { name: "Veridian Apparel", initials: "VA", color: "#BE185D" },
-  { name: "ScaleTech", initials: "ST", color: "#1D4ED8" },
-  { name: "Thorne Architecture", initials: "TA", color: "#92400E" },
-  { name: "Nova Wealth", initials: "NW", color: "#0E7490" },
-  { name: "Lumina Estates", initials: "LE", color: "#B45309" },
+  { name: "EdTech Future", initials: "EF", color: "#2563EB" },
+  { name: "School Management", initials: "SM", color: "#059669" },
+  { name: "Reddy Estate", initials: "RE", color: "#B45309" },
+  { name: "New Fashion", initials: "NF", color: "#BE185D" },
+  { name: "Nova AI", initials: "NA", color: "#7C3AED" },
+  { name: "CyberSec", initials: "CS", color: "#DC2626" },
+  { name: "Kova Skincare", initials: "KS", color: "#CAA353" },
+  { name: "NestFin", initials: "NF", color: "#0E7490" },
   { name: "Apex Motors", initials: "AM", color: "#047857" },
-  { name: "Aura Fashion", initials: "AF", color: "#7C3AED" },
-  { name: "Orbit Media", initials: "OM", color: "#4C1D95" },
-  { name: "Forge Capital", initials: "FC", color: "#374151" },
-  { name: "Meridian Health", initials: "MH", color: "#065F46" },
+  { name: "Prestige Landbase", initials: "PL", color: "#4C1D95" },
 ];
 
 function BrandBadge({ brand }: { brand: typeof brands[0] }) {
