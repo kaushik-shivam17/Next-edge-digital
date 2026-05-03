@@ -1,7 +1,21 @@
-import { Router, type IRouter } from "express";
+import { Router, type IRouter, type Request, type Response } from "express";
+import { rateLimit } from "express-rate-limit";
 import { openai } from "@workspace/integrations-openai-ai-server";
 
 const router: IRouter = Router();
+
+const MAX_MESSAGES = 20;
+const MAX_MESSAGE_LENGTH = 2000;
+const ALLOWED_ROLES = new Set(["user", "assistant"]);
+
+const chatLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  message: { error: "Too many requests, please try again later." },
+  skip: () => false,
+});
 
 const SYSTEM_PROMPT = `You are the AI assistant for Next Edge Digital — a premium digital agency. You ONLY answer questions about Next Edge Digital. If asked about anything unrelated to the agency, its services, portfolio, team, pricing, or process, politely redirect the user back to questions about the agency.
 
@@ -139,18 +153,43 @@ Discovery calls are free and no-obligation. We'll tell you exactly what we'd do 
 
 **How do I contact you?** WhatsApp: +916398054033, or use the contact form on our website. We typically respond within a few hours.`;
 
-router.post("/chat", async (req, res) => {
-  const { messages } = req.body as { messages: { role: string; content: string }[] };
-
+function validateMessages(messages: unknown): { role: "user" | "assistant"; content: string }[] {
   if (!Array.isArray(messages) || messages.length === 0) {
-    res.status(400).json({ error: "messages array is required" });
+    throw new Error("messages array is required and must not be empty");
+  }
+  if (messages.length > MAX_MESSAGES) {
+    throw new Error(`Too many messages: max ${MAX_MESSAGES} allowed`);
+  }
+  return messages.map((m, i) => {
+    if (typeof m !== "object" || m === null) {
+      throw new Error(`Message at index ${i} must be an object`);
+    }
+    const msg = m as Record<string, unknown>;
+    if (!ALLOWED_ROLES.has(String(msg.role))) {
+      throw new Error(`Invalid role at index ${i}: must be 'user' or 'assistant'`);
+    }
+    if (typeof msg.content !== "string") {
+      throw new Error(`Message content at index ${i} must be a string`);
+    }
+    const content = msg.content.slice(0, MAX_MESSAGE_LENGTH);
+    return { role: msg.role as "user" | "assistant", content };
+  });
+}
+
+router.post("/chat", chatLimiter, async (req: Request, res: Response) => {
+  let validatedMessages: { role: "user" | "assistant"; content: string }[];
+
+  try {
+    validatedMessages = validateMessages(req.body?.messages);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Invalid request";
+    res.status(400).json({ error: message });
     return;
   }
 
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
-  res.setHeader("Access-Control-Allow-Origin", "*");
 
   try {
     const stream = await openai.chat.completions.create({
@@ -158,10 +197,7 @@ router.post("/chat", async (req, res) => {
       max_completion_tokens: 400,
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
-        ...messages.map((m) => ({
-          role: m.role as "user" | "assistant",
-          content: m.content,
-        })),
+        ...validatedMessages,
       ],
       stream: true,
     });

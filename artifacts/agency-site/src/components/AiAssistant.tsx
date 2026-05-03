@@ -8,6 +8,9 @@ interface Message {
   streaming?: boolean;
 }
 
+const MAX_INPUT_LENGTH = 2000;
+const MAX_HISTORY = 20;
+
 const SUGGESTED = [
   "What services do you offer?",
   "How much does a project cost?",
@@ -46,24 +49,28 @@ export function AiAssistant() {
   }, [messages]);
 
   const send = async (text: string) => {
-    if (!text.trim() || loading) return;
+    const sanitized = text.trim().slice(0, MAX_INPUT_LENGTH);
+    if (!sanitized || loading) return;
+    const text_to_send = sanitized;
     setShowSuggested(false);
     setInput("");
     setLoading(true);
 
-    const userMsg: Message = { role: "user", content: text };
+    const userMsg: Message = { role: "user", content: text_to_send };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
 
     const assistantMsg: Message = { role: "assistant", content: "", streaming: true };
     setMessages((prev) => [...prev, assistantMsg]);
 
+    const recentMessages = newMessages.slice(-MAX_HISTORY);
+
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: newMessages.map(({ role, content }) => ({ role, content })),
+          messages: recentMessages.map(({ role, content }) => ({ role, content: content.slice(0, MAX_INPUT_LENGTH) })),
         }),
       });
 
@@ -282,9 +289,10 @@ export function AiAssistant() {
                 <input
                   ref={inputRef}
                   value={input}
-                  onChange={(e) => setInput(e.target.value)}
+                  onChange={(e) => setInput(e.target.value.slice(0, MAX_INPUT_LENGTH))}
                   onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(input); } }}
                   placeholder="Ask anything about Next Edge…"
+                  maxLength={MAX_INPUT_LENGTH}
                   className="flex-1 bg-transparent text-sm text-white placeholder:text-white/25 outline-none"
                 />
                 <button
