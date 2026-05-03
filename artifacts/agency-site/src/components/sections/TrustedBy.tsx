@@ -39,7 +39,7 @@ export function TrustedBy() {
     <section className="py-16 border-y border-white/5 bg-card/20 overflow-hidden relative z-10">
       <div className="container px-4 md:px-6 mb-10">
         <p className="text-center text-xs font-semibold tracking-[0.3em] uppercase text-foreground/30">
-          Trusted by ambitious brands across 20+ countries worldwide
+          Trusted by ambitious brands across 3+ countries worldwide
         </p>
       </div>
 
