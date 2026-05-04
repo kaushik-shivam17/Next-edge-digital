@@ -15,6 +15,7 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - **Validation**: Zod (`zod/v4`), `drizzle-zod`
 - **API codegen**: Orval (from OpenAPI spec)
 - **Build**: esbuild (CJS bundle)
+- **AI**: Replit AI Integrations (OpenAI) — no API key required, billed to Replit credits
 
 ## Key Commands
 
@@ -26,9 +27,14 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 
 See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
 
+## Workflows
+
+- **Start application**: `VITE_PORT=5000 pnpm --filter @workspace/agency-site run dev` (port 5000, webview)
+- **API Server**: `PORT=8080 pnpm --filter @workspace/api-server run dev` (port 8080, console)
+
 ## Agency Site (`artifacts/agency-site`)
 
-A premium digital agency website for "Next Edge Digital". Runs on port 19242 (externally port 3000).
+A premium digital agency website for "Next Edge Digital". Runs on port 5000.
 
 ### Features
 - Cinematic preloader with counter animation
@@ -49,6 +55,28 @@ A premium digital agency website for "Next Edge Digital". Runs on port 19242 (ex
 - Back-to-top: floating button appears on scroll
 - Floating WhatsApp button
 - Scroll progress bar at top
+- AI chat assistant ("Ask Edge AI") powered by OpenAI gpt-5-mini via Replit AI Integrations
 
-### Dev command
-`PORT=19242 pnpm --filter @workspace/agency-site run dev`
+## API Server (`artifacts/api-server`)
+
+Express 5 backend running on port 8080.
+
+### Routes
+- `GET /api/healthz` — health check
+- `POST /api/chat` — streaming AI chat (SSE), rate limited to 30 req/15min
+- `POST /api/contact` — contact form submission via Nodemailer (requires SMTP_PASSWORD secret)
+
+### Environment Variables Required
+- `PORT` — set to 8080 (configured in workflow)
+- `AI_INTEGRATIONS_OPENAI_API_KEY` — auto-set by Replit AI Integrations
+- `AI_INTEGRATIONS_OPENAI_BASE_URL` — auto-set by Replit AI Integrations
+- `DATABASE_URL` — auto-set by Replit PostgreSQL
+- `SMTP_PASSWORD` — must be set by user for contact form email delivery
+
+## Database (`lib/db`)
+
+Drizzle ORM with PostgreSQL. Schema includes:
+- `conversations` — chat conversation records
+- `messages` — individual chat messages per conversation
+
+Run `pnpm --filter @workspace/db push` to apply schema changes.

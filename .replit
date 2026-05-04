@@ -18,23 +18,40 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
+args = "API Server"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
 args = "Start application"
+
+[[workflows.workflow]]
+name = "API Server"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PORT=8080 pnpm --filter @workspace/api-server run dev"
+waitForPort = 8080
+
+[workflows.workflow.metadata]
+outputType = "console"
 
 [[workflows.workflow]]
 name = "Start application"
 author = "agent"
 
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "VITE_PORT=5000 pnpm --filter @workspace/agency-site run dev"
+waitForPort = 5000
+
 [workflows.workflow.metadata]
 outputType = "webview"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "pnpm --filter @workspace/agency-site run dev"
-waitForPort = 3000
-
 [agent]
-stack = "PNPM_WORKSPACE"
+stack = "BEST_EFFORT_FALLBACK"
 expertMode = true
+integrations = ["javascript_openai_ai_integrations:2.0.0"]
 
 [postMerge]
 path = "scripts/post-merge.sh"
@@ -45,11 +62,7 @@ localPort = 3000
 externalPort = 3002
 
 [[ports]]
-localPort = 8080
-externalPort = 8080
-
-[[ports]]
-localPort = 8081
+localPort = 5000
 externalPort = 80
 
 [[ports]]
@@ -64,7 +77,15 @@ externalPort = 4200
 localPort = 19242
 externalPort = 3000
 
+[[ports]]
+localPort = 8080
+externalPort = 8080
+
 [userenv]
 
 [userenv.shared]
 VITE_WEB3FORMS_ACCESS_KEY = "87c9a8e1-c127-49af-8e8c-4f6a2d78f4c7"
+PORT = "8080"
+
+[nix]
+channel = "stable-25_05"
