@@ -95,7 +95,7 @@ const plans = [
 /* ─── Hook ─────────────────────────────────────────────────────────────── */
 
 function useCurrency() {
-  const [currency, setCurrency] = useState<Currency>(currencies.DEFAULT);
+  const [currency, setCurrency] = useState<Currency>(currencies.IN);
   const [country,  setCountry]  = useState("IN");
   const [loading,  setLoading]  = useState(true);
 
@@ -105,9 +105,9 @@ function useCurrency() {
       .then((d) => {
         const c = d.country_code || "IN";
         setCountry(c);
-        setCurrency(currencies[c] ?? currencies.DEFAULT);
+        setCurrency(currencies[c] ?? currencies.IN);
       })
-      .catch(() => setCurrency(currencies.DEFAULT))
+      .catch(() => setCurrency(currencies.IN))
       .finally(() => setLoading(false));
   }, []);
 
