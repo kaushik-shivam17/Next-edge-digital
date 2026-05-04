@@ -77,19 +77,28 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="flex items-center gap-4"
             >
-              <div className="relative w-12 h-12 flex items-center justify-center">
+              <div
+                className="relative flex-shrink-0"
+                style={{ width: 52, height: 52, padding: 1.5, background: "linear-gradient(135deg, #8B6914 0%, #CAA353 55%, #F0C97A 100%)", borderRadius: 13, boxSizing: "border-box", boxShadow: "0 0 32px rgba(202,163,83,0.3)" }}
+              >
                 <motion.div
-                  animate={{ rotate: [6, 15, 6] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute inset-0 rounded-md"
-                  style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)" }}
-                />
-                <span className="relative text-sm font-black tracking-tighter" style={{ color: "#0c0c0e" }}>
-                  NE
-                </span>
+                  animate={{ boxShadow: ["0 0 0px rgba(202,163,83,0)", "0 0 24px rgba(202,163,83,0.35)", "0 0 0px rgba(202,163,83,0)"] }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                  className="w-full h-full flex items-center justify-center"
+                  style={{ background: "#0c0c0e", borderRadius: 11 }}
+                >
+                  <span
+                    className="font-black leading-none select-none"
+                    style={{ fontSize: 15, letterSpacing: "-0.02em", background: "linear-gradient(135deg, #CAA353, #F0C97A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+                  >
+                    NE
+                  </span>
+                </motion.div>
+                <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full" style={{ background: "#F0C97A", boxShadow: "0 0 10px rgba(240,201,122,1)" }} />
               </div>
-              <div className="flex flex-col leading-none">
-                <span className="text-base font-bold tracking-widest uppercase text-white">nextedgetech</span>
+              <div className="flex flex-col leading-none gap-[5px]">
+                <span className="font-black uppercase" style={{ fontSize: 16, letterSpacing: "0.15em", color: "#ffffff" }}>nextedge</span>
+                <span className="font-bold uppercase" style={{ fontSize: 9, letterSpacing: "0.5em", color: "#CAA353" }}>tech</span>
               </div>
             </motion.div>
 

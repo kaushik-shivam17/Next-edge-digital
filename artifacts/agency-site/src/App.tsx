@@ -171,17 +171,26 @@ function AgencySite() {
         >
           <div className="container flex items-center justify-between h-20 px-4 md:px-6">
             <a href="#" className="flex items-center gap-3 group" data-testid="link-logo" onClick={(e) => { e.preventDefault(); if (lenisRef.current) { lenisRef.current.scrollTo(0, { duration: 1.4 }); } else { window.scrollTo({ top: 0, behavior: "smooth" }); } }}>
-              <div className="relative w-9 h-9 flex items-center justify-center">
+              <div
+                className="relative flex-shrink-0 transition-transform duration-500 group-hover:scale-[1.07]"
+                style={{ width: 38, height: 38, padding: 1.5, background: "linear-gradient(135deg, #8B6914 0%, #CAA353 55%, #F0C97A 100%)", borderRadius: 9, boxSizing: "border-box", boxShadow: "0 0 18px rgba(202,163,83,0.22)" }}
+              >
                 <div
-                  className="absolute inset-0 rotate-6 group-hover:rotate-[20deg] transition-transform duration-500"
-                  style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)", borderRadius: "4px" }}
-                />
-                <span className="relative text-xs font-black tracking-tighter leading-none" style={{ color: "#0c0c0e" }}>
-                  NE
-                </span>
+                  className="w-full h-full flex items-center justify-center"
+                  style={{ background: "#0c0c0e", borderRadius: 7 }}
+                >
+                  <span
+                    className="font-black leading-none select-none"
+                    style={{ fontSize: 11, letterSpacing: "-0.02em", background: "linear-gradient(135deg, #CAA353, #F0C97A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+                  >
+                    NE
+                  </span>
+                </div>
+                <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full" style={{ background: "#F0C97A", boxShadow: "0 0 8px rgba(240,201,122,0.95)" }} />
               </div>
-              <div className="flex flex-col leading-none">
-                <span className="text-sm font-bold tracking-widest uppercase text-foreground">nextedgetech</span>
+              <div className="flex flex-col leading-none gap-[4px]">
+                <span className="font-black uppercase" style={{ fontSize: 13, letterSpacing: "0.13em", color: "#ffffff" }}>nextedge</span>
+                <span className="font-bold uppercase" style={{ fontSize: 8, letterSpacing: "0.48em", color: "#CAA353" }}>tech</span>
               </div>
             </a>
 

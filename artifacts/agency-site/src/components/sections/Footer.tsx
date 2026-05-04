@@ -28,12 +28,26 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <div className="relative w-9 h-9 flex items-center justify-center">
-                <div className="absolute inset-0 bg-primary rounded-sm rotate-6" />
-                <span className="relative text-xs font-black text-primary-foreground tracking-tighter leading-none">NE</span>
+              <div
+                className="relative flex-shrink-0"
+                style={{ width: 38, height: 38, padding: 1.5, background: "linear-gradient(135deg, #8B6914 0%, #CAA353 55%, #F0C97A 100%)", borderRadius: 9, boxSizing: "border-box", boxShadow: "0 0 18px rgba(202,163,83,0.15)" }}
+              >
+                <div
+                  className="w-full h-full flex items-center justify-center"
+                  style={{ background: "#0c0c0e", borderRadius: 7 }}
+                >
+                  <span
+                    className="font-black leading-none select-none"
+                    style={{ fontSize: 11, letterSpacing: "-0.02em", background: "linear-gradient(135deg, #CAA353, #F0C97A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+                  >
+                    NE
+                  </span>
+                </div>
+                <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full" style={{ background: "#F0C97A", boxShadow: "0 0 8px rgba(240,201,122,0.9)" }} />
               </div>
-              <div className="flex flex-col leading-none">
-                <span className="text-sm font-bold tracking-widest uppercase text-foreground">nextedgetech</span>
+              <div className="flex flex-col leading-none gap-[4px]">
+                <span className="font-black uppercase" style={{ fontSize: 13, letterSpacing: "0.13em", color: "#ffffff" }}>nextedge</span>
+                <span className="font-bold uppercase" style={{ fontSize: 8, letterSpacing: "0.48em", color: "#CAA353" }}>tech</span>
               </div>
             </div>
             <p className="text-foreground/40 text-sm leading-relaxed max-w-xs mb-8">
