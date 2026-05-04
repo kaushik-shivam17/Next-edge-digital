@@ -112,6 +112,21 @@ export function AiAssistant() {
 
     const recentMessages = newMessages.slice(-MAX_HISTORY);
 
+    const clearStreaming = (content?: string) => {
+      setMessages((prev) => {
+        const updated = [...prev];
+        const last = updated[updated.length - 1];
+        if (last?.role === "assistant") {
+          updated[updated.length - 1] = {
+            role: "assistant",
+            content: content ?? last.content,
+            streaming: false,
+          };
+        }
+        return updated;
+      });
+    };
+
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
@@ -121,18 +136,35 @@ export function AiAssistant() {
         }),
       });
 
+      if (!res.ok) {
+        clearStreaming("Sorry, I'm having trouble connecting right now. Please try WhatsApp: **+918218628232**");
+        return;
+      }
+
       const reader = res.body?.getReader();
+      if (!reader) {
+        clearStreaming("Sorry, I'm having trouble connecting right now. Please try WhatsApp: **+918218628232**");
+        return;
+      }
+
       const decoder = new TextDecoder();
       let full = "";
+      let buffer = "";
 
-      while (reader) {
+      while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        const chunk = decoder.decode(value);
-        const lines = chunk.split("\n").filter((l) => l.startsWith("data: "));
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() ?? "";
         for (const line of lines) {
+          if (!line.startsWith("data: ")) continue;
           try {
-            const data = JSON.parse(line.slice(6));
+            const data = JSON.parse(line.slice(6)) as { content?: string; done?: boolean; error?: string };
+            if (data.error) {
+              clearStreaming("Sorry, I'm having trouble connecting right now. Please try WhatsApp: **+918218628232**");
+              return;
+            }
             if (data.content) {
               full += data.content;
               setMessages((prev) => {
@@ -142,25 +174,15 @@ export function AiAssistant() {
               });
             }
             if (data.done) {
-              setMessages((prev) => {
-                const updated = [...prev];
-                updated[updated.length - 1] = { role: "assistant", content: full, streaming: false };
-                return updated;
-              });
+              clearStreaming(full || "Sorry, I'm having trouble connecting right now. Please try WhatsApp: **+918218628232**");
             }
           } catch {}
         }
       }
+
+      if (full) clearStreaming(full);
     } catch {
-      setMessages((prev) => {
-        const updated = [...prev];
-        updated[updated.length - 1] = {
-          role: "assistant",
-          content: "Sorry, I'm having trouble connecting right now. Please try WhatsApp: **+918218628232**",
-          streaming: false,
-        };
-        return updated;
-      });
+      clearStreaming("Sorry, I'm having trouble connecting right now. Please try WhatsApp: **+918218628232**");
     } finally {
       setLoading(false);
     }
