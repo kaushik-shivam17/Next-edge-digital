@@ -24,6 +24,7 @@ import { CustomCursor } from "./components/CustomCursor";
 import { NoiseOverlay } from "./components/NoiseOverlay";
 import { BackToTop } from "./components/BackToTop";
 import { AiAssistant } from "./components/AiAssistant";
+import { Preloader } from "./components/Preloader";
 
 
 const navLinks = [
@@ -46,6 +47,7 @@ function AgencySite() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [isHoverDevice, setIsHoverDevice] = useState(false);
+  const [preloaderDone, setPreloaderDone] = useState(false);
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
@@ -84,7 +86,7 @@ function AgencySite() {
 
   // Intersection Observer for active nav section
   useEffect(() => {
-    const sectionIds = ["work", "services", "about", "contact"];
+    const sectionIds = ["work", "services", "pricing", "about", "contact"];
     const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {
@@ -121,6 +123,10 @@ function AgencySite() {
       className="relative min-h-screen bg-background text-foreground dark selection:bg-primary selection:text-primary-foreground font-sans"
       style={{ cursor: isHoverDevice ? "none" : "auto" }}
     >
+        <AnimatePresence>
+          {!preloaderDone && <Preloader onComplete={() => setPreloaderDone(true)} />}
+        </AnimatePresence>
+
         {/* Fixed floating elements are siblings of the animated wrapper — never inside a transformed parent */}
         {isHoverDevice && <CustomCursor />}
         <FloatingWhatsApp />

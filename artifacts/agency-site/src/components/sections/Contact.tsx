@@ -14,14 +14,14 @@ const CONTACT_EMAIL = "nextedgetech@rediffmail.com";
 
 const contactDetails = [
   { icon: Mail, label: "General Inquiries", value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
-  { icon: MapPin, label: "Studio", value: "Remote-first · Serving clients globally", href: "#" },
-  { icon: Clock, label: "Response Time", value: "Within 24 hrs — any time zone", href: "#" },
+  { icon: MapPin, label: "Studio", value: "Remote-first · Serving clients globally", href: null },
+  { icon: Clock, label: "Response Time", value: "Within 24 hrs — any time zone", href: null },
 ];
 
 const services = [
   "Website Design & Development",
   "Social Media Management",
-  
+  "Brand Identity",
   "SEO & Organic Growth",
   "Digital Strategy",
   "Full-Service Package",
@@ -200,9 +200,13 @@ export function Contact() {
                   </div>
                   <div>
                     <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/30 mb-1">{detail.label}</p>
-                    <a href={detail.href} className="text-foreground/80 hover:text-primary transition-colors text-sm font-medium">
-                      {detail.value}
-                    </a>
+                    {detail.href ? (
+                      <a href={detail.href} className="text-foreground/80 hover:text-primary transition-colors text-sm font-medium">
+                        {detail.value}
+                      </a>
+                    ) : (
+                      <span className="text-foreground/80 text-sm font-medium">{detail.value}</span>
+                    )}
                   </div>
                 </div>
               ))}

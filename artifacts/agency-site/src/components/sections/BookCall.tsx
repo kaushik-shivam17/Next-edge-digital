@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { SiWhatsapp } from "react-icons/si";
 import { ArrowRight, CalendarCheck, Globe, ShieldCheck, CalendarDays } from "lucide-react";
+import { scrollToSection } from "@/lib/scrollTo";
 
 const WHATSAPP_URL = `https://wa.me/918218628232?text=${encodeURIComponent("Hi! I'd like to book a free strategy call with nextedgetech.")}`;
 
@@ -213,8 +214,8 @@ export function BookCall() {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
 
-            <a
-              href="#contact"
+            <button
+              onClick={() => scrollToSection("contact")}
               data-testid="button-book-whatsapp"
               className="group inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-5 rounded-xl font-semibold text-sm tracking-wide transition-all duration-300"
               style={{
@@ -233,7 +234,7 @@ export function BookCall() {
             >
               <SiWhatsapp className="w-4 h-4" />
               Send a Project Brief
-            </a>
+            </button>
           </motion.div>
 
           <motion.div
