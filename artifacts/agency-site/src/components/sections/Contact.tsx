@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -97,14 +97,24 @@ export function Contact() {
     setStep((s) => Math.max(s - 1, 0));
   };
 
+  const lastSubmitRef = useRef<number>(0);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!canAdvance()) return;
+
+    const now = Date.now();
+    if (now - lastSubmitRef.current < 30_000) {
+      toast({ title: "Please wait", description: "You can only submit once every 30 seconds.", variant: "destructive" });
+      return;
+    }
+
     setSubmitting(true);
 
     try {
       const payload = {
         access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
+        botcheck: false,
         subject: `New Project Inquiry from ${formData.name} — ${formData.company || "Unknown"}`,
         from_name: formData.name,
         replyto: formData.email,
@@ -126,6 +136,7 @@ export function Contact() {
       const data = await res.json() as { success: boolean; message?: string };
 
       if (data.success) {
+        lastSubmitRef.current = Date.now();
         setSubmitted(true);
         toast({ title: "Inquiry Received", description: "Our partners will personally review your submission within 24 hours." });
       } else {
