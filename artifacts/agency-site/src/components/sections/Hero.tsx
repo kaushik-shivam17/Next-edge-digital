@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Award, Users, Clock } from "lucide-react";
 import { Magnetic } from "../Magnetic";
 import { HeroCanvas } from "../HeroCanvas";
+import { scrollToSection } from "@/lib/scrollTo";
 
 const HEADLINE_1 = "We Build";
 const HEADLINE_2 = "Digital";
@@ -188,6 +189,7 @@ export function Hero() {
             <Magnetic strength={0.3} className="w-full sm:w-auto">
               <a
                 href="#contact"
+                onClick={(e) => { e.preventDefault(); scrollToSection("contact"); }}
                 data-testid="button-hero-primary"
                 data-cursor-text="START"
                 className="group relative inline-flex items-center justify-center gap-2 w-full sm:w-auto px-9 py-4 font-bold text-sm tracking-[0.15em] uppercase overflow-hidden"
@@ -212,6 +214,7 @@ export function Hero() {
             <Magnetic strength={0.25} className="w-full sm:w-auto">
               <a
                 href="#work"
+                onClick={(e) => { e.preventDefault(); scrollToSection("work"); }}
                 data-testid="button-hero-secondary"
                 data-cursor-text="VIEW"
                 className="group inline-flex items-center justify-center gap-2 w-full sm:w-auto px-9 py-4 text-foreground/60 font-semibold text-sm tracking-[0.15em] uppercase hover:text-foreground transition-all duration-300"

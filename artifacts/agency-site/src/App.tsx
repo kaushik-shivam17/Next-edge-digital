@@ -109,8 +109,12 @@ function AgencySite() {
     setMenuOpen(false);
     const id = href.replace("#", "");
     const el = document.getElementById(id);
-    if (el && lenisRef.current) {
+    if (!el) return;
+    if (lenisRef.current) {
       lenisRef.current.scrollTo(el, { offset: -80, duration: 1.4 });
+    } else {
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: "smooth" });
     }
   };
 

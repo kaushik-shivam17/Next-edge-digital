@@ -1,18 +1,23 @@
 import { SiInstagram, SiDribbble, SiX, SiWhatsapp } from "react-icons/si";
 import { Linkedin } from "lucide-react";
+import { scrollToSection } from "@/lib/scrollTo";
 
 const WHATSAPP_URL = `https://wa.me/918218628232`;
 
-const links = {
-  services: [
-    "Website Design",
-    "Social Media",
-    "Brand Identity",
-    "SEO & Growth",
-    "Digital Strategy",
-  ],
-  company: ["About Us", "Our Work", "Process", "Careers", "Contact"],
-};
+const serviceLinks = [
+  { label: "Website Design", section: "services" },
+  { label: "Social Media", section: "services" },
+  { label: "Brand Identity", section: "services" },
+  { label: "SEO & Growth", section: "services" },
+  { label: "Digital Strategy", section: "services" },
+];
+
+const companyLinks = [
+  { label: "About Us", section: "about" },
+  { label: "Our Work", section: "work" },
+  { label: "Process", section: "process" },
+  { label: "Contact", section: "contact" },
+];
 
 export function Footer() {
   return (
@@ -76,11 +81,14 @@ export function Footer() {
           <div>
             <h4 className="text-[10px] font-bold tracking-[0.3em] uppercase text-foreground/30 mb-6">Services</h4>
             <ul className="space-y-3">
-              {links.services.map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-sm text-foreground/50 hover:text-primary transition-colors duration-200">
-                    {item}
-                  </a>
+              {serviceLinks.map(({ label, section }) => (
+                <li key={label}>
+                  <button
+                    onClick={() => scrollToSection(section)}
+                    className="text-sm text-foreground/50 hover:text-primary transition-colors duration-200 text-left"
+                  >
+                    {label}
+                  </button>
                 </li>
               ))}
             </ul>
@@ -90,11 +98,14 @@ export function Footer() {
           <div>
             <h4 className="text-[10px] font-bold tracking-[0.3em] uppercase text-foreground/30 mb-6">Company</h4>
             <ul className="space-y-3">
-              {links.company.map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-sm text-foreground/50 hover:text-primary transition-colors duration-200">
-                    {item}
-                  </a>
+              {companyLinks.map(({ label, section }) => (
+                <li key={label}>
+                  <button
+                    onClick={() => scrollToSection(section)}
+                    className="text-sm text-foreground/50 hover:text-primary transition-colors duration-200 text-left"
+                  >
+                    {label}
+                  </button>
                 </li>
               ))}
             </ul>
