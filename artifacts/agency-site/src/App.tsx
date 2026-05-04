@@ -175,8 +175,7 @@ function AgencySite() {
                 </span>
               </div>
               <div className="flex flex-col leading-none">
-                <span className="text-sm font-bold tracking-widest uppercase text-foreground">Next Edge</span>
-                <span className="text-[10px] tracking-[0.3em] uppercase text-primary font-medium">Digital</span>
+                <span className="text-sm font-bold tracking-widest uppercase text-foreground">nextedgetech</span>
               </div>
             </a>
 

@@ -66,7 +66,7 @@ const SUGGESTED = [
   "How do I get started?",
 ];
 
-const GREETING = `Hi! I'm Edge — Next Edge Digital's AI assistant. 🤝
+const GREETING = `Hi! I'm Edge — nextedgetech's AI assistant. 🤝
 
 I'm here to answer any questions about our services, portfolio, process, or pricing.
 
@@ -252,7 +252,7 @@ export function AiAssistant() {
                   <p className="text-sm font-bold text-white">Edge AI</p>
                   <div className="flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                    <span className="text-[10px] text-white/40">Next Edge Digital Assistant</span>
+                    <span className="text-[10px] text-white/40">nextedgetech Assistant</span>
                   </div>
                 </div>
               </div>
@@ -403,7 +403,7 @@ export function AiAssistant() {
                   value={input}
                   onChange={(e) => setInput(e.target.value.slice(0, MAX_INPUT_LENGTH))}
                   onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(input); } }}
-                  placeholder="Ask anything about Next Edge…"
+                  placeholder="Ask anything about nextedgetech…"
                   maxLength={MAX_INPUT_LENGTH}
                   className="flex-1 bg-transparent text-sm text-white placeholder:text-white/25 outline-none"
                 />
@@ -421,7 +421,7 @@ export function AiAssistant() {
                 </button>
               </div>
               <p className="text-center text-[9px] text-white/15 mt-2 tracking-wide">
-                Powered by Next Edge Digital · AI may make mistakes
+                Powered by nextedgetech · AI may make mistakes
               </p>
             </div>
           </motion.div>

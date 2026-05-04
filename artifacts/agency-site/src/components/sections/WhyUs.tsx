@@ -46,7 +46,7 @@ export function WhyUs() {
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-xs font-semibold tracking-[0.3em] uppercase text-primary mb-3">Why Next Edge</p>
+            <p className="text-xs font-semibold tracking-[0.3em] uppercase text-primary mb-3">Why nextedgetech</p>
             <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-[0.95]">
               Not Another Agency.<br />
               <span

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { SiWhatsapp } from "react-icons/si";
 import { ArrowRight, CalendarCheck, Globe, ShieldCheck, CalendarDays } from "lucide-react";
 
-const WHATSAPP_URL = `https://wa.me/918218628232?text=${encodeURIComponent("Hi! I'd like to book a free strategy call with Next Edge Digital.")}`;
+const WHATSAPP_URL = `https://wa.me/918218628232?text=${encodeURIComponent("Hi! I'd like to book a free strategy call with nextedgetech.")}`;
 
 const perks = [
   {

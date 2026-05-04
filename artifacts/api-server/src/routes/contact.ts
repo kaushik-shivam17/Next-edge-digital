@@ -85,7 +85,7 @@ router.post("/contact", contactLimiter, async (req: Request, res: Response) => {
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0c0c0e; color: #ffffff; padding: 32px; border-radius: 12px;">
       <div style="border-bottom: 2px solid #CAA353; padding-bottom: 16px; margin-bottom: 24px;">
         <h2 style="margin: 0; color: #CAA353; font-size: 22px;">New Project Inquiry</h2>
-        <p style="margin: 4px 0 0; color: #888; font-size: 13px;">Next Edge Digital — Contact Form</p>
+        <p style="margin: 4px 0 0; color: #888; font-size: 13px;">nextedgetech — Contact Form</p>
       </div>
 
       <table style="width: 100%; border-collapse: collapse;">
@@ -121,14 +121,14 @@ router.post("/contact", contactLimiter, async (req: Request, res: Response) => {
       </div>
 
       <p style="margin-top: 24px; color: #555; font-size: 12px; text-align: center;">
-        Sent via Next Edge Digital contact form
+        Sent via nextedgetech contact form
       </p>
     </div>
   `;
 
   try {
     await transporter.sendMail({
-      from: `"Next Edge Digital" <${CONTACT_EMAIL}>`,
+      from: `"nextedgetech" <${CONTACT_EMAIL}>`,
       to: CONTACT_EMAIL,
       replyTo: safe.email,
       subject,

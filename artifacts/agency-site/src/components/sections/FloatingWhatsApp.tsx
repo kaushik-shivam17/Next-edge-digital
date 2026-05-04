@@ -64,7 +64,7 @@ export function FloatingWhatsApp() {
                     <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-white border-2 border-[#128C7E]" />
                   </div>
                   <div>
-                    <p className="text-white font-bold text-sm tracking-wide">Next Edge Digital</p>
+                    <p className="text-white font-bold text-sm tracking-wide">nextedgetech</p>
                     <div className="flex items-center gap-1.5 mt-0.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                       <p className="text-white/75 text-[11px] tracking-wide">Online · Replies instantly</p>

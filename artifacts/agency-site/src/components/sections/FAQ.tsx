@@ -34,7 +34,7 @@ const faqs = [
       "Yes. We offer monthly retainer packages for clients who want us to handle ongoing optimization, content, and growth. We also provide a 30-day post-launch support window for all website builds, so you're never left on your own.",
   },
   {
-    question: "What makes Next Edge different from other agencies?",
+    question: "What makes nextedgetech different from other agencies?",
     answer:
       "Most agencies sell you on pretty designs and disappear after launch. We're obsessed with outcomes — revenue, followers, leads, rankings. Every decision we make is tied to a measurable result. Our 98% client retention rate isn't an accident.",
   },

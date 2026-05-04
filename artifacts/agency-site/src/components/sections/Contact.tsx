@@ -8,7 +8,7 @@ import { ArrowRight, Mail, MapPin, Clock, CheckCircle2 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 
 const WHATSAPP_NUMBER = "918218628232";
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi! I'd like to discuss a project with Next Edge Digital.")}`;
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi! I'd like to discuss a project with nextedgetech.")}`;
 
 const CONTACT_EMAIL = "nextedgetech@rediffmail.com";
 
@@ -112,35 +112,28 @@ export function Contact() {
     setSubmitting(true);
 
     try {
-      const payload = {
-        access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
-        botcheck: false,
-        subject: `New Project Inquiry from ${formData.name} — ${formData.company || "Unknown"}`,
-        from_name: formData.name,
-        replyto: formData.email,
-        name: formData.name,
-        company: formData.company || "—",
-        email: formData.email,
-        country: formData.country || "—",
-        service: formData.service || "—",
-        budget: formData.budget || "—",
-        message: formData.message,
-      };
-
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          company: formData.company,
+          email: formData.email,
+          country: formData.country,
+          service: formData.service,
+          budget: formData.budget,
+          message: formData.message,
+        }),
       });
 
-      const data = await res.json() as { success: boolean; message?: string };
+      const data = await res.json() as { success?: boolean; error?: string };
 
-      if (data.success) {
+      if (res.ok && data.success) {
         lastSubmitRef.current = Date.now();
         setSubmitted(true);
         toast({ title: "Inquiry Received", description: "Our partners will personally review your submission within 24 hours." });
       } else {
-        toast({ title: "Something went wrong", description: "Please try again or reach us on WhatsApp.", variant: "destructive" });
+        toast({ title: "Something went wrong", description: data.error ?? "Please try again or reach us on WhatsApp.", variant: "destructive" });
       }
     } catch {
       toast({ title: "Network error", description: "Please try again or reach us on WhatsApp.", variant: "destructive" });

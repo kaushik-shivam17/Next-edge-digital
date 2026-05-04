@@ -5,7 +5,7 @@ import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 const testimonials = [
   {
     quote:
-      "Next Edge Digital rebuilt our entire Shopify store and took over our Instagram and Meta ads. In 5 months, our monthly orders went from 800 to nearly 2,600. I was skeptical at first — now I tell every founder I know to call them before anyone else.",
+      "nextedgetech rebuilt our entire Shopify store and took over our Instagram and Meta ads. In 5 months, our monthly orders went from 800 to nearly 2,600. I was skeptical at first — now I tell every founder I know to call them before anyone else.",
     author: "Rahul Sharma",
     role: "Co-Founder",
     company: "Kova Skincare",
@@ -16,7 +16,7 @@ const testimonials = [
   },
   {
     quote:
-      "We were burning money on ads that weren't converting. Next Edge audited everything, rebuilt our landing pages, and restructured our funnel. Our cost per acquisition dropped by 60% in the first 8 weeks. The team is sharp, fast, and genuinely cares.",
+      "We were burning money on ads that weren't converting. nextedgetech audited everything, rebuilt our landing pages, and restructured our funnel. Our cost per acquisition dropped by 60% in the first 8 weeks. The team is sharp, fast, and genuinely cares.",
     author: "Priya Mehta",
     role: "Head of Growth",
     company: "NestFin",
@@ -27,7 +27,7 @@ const testimonials = [
   },
   {
     quote:
-      "Working with Next Edge feels like having an elite in-house team. They rebranded ScaleTech end-to-end — website, pitch deck, LinkedIn presence. Within a quarter we closed two enterprise contracts we'd been chasing for over a year. Exceptional work.",
+      "Working with nextedgetech feels like having an elite in-house team. They rebranded ScaleTech end-to-end — website, pitch deck, LinkedIn presence. Within a quarter we closed two enterprise contracts we'd been chasing for over a year. Exceptional work.",
     author: "David Chen",
     role: "Founder & CEO",
     company: "ScaleTech",
@@ -38,7 +38,7 @@ const testimonials = [
   },
   {
     quote:
-      "Our Instagram went from 14K to 580K followers in 8 months. But more importantly, the content actually drives showroom walk-ins now. Next Edge understood our brand voice immediately and executed without hand-holding. Rare and valuable.",
+      "Our Instagram went from 14K to 580K followers in 8 months. But more importantly, the content actually drives showroom walk-ins now. nextedgetech understood our brand voice immediately and executed without hand-holding. Rare and valuable.",
     author: "James Harlow",
     role: "Brand Director",
     company: "Apex Motors",
@@ -60,7 +60,7 @@ const testimonials = [
   },
   {
     quote:
-      "We rebranded our architecture firm with Next Edge and raised our project fees by 40% the same year. Clients started coming to us — not the other way around. The website and brand positioning they built is simply in a different league.",
+      "We rebranded our architecture firm with nextedgetech and raised our project fees by 40% the same year. Clients started coming to us — not the other way around. The website and brand positioning they built is simply in a different league.",
     author: "Marcus Thorne",
     role: "Principal Architect",
     company: "Thorne Studio",

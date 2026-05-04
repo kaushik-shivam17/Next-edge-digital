@@ -33,8 +33,7 @@ export function Footer() {
                 <span className="relative text-xs font-black text-primary-foreground tracking-tighter leading-none">NE</span>
               </div>
               <div className="flex flex-col leading-none">
-                <span className="text-sm font-bold tracking-widest uppercase text-foreground">Next Edge</span>
-                <span className="text-[10px] tracking-[0.3em] uppercase text-primary font-medium">Digital</span>
+                <span className="text-sm font-bold tracking-widest uppercase text-foreground">nextedgetech</span>
               </div>
             </div>
             <p className="text-foreground/40 text-sm leading-relaxed max-w-xs mb-8">
@@ -119,7 +118,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="py-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-[11px] text-foreground/25 tracking-wide">
-            &copy; {new Date().getFullYear()} Next Edge Digital. All rights reserved.
+            &copy; {new Date().getFullYear()} nextedgetech. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             {["Privacy Policy", "Terms of Service", "Cookie Policy"].map((item) => (

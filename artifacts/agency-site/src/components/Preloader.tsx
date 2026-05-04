@@ -89,10 +89,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
                 </span>
               </div>
               <div className="flex flex-col leading-none">
-                <span className="text-base font-bold tracking-widest uppercase text-white">Next Edge</span>
-                <span className="text-[11px] tracking-[0.3em] uppercase font-medium" style={{ color: "#CAA353" }}>
-                  Digital
-                </span>
+                <span className="text-base font-bold tracking-widest uppercase text-white">nextedgetech</span>
               </div>
             </motion.div>
 
