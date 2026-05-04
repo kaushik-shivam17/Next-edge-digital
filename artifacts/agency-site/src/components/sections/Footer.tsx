@@ -42,13 +42,15 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-3">
               {[
-                { icon: SiX, href: "#", label: "X (Twitter)" },
-                { icon: SiInstagram, href: "#", label: "Instagram" },
-                { icon: SiDribbble, href: "#", label: "Dribbble" },
+                { icon: SiX, href: "https://x.com/nextedgedigital", label: "X (Twitter)" },
+                { icon: SiInstagram, href: "https://instagram.com/nextedgedigital", label: "Instagram" },
+                { icon: SiDribbble, href: "https://dribbble.com/nextedgedigital", label: "Dribbble" },
               ].map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}
                   href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={label}
                   data-testid={`link-social-${label.toLowerCase().replace(/[^a-z]/g, "")}`}
                   className="w-11 h-11 md:w-9 md:h-9 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-foreground/40 hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all duration-300"
@@ -57,7 +59,9 @@ export function Footer() {
                 </a>
               ))}
               <a
-                href="#"
+                href="https://linkedin.com/company/nextedgedigital"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="LinkedIn"
                 data-testid="link-social-linkedin"
                 className="w-11 h-11 md:w-9 md:h-9 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-foreground/40 hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all duration-300"
@@ -119,9 +123,9 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-6">
             {["Privacy Policy", "Terms of Service", "Cookie Policy"].map((item) => (
-              <a key={item} href="#" className="text-[11px] text-foreground/25 hover:text-foreground/50 transition-colors tracking-wide">
+              <span key={item} className="text-[11px] text-foreground/25 tracking-wide cursor-default">
                 {item}
-              </a>
+              </span>
             ))}
           </div>
         </div>

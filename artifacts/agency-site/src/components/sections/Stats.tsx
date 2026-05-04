@@ -5,6 +5,7 @@ const stats = [
   {
     value: 42,
     suffix: "+",
+    prefix: "",
     label: "Projects Delivered",
     description: "Across multiple industries worldwide",
     accent: "#CAA353",
@@ -12,6 +13,7 @@ const stats = [
   {
     value: 98,
     suffix: "%",
+    prefix: "",
     label: "Client Retention Rate",
     description: "Clients who stay, grow, and scale",
     accent: "#CAA353",
@@ -19,6 +21,7 @@ const stats = [
   {
     value: 3,
     suffix: "+",
+    prefix: "",
     label: "Countries Served",
     description: "Clients across continents",
     accent: "#CAA353",
@@ -26,6 +29,7 @@ const stats = [
   {
     value: 6,
     suffix: "+",
+    prefix: "",
     label: "Years Experience",
     description: "Delivering results since 2019",
     accent: "#CAA353",

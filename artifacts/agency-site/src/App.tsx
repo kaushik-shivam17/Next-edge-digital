@@ -164,7 +164,7 @@ function AgencySite() {
           }}
         >
           <div className="container flex items-center justify-between h-20 px-4 md:px-6">
-            <a href="#" className="flex items-center gap-3 group" data-testid="link-logo" onClick={() => lenisRef.current?.scrollTo(0, { duration: 1.4 })}>
+            <a href="#" className="flex items-center gap-3 group" data-testid="link-logo" onClick={(e) => { e.preventDefault(); if (lenisRef.current) { lenisRef.current.scrollTo(0, { duration: 1.4 }); } else { window.scrollTo({ top: 0, behavior: "smooth" }); } }}>
               <div className="relative w-9 h-9 flex items-center justify-center">
                 <div
                   className="absolute inset-0 rotate-6 group-hover:rotate-[20deg] transition-transform duration-500"

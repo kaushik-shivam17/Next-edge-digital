@@ -43,10 +43,9 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          "react-vendor":   ["react", "react-dom"],
-          "motion-vendor":  ["framer-motion"],
-          "lenis-vendor":   ["lenis"],
-          "query-vendor":   ["@tanstack/react-query"],
+          "react-vendor":  ["react", "react-dom"],
+          "motion-vendor": ["framer-motion"],
+          "lenis-vendor":  ["lenis"],
         },
       },
     },
