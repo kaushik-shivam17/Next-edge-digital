@@ -97,18 +97,45 @@ export function Contact() {
     setStep((s) => Math.max(s - 1, 0));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!canAdvance()) return;
+    setSubmitting(true);
 
-    const subject = encodeURIComponent(`New Project Inquiry from ${formData.name} — ${formData.company}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nCompany: ${formData.company}\nEmail: ${formData.email}\nCountry: ${formData.country || "Not specified"}\n\nService Needed: ${formData.service}\nBudget: ${formData.budget || "Not specified"}\n\nProject Details:\n${formData.message}`
-    );
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+    try {
+      const payload = {
+        access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
+        subject: `New Project Inquiry from ${formData.name} — ${formData.company || "Unknown"}`,
+        from_name: formData.name,
+        replyto: formData.email,
+        name: formData.name,
+        company: formData.company || "—",
+        email: formData.email,
+        country: formData.country || "—",
+        service: formData.service || "—",
+        budget: formData.budget || "—",
+        message: formData.message,
+      };
 
-    setSubmitted(true);
-    toast({ title: "Inquiry Received", description: "Our partners will personally review your submission within 24 hours." });
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json() as { success: boolean; message?: string };
+
+      if (data.success) {
+        setSubmitted(true);
+        toast({ title: "Inquiry Received", description: "Our partners will personally review your submission within 24 hours." });
+      } else {
+        toast({ title: "Something went wrong", description: "Please try again or reach us on WhatsApp.", variant: "destructive" });
+      }
+    } catch {
+      toast({ title: "Network error", description: "Please try again or reach us on WhatsApp.", variant: "destructive" });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -412,7 +439,7 @@ export function Contact() {
                         ) : (
                           <button
                             type="submit"
-                            disabled={!canAdvance()}
+                            disabled={!canAdvance() || submitting}
                             data-testid="button-submit"
                             className="flex-1 flex items-center justify-center gap-2 h-12 text-xs font-bold tracking-widest uppercase rounded-sm transition-all duration-300 group disabled:opacity-40 disabled:cursor-not-allowed"
                             style={{
@@ -420,8 +447,8 @@ export function Contact() {
                               color: "#0c0c0e",
                             }}
                           >
-                            Submit Inquiry
-                            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                            {submitting ? "Sending…" : "Submit Inquiry"}
+                            {!submitting && <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />}
                           </button>
                         )}
                       </div>
