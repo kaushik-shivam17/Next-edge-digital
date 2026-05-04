@@ -96,14 +96,14 @@ const plans = [
 
 function useCurrency() {
   const [currency, setCurrency] = useState<Currency>(currencies.DEFAULT);
-  const [country,  setCountry]  = useState("US");
+  const [country,  setCountry]  = useState("IN");
   const [loading,  setLoading]  = useState(true);
 
   useEffect(() => {
     fetch("https://ipapi.co/json/")
       .then((r) => r.json())
       .then((d) => {
-        const c = d.country_code || "US";
+        const c = d.country_code || "IN";
         setCountry(c);
         setCurrency(currencies[c] ?? currencies.DEFAULT);
       })

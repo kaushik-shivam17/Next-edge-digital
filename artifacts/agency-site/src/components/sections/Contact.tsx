@@ -21,7 +21,7 @@ const contactDetails = [
 const services = [
   "Website Design & Development",
   "Social Media Management",
-  "Brand Identity",
+  
   "SEO & Organic Growth",
   "Digital Strategy",
   "Full-Service Package",
@@ -112,28 +112,35 @@ export function Contact() {
     setSubmitting(true);
 
     try {
-      const res = await fetch("/api/contact", {
+      const payload = {
+        access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
+        botcheck: false,
+        subject: `New Project Inquiry from ${formData.name} — ${formData.company || "Unknown"}`,
+        from_name: formData.name,
+        replyto: formData.email,
+        name: formData.name,
+        company: formData.company || "—",
+        email: formData.email,
+        country: formData.country || "—",
+        service: formData.service || "—",
+        budget: formData.budget || "—",
+        message: formData.message,
+      };
+
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          company: formData.company,
-          email: formData.email,
-          country: formData.country,
-          service: formData.service,
-          budget: formData.budget,
-          message: formData.message,
-        }),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
       });
 
-      const data = await res.json() as { success?: boolean; error?: string };
+      const data = await res.json() as { success: boolean; message?: string };
 
-      if (res.ok && data.success) {
+      if (data.success) {
         lastSubmitRef.current = Date.now();
         setSubmitted(true);
         toast({ title: "Inquiry Received", description: "Our partners will personally review your submission within 24 hours." });
       } else {
-        toast({ title: "Something went wrong", description: data.error ?? "Please try again or reach us on WhatsApp.", variant: "destructive" });
+        toast({ title: "Something went wrong", description: "Please try again or reach us on WhatsApp.", variant: "destructive" });
       }
     } catch {
       toast({ title: "Network error", description: "Please try again or reach us on WhatsApp.", variant: "destructive" });
