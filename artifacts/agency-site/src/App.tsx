@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Lenis from "lenis";
 import { motion, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Menu, X } from "lucide-react";
@@ -26,7 +25,6 @@ import { NoiseOverlay } from "./components/NoiseOverlay";
 import { BackToTop } from "./components/BackToTop";
 import { AiAssistant } from "./components/AiAssistant";
 
-const queryClient = new QueryClient();
 
 const navLinks = [
   { label: "Work", href: "#work" },
@@ -298,12 +296,10 @@ function AgencySite() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <AgencySite />
-        <Toaster />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <TooltipProvider>
+      <AgencySite />
+      <Toaster />
+    </TooltipProvider>
   );
 }
 
