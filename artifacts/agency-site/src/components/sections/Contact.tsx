@@ -10,8 +10,10 @@ import { SiWhatsapp } from "react-icons/si";
 const WHATSAPP_NUMBER = "918218628232";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi! I'd like to discuss a project with Next Edge Digital.")}`;
 
+const CONTACT_EMAIL = "nextedgetech@rediffmail.com";
+
 const contactDetails = [
-  { icon: Mail, label: "General Inquiries", value: "hello@nextedgedigital.com", href: "mailto:hello@nextedgedigital.com" },
+  { icon: Mail, label: "General Inquiries", value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
   { icon: MapPin, label: "Studio", value: "Remote-first · Serving clients globally", href: "#" },
   { icon: Clock, label: "Response Time", value: "Within 24 hrs — any time zone", href: "#" },
 ];
@@ -97,6 +99,13 @@ export function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!canAdvance()) return;
+
+    const subject = encodeURIComponent(`New Project Inquiry from ${formData.name} — ${formData.company}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nCompany: ${formData.company}\nEmail: ${formData.email}\nCountry: ${formData.country || "Not specified"}\n\nService Needed: ${formData.service}\nBudget: ${formData.budget || "Not specified"}\n\nProject Details:\n${formData.message}`
+    );
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+
     setSubmitted(true);
     toast({ title: "Inquiry Received", description: "Our partners will personally review your submission within 24 hours." });
   };
