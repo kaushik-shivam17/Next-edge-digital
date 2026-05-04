@@ -72,6 +72,7 @@ export function Contact() {
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     name: "", company: "", email: "", country: "", service: "", budget: "", message: "",
   });
