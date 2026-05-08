@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Mail, Building2, Globe, Briefcase, DollarSign, MessageSquare, Calendar, LogOut, RefreshCw, Inbox } from "lucide-react";
+import { Mail, Building2, Globe, Briefcase, DollarSign, MessageSquare, Calendar, LogOut, RefreshCw, Inbox, Trash2 } from "lucide-react";
 
 type Submission = {
   id: string;
@@ -34,6 +34,8 @@ export function Admin() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [selected, setSelected] = useState<Submission | null>(null);
+  const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   const fetchSubmissions = async (adminKey: string) => {
     setLoading(true);
@@ -75,7 +77,26 @@ export function Admin() {
     setInputKey("");
     setSubmissions([]);
     setSelected(null);
+    setDeleteConfirm(null);
     sessionStorage.removeItem(ADMIN_KEY_STORAGE);
+  };
+
+  const handleDelete = async (id: string) => {
+    setDeleting(true);
+    try {
+      const res = await fetch(`/api/submissions/${id}`, {
+        method: "DELETE",
+        headers: { "x-admin-key": key },
+      });
+      if (!res.ok) throw new Error("Failed to delete");
+      setSubmissions((prev) => prev.filter((s) => s.id !== id));
+      if (selected?.id === id) setSelected(null);
+      setDeleteConfirm(null);
+    } catch {
+      // silently fail — submission stays in the list
+    } finally {
+      setDeleting(false);
+    }
   };
 
   if (!authed) {
@@ -191,28 +212,41 @@ export function Admin() {
           ) : (
             <div className="divide-y divide-white/[0.04]">
               {submissions.map((s) => (
-                <button
+                <div
                   key={s.id}
-                  onClick={() => setSelected(s)}
-                  className="w-full text-left px-5 py-4 hover:bg-white/[0.03] transition-colors group"
+                  className="relative group"
                   style={selected?.id === s.id ? { background: "rgba(202,163,83,0.06)", borderLeft: "2px solid rgba(202,163,83,0.5)" } : {}}
                 >
-                  <div className="flex items-start justify-between gap-2 mb-1">
-                    <p className="text-sm font-bold text-white truncate">{s.name}</p>
-                    <span className="text-[10px] text-white/25 whitespace-nowrap flex-shrink-0 mt-0.5">
-                      {new Date(s.createdAt).toLocaleDateString("en-IN", { day: "2-digit", month: "short" })}
-                    </span>
-                  </div>
-                  <p className="text-xs text-white/40 truncate">{s.company || s.email}</p>
-                  {s.service && (
-                    <span
-                      className="inline-block mt-2 px-2 py-0.5 rounded text-[10px] font-semibold"
-                      style={{ background: "rgba(202,163,83,0.1)", color: "#CAA353", border: "1px solid rgba(202,163,83,0.2)" }}
-                    >
-                      {s.service}
-                    </span>
-                  )}
-                </button>
+                  <button
+                    onClick={() => { setSelected(s); setDeleteConfirm(null); }}
+                    className="w-full text-left px-5 py-4 hover:bg-white/[0.03] transition-colors pr-12"
+                  >
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <p className="text-sm font-bold text-white truncate">{s.name}</p>
+                      <span className="text-[10px] text-white/25 whitespace-nowrap flex-shrink-0 mt-0.5">
+                        {new Date(s.createdAt).toLocaleDateString("en-IN", { day: "2-digit", month: "short" })}
+                      </span>
+                    </div>
+                    <p className="text-xs text-white/40 truncate">{s.company || s.email}</p>
+                    {s.service && (
+                      <span
+                        className="inline-block mt-2 px-2 py-0.5 rounded text-[10px] font-semibold"
+                        style={{ background: "rgba(202,163,83,0.1)", color: "#CAA353", border: "1px solid rgba(202,163,83,0.2)" }}
+                      >
+                        {s.service}
+                      </span>
+                    )}
+                  </button>
+
+                  {/* Delete button — appears on hover */}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setDeleteConfirm(s.id); setSelected(s); }}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-7 h-7 rounded-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500/20"
+                    title="Delete submission"
+                  >
+                    <Trash2 className="w-3.5 h-3.5 text-red-400" />
+                  </button>
+                </div>
               ))}
             </div>
           )}
@@ -231,7 +265,7 @@ export function Admin() {
             <div className="p-6 md:p-10 max-w-2xl w-full">
               {/* Mobile back button */}
               <button
-                onClick={() => setSelected(null)}
+                onClick={() => { setSelected(null); setDeleteConfirm(null); }}
                 className="md:hidden flex items-center gap-2 text-xs font-semibold text-white/40 hover:text-white mb-6 transition-colors"
               >
                 ← Back to list
@@ -275,7 +309,7 @@ export function Admin() {
                 ))}
               </div>
 
-              <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-6">
+              <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-6 mb-6">
                 <div className="flex items-center gap-2 mb-4">
                   <MessageSquare className="w-3.5 h-3.5 text-white/25" />
                   <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/25">Project Details</span>
@@ -283,7 +317,8 @@ export function Admin() {
                 <p className="text-sm text-white/70 leading-relaxed whitespace-pre-wrap">{selected.message}</p>
               </div>
 
-              <div className="mt-6 flex gap-3">
+              {/* Action buttons */}
+              <div className="flex flex-wrap gap-3">
                 <a
                   href={`mailto:${selected.email}?subject=Re: Your Project Inquiry — NextEdge Tech`}
                   className="flex items-center gap-2 px-5 py-3 rounded-lg text-xs font-bold tracking-wide uppercase transition-opacity hover:opacity-90"
@@ -292,6 +327,35 @@ export function Admin() {
                   <Mail className="w-3.5 h-3.5" />
                   Reply via Email
                 </a>
+
+                {deleteConfirm === selected.id ? (
+                  /* Confirmation state */
+                  <div className="flex items-center gap-2 px-4 py-3 rounded-lg border border-red-500/30 bg-red-500/10">
+                    <span className="text-xs text-red-300 font-semibold">Delete this submission?</span>
+                    <button
+                      onClick={() => handleDelete(selected.id)}
+                      disabled={deleting}
+                      className="px-3 py-1 rounded text-xs font-bold bg-red-500 text-white hover:bg-red-600 transition-colors disabled:opacity-50"
+                    >
+                      {deleting ? "Deleting…" : "Yes, delete"}
+                    </button>
+                    <button
+                      onClick={() => setDeleteConfirm(null)}
+                      disabled={deleting}
+                      className="px-3 py-1 rounded text-xs font-semibold text-white/40 hover:text-white transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setDeleteConfirm(selected.id)}
+                    className="flex items-center gap-2 px-5 py-3 rounded-lg text-xs font-bold tracking-wide uppercase border border-white/[0.08] text-white/40 hover:text-red-400 hover:border-red-500/30 transition-all"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    Delete
+                  </button>
+                )}
               </div>
             </div>
           )}

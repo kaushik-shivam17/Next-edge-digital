@@ -185,4 +185,38 @@ router.get("/submissions", adminReadLimiter, async (req: Request, res: Response)
   }
 });
 
+router.delete("/submissions/:id", adminReadLimiter, async (req: Request, res: Response) => {
+  const key = (req.headers["x-admin-key"] as string | undefined) ?? "";
+
+  if (!ADMIN_KEY) {
+    res.status(503).json({ error: "Admin access not configured. Set the ADMIN_KEY secret." });
+    return;
+  }
+
+  if (!safeCompareKey(key, ADMIN_KEY)) {
+    res.status(401).json({ error: "Unauthorized." });
+    return;
+  }
+
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id) || id <= 0) {
+    res.status(400).json({ error: "Invalid submission ID." });
+    return;
+  }
+
+  try {
+    const deleted = await db
+      .delete(contactSubmissions)
+      .where(eq(contactSubmissions.id, id))
+      .returning();
+    if (deleted.length === 0) {
+      res.status(404).json({ error: "Submission not found." });
+      return;
+    }
+    res.json({ success: true });
+  } catch {
+    res.status(500).json({ error: "Failed to delete submission." });
+  }
+});
+
 export default router;
