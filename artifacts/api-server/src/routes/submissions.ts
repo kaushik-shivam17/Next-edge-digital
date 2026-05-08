@@ -10,10 +10,7 @@ const router: IRouter = Router();
 
 const CONTACT_EMAIL = "nextedgetech@rediffmail.com";
 
-if (!process.env["ADMIN_KEY"]) {
-  throw new Error("ADMIN_KEY environment variable is required but not set.");
-}
-const ADMIN_KEY = process.env["ADMIN_KEY"];
+const ADMIN_KEY = process.env["ADMIN_KEY"] ?? "";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
