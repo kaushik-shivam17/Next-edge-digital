@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from "react";
+import { Switch, Route } from "wouter";
 import Lenis from "lenis";
 import { motion, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Menu, X } from "lucide-react";
+import { Admin } from "./components/Admin";
 
 import { Hero } from "./components/sections/Hero";
 import { TrustedBy } from "./components/sections/TrustedBy";
@@ -304,7 +306,10 @@ function AgencySite() {
 function App() {
   return (
     <TooltipProvider>
-      <AgencySite />
+      <Switch>
+        <Route path="/admin" component={Admin} />
+        <Route component={AgencySite} />
+      </Switch>
       <Toaster />
     </TooltipProvider>
   );

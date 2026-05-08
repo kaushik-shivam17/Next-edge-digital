@@ -137,6 +137,14 @@ export function Contact() {
 
       if (data.success) {
         lastSubmitRef.current = Date.now();
+
+        // Also save to our own database (fire-and-forget)
+        fetch("/api/submissions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }).catch(() => {});
+
         setSubmitted(true);
         toast({ title: "Inquiry Received", description: "Our partners will personally review your submission within 24 hours." });
       } else {
