@@ -307,8 +307,8 @@ function App() {
   return (
     <TooltipProvider>
       <Switch>
-        <Route path="/admin" component={Admin} />
-        <Route component={AgencySite} />
+        <Route path="/admin">{() => <Admin />}</Route>
+        <Route>{() => <AgencySite />}</Route>
       </Switch>
       <Toaster />
     </TooltipProvider>
