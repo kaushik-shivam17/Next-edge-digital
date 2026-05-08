@@ -1,14 +1,14 @@
 import { Router, type IRouter, type Request, type Response } from "express";
 import { rateLimit } from "express-rate-limit";
 import { timingSafeEqual } from "crypto";
-import { collection, addDoc, getDocs, orderBy, query, Timestamp } from "firebase/firestore";
-import { firestoreDb } from "../lib/firebase";
+import { db } from "@workspace/db";
+import { contactSubmissions } from "@workspace/db";
+import { desc } from "drizzle-orm";
 import nodemailer from "nodemailer";
 
 const router: IRouter = Router();
 
 const CONTACT_EMAIL = "nextedgetech@rediffmail.com";
-const COLLECTION = "submissions";
 
 if (!process.env["ADMIN_KEY"]) {
   throw new Error("ADMIN_KEY environment variable is required but not set.");
@@ -150,13 +150,12 @@ router.post("/submissions", submitLimiter, async (req: Request, res: Response) =
     service: (service ?? "").trim(),
     budget: (budget ?? "").trim(),
     message: message.trim(),
-    createdAt: Timestamp.now(),
   };
 
   try {
-    const docRef = await addDoc(collection(firestoreDb, COLLECTION), data);
+    const [row] = await db.insert(contactSubmissions).values(data).returning();
     sendNotificationEmail(data).catch(() => {});
-    res.json({ success: true, id: docRef.id });
+    res.json({ success: true, id: row!.id });
   } catch (err) {
     res.status(500).json({ error: "Failed to save submission." });
   }
@@ -171,25 +170,14 @@ router.get("/submissions", adminReadLimiter, async (req: Request, res: Response)
   }
 
   try {
-    const q = query(collection(firestoreDb, COLLECTION), orderBy("createdAt", "desc"));
-    const snapshot = await getDocs(q);
-    const rows = snapshot.docs.map((doc) => {
-      const d = doc.data();
-      return {
-        id: doc.id,
-        name: d.name ?? "",
-        company: d.company ?? "",
-        email: d.email ?? "",
-        country: d.country ?? "",
-        service: d.service ?? "",
-        budget: d.budget ?? "",
-        message: d.message ?? "",
-        createdAt: d.createdAt instanceof Timestamp
-          ? d.createdAt.toDate().toISOString()
-          : new Date().toISOString(),
-      };
-    });
-    res.json(rows);
+    const rows = await db
+      .select()
+      .from(contactSubmissions)
+      .orderBy(desc(contactSubmissions.createdAt));
+    res.json(rows.map((r) => ({
+      ...r,
+      createdAt: r.createdAt.toISOString(),
+    })));
   } catch {
     res.status(500).json({ error: "Failed to fetch submissions." });
   }
