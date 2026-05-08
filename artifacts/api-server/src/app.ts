@@ -36,10 +36,23 @@ app.use(
   }),
 );
 
+// FIX #6: Enable Content Security Policy — API-only server, restrict to basics
 app.use(
   helmet({
-    contentSecurityPolicy: false,
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'none'"],
+        frameAncestors: ["'none'"],
+      },
+    },
     crossOriginEmbedderPolicy: false,
+    // Ensure these security headers are on
+    xContentTypeOptions: true,
+    xFrameOptions: { action: "deny" },
+    strictTransportSecurity: {
+      maxAge: 31536000,
+      includeSubDomains: true,
+    },
   }),
 );
 
@@ -52,7 +65,8 @@ app.use(
       callback(new Error("Not allowed by CORS"));
     },
     methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type"],
+    // FIX #8: Declare x-admin-key so preflight requests don't block the admin panel
+    allowedHeaders: ["Content-Type", "x-admin-key"],
   }),
 );
 

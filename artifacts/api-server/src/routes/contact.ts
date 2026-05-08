@@ -49,7 +49,7 @@ router.post("/contact", contactLimiter, async (req: Request, res: Response) => {
   for (const [field, max] of Object.entries(MAX_LENGTHS)) {
     const val = fields[field];
     if (val && val.length > max) {
-      res.status(400).json({ error: `Field "${field}" exceeds maximum length of ${max} characters` });
+      res.status(400).json({ error: "One or more fields exceed the maximum allowed length." });
       return;
     }
   }
