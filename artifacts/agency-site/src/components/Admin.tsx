@@ -103,6 +103,7 @@ export function Admin() {
               <p className="text-white font-bold text-lg mb-1">Sign in</p>
               <p className="text-white/40 text-sm">Enter your admin key to view submissions.</p>
             </div>
+            <input type="text" name="username" autoComplete="username" defaultValue="admin" aria-hidden="true" className="hidden" tabIndex={-1} />
             <div className="space-y-2">
               <label className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/30">Admin Key</label>
               <input
@@ -110,6 +111,7 @@ export function Admin() {
                 value={inputKey}
                 onChange={(e) => setInputKey(e.target.value)}
                 placeholder="••••••••••••"
+                autoComplete="current-password"
                 required
                 className="w-full h-12 px-4 rounded-lg text-sm text-white placeholder:text-white/20 outline-none transition-colors"
                 style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)" }}
