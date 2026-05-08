@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Mail, Building2, Globe, Briefcase, DollarSign, MessageSquare, Calendar, LogOut, RefreshCw, Inbox } from "lucide-react";
 
 type Submission = {
-  id: number;
+  id: string;
   name: string;
   company: string;
   email: string;
