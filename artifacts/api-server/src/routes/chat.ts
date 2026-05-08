@@ -8,6 +8,18 @@ const MAX_MESSAGES = 20;
 const MAX_MESSAGE_LENGTH = 2000;
 const ALLOWED_ROLES = new Set(["user", "assistant"]);
 
+function realIp(req: import("express").Request): string {
+  if (process.env["NODE_ENV"] === "production") {
+    const xff = req.headers["x-forwarded-for"];
+    if (xff) {
+      const raw = Array.isArray(xff) ? xff[0] : xff;
+      const last = raw.split(",").pop()?.trim();
+      if (last) return last;
+    }
+  }
+  return req.socket.remoteAddress ?? req.ip ?? "unknown";
+}
+
 const chatLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 30,
@@ -15,6 +27,7 @@ const chatLimiter = rateLimit({
   legacyHeaders: false,
   message: { error: "Too many requests, please try again later." },
   skip: () => false,
+  keyGenerator: realIp,
 });
 
 const SYSTEM_PROMPT = `You are the AI assistant for nextedgetech — a premium digital agency. You ONLY answer questions about nextedgetech. If asked about anything unrelated to the agency, its services, portfolio, team, pricing, or process, politely redirect the user back to questions about the agency.

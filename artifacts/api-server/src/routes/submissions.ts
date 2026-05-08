@@ -30,7 +30,25 @@ function escapeHtml(str: string): string {
   );
 }
 
+const MAX_ADMIN_KEY_LENGTH = 512;
+
+function realIp(req: Request): string {
+  if (process.env["NODE_ENV"] === "production") {
+    // In production Replit appends the real client IP as the last X-Forwarded-For entry.
+    // Taking the last entry means a client-forged prefix is ignored.
+    const xff = req.headers["x-forwarded-for"];
+    if (xff) {
+      const raw = Array.isArray(xff) ? xff[0] : xff;
+      const last = raw.split(",").pop()?.trim();
+      if (last) return last;
+    }
+  }
+  // In development there is no trusted proxy — use the direct socket address.
+  return req.socket.remoteAddress ?? req.ip ?? "unknown";
+}
+
 function safeCompareKey(provided: string, expected: string): boolean {
+  if (provided.length > MAX_ADMIN_KEY_LENGTH) return false;
   try {
     const maxLen = Math.max(provided.length, expected.length);
     const a = Buffer.from(provided.padEnd(maxLen, "\0").slice(0, maxLen));
@@ -47,14 +65,16 @@ const submitLimiter = rateLimit({
   standardHeaders: "draft-8",
   legacyHeaders: false,
   message: { error: "Too many submissions. Please wait before trying again." },
+  keyGenerator: realIp,
 });
 
 const adminReadLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 20,
+  max: 10,
   standardHeaders: "draft-8",
   legacyHeaders: false,
   message: { error: "Too many requests." },
+  keyGenerator: realIp,
 });
 
 async function sendNotificationEmail(data: {
