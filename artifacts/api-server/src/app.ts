@@ -64,7 +64,7 @@ app.use(
       if (allowed) return callback(null, true);
       callback(new Error("Not allowed by CORS"));
     },
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "DELETE"],
     // FIX #8: Declare x-admin-key so preflight requests don't block the admin panel
     allowedHeaders: ["Content-Type", "x-admin-key"],
   }),

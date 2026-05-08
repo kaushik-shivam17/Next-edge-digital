@@ -3,7 +3,7 @@ import { rateLimit } from "express-rate-limit";
 import { timingSafeEqual } from "crypto";
 import { db } from "@workspace/db";
 import { contactSubmissions } from "@workspace/db";
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import nodemailer from "nodemailer";
 
 const router: IRouter = Router();
