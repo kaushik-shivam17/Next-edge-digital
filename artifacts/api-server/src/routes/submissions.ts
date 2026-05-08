@@ -161,6 +161,11 @@ router.post("/submissions", submitLimiter, async (req: Request, res: Response) =
 router.get("/submissions", adminReadLimiter, async (req: Request, res: Response) => {
   const key = (req.headers["x-admin-key"] as string | undefined) ?? "";
 
+  if (!ADMIN_KEY) {
+    res.status(503).json({ error: "Admin access not configured. Set the ADMIN_KEY secret." });
+    return;
+  }
+
   if (!safeCompareKey(key, ADMIN_KEY)) {
     res.status(401).json({ error: "Unauthorized." });
     return;
