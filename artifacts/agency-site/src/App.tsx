@@ -24,8 +24,6 @@ import { CustomCursor } from "./components/CustomCursor";
 import { NoiseOverlay } from "./components/NoiseOverlay";
 import { BackToTop } from "./components/BackToTop";
 import { AiAssistant } from "./components/AiAssistant";
-import { Preloader } from "./components/Preloader";
-
 
 const navLinks = [
   { label: "Work", href: "#work" },
@@ -47,7 +45,6 @@ function AgencySite() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [isHoverDevice, setIsHoverDevice] = useState(false);
-  const [preloaderDone, setPreloaderDone] = useState(false);
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
@@ -123,10 +120,6 @@ function AgencySite() {
       className="relative min-h-screen bg-background text-foreground dark selection:bg-primary selection:text-primary-foreground font-sans"
       style={{ cursor: isHoverDevice ? "none" : "auto" }}
     >
-        <AnimatePresence>
-          {!preloaderDone && <Preloader onComplete={() => setPreloaderDone(true)} />}
-        </AnimatePresence>
-
         {/* Fixed floating elements are siblings of the animated wrapper — never inside a transformed parent */}
         {isHoverDevice && <CustomCursor />}
         <FloatingWhatsApp />
