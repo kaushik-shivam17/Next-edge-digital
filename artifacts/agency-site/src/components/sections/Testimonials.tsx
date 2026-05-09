@@ -180,7 +180,7 @@ export function Testimonials() {
           onMouseLeave={() => setPaused(false)}
         >
           <div
-            className="relative rounded-2xl overflow-hidden p-10 md:p-16"
+            className="relative rounded-2xl overflow-hidden p-5 sm:p-10 md:p-16"
             style={{
               background: "rgba(255,255,255,0.02)",
               border: "1px solid rgba(255,255,255,0.06)",

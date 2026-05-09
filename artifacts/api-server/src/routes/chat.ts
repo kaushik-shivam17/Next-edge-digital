@@ -1,5 +1,5 @@
 import { Router, type IRouter, type Request, type Response } from "express";
-import { rateLimit } from "express-rate-limit";
+import { rateLimit, ipKeyGenerator } from "express-rate-limit";
 import { openai } from "@workspace/integrations-openai-ai-server";
 
 const router: IRouter = Router();
@@ -27,7 +27,7 @@ const chatLimiter = rateLimit({
   legacyHeaders: false,
   message: { error: "Too many requests, please try again later." },
   skip: () => false,
-  keyGenerator: realIp,
+  keyGenerator: (req) => ipKeyGenerator(req, realIp(req)),
 });
 
 const SYSTEM_PROMPT = `You are the AI assistant for nextedgetech — a premium digital agency. You ONLY answer questions about nextedgetech. If asked about anything unrelated to the agency, its services, portfolio, team, pricing, or process, politely redirect the user back to questions about the agency.

@@ -1,5 +1,5 @@
 import { Router, type IRouter, type Request, type Response } from "express";
-import { rateLimit } from "express-rate-limit";
+import { rateLimit, ipKeyGenerator } from "express-rate-limit";
 import { timingSafeEqual } from "crypto";
 import { db } from "@workspace/db";
 import { contactSubmissions } from "@workspace/db";
@@ -65,7 +65,7 @@ const submitLimiter = rateLimit({
   standardHeaders: "draft-8",
   legacyHeaders: false,
   message: { error: "Too many submissions. Please wait before trying again." },
-  keyGenerator: realIp,
+  keyGenerator: (req) => ipKeyGenerator(req, realIp(req)),
 });
 
 const adminReadLimiter = rateLimit({
@@ -74,7 +74,7 @@ const adminReadLimiter = rateLimit({
   standardHeaders: "draft-8",
   legacyHeaders: false,
   message: { error: "Too many requests." },
-  keyGenerator: realIp,
+  keyGenerator: (req) => ipKeyGenerator(req, realIp(req)),
 });
 
 async function sendNotificationEmail(data: {

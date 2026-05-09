@@ -211,7 +211,7 @@ export function Contact() {
             className="lg:col-span-3 order-1 lg:order-2"
           >
             <div
-              className="bg-card p-8 md:p-12 rounded-2xl border border-white/5 relative overflow-hidden"
+              className="bg-card p-5 sm:p-8 md:p-12 rounded-2xl border border-white/5 relative overflow-hidden"
               data-testid="form-contact"
             >
               <AnimatePresence mode="wait">

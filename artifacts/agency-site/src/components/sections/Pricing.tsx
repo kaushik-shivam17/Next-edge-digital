@@ -135,11 +135,7 @@ function PlanCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.75, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      className="relative flex flex-col"
-      style={{
-        borderLeft: "1px solid rgba(255,255,255,0.07)",
-        borderRight: index === plans.length - 1 ? "1px solid rgba(255,255,255,0.07)" : "none",
-      }}
+      className={`relative flex flex-col md:border-l md:border-white/[0.07] ${index === plans.length - 1 ? "md:border-r md:border-white/[0.07]" : ""}`}
     >
       {/* Featured top bar */}
       {plan.featured && (
@@ -149,7 +145,7 @@ function PlanCard({
         />
       )}
 
-      <div className="flex flex-col h-full px-8 md:px-10 pt-10 pb-10">
+      <div className="flex flex-col h-full px-6 md:px-10 pt-8 pb-8 md:pt-10 md:pb-10">
 
         {/* Roman numeral */}
         <p
