@@ -27,7 +27,7 @@ const chatLimiter = rateLimit({
   legacyHeaders: false,
   message: { error: "Too many requests, please try again later." },
   skip: () => false,
-  keyGenerator: (req) => ipKeyGenerator(req, realIp(req)),
+  keyGenerator: (req) => ipKeyGenerator(realIp(req)),
 });
 
 const SYSTEM_PROMPT = `You are the AI assistant for nextedgetech — a premium digital agency. You ONLY answer questions about nextedgetech. If asked about anything unrelated to the agency, its services, portfolio, team, pricing, or process, politely redirect the user back to questions about the agency.

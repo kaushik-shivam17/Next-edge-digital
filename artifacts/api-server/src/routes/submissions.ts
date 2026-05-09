@@ -65,7 +65,7 @@ const submitLimiter = rateLimit({
   standardHeaders: "draft-8",
   legacyHeaders: false,
   message: { error: "Too many submissions. Please wait before trying again." },
-  keyGenerator: (req) => ipKeyGenerator(req, realIp(req)),
+  keyGenerator: (req) => ipKeyGenerator(realIp(req)),
 });
 
 const adminReadLimiter = rateLimit({
@@ -74,7 +74,7 @@ const adminReadLimiter = rateLimit({
   standardHeaders: "draft-8",
   legacyHeaders: false,
   message: { error: "Too many requests." },
-  keyGenerator: (req) => ipKeyGenerator(req, realIp(req)),
+  keyGenerator: (req) => ipKeyGenerator(realIp(req)),
 });
 
 async function sendNotificationEmail(data: {
@@ -196,7 +196,7 @@ router.get("/submissions", adminReadLimiter, async (req: Request, res: Response)
       .select()
       .from(contactSubmissions)
       .orderBy(desc(contactSubmissions.createdAt));
-    res.json(rows.map((r) => ({
+    res.json(rows.map((r: typeof contactSubmissions.$inferSelect) => ({
       ...r,
       createdAt: r.createdAt.toISOString(),
     })));
