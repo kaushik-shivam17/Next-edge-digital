@@ -53,4 +53,33 @@
     <priority>0.78</priority>
   </url>
 
+  <!-- Individual AI Service Pages -->
+  <url>
+    <loc>https://coreelitedigital.com/ai/call-management</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.93</priority>
+  </url>
+
+  <url>
+    <loc>https://coreelitedigital.com/ai/whatsapp</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.93</priority>
+  </url>
+
+  <url>
+    <loc>https://coreelitedigital.com/ai/social-media</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+  </url>
+
+  <url>
+    <loc>https://coreelitedigital.com/ai/site-building</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+  </url>
+
 </urlset>

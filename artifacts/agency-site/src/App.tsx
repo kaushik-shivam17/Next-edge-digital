@@ -8,6 +8,10 @@ import { Menu, X } from "lucide-react";
 import { Admin } from "./components/Admin";
 import { ServicesPage } from "./pages/ServicesPage";
 import { AiPage } from "./pages/AiPage";
+import { AiCallPage } from "./pages/AiCallPage";
+import { AiWhatsAppPage } from "./pages/AiWhatsAppPage";
+import { AiSocialPage } from "./pages/AiSocialPage";
+import { AiSitePage } from "./pages/AiSitePage";
 import { PortfolioPage } from "./pages/PortfolioPage";
 import { AboutPage } from "./pages/AboutPage";
 import { ContactPage } from "./pages/ContactPage";
@@ -325,6 +329,10 @@ function App() {
         <Route path="/admin">{() => <Admin />}</Route>
         <Route path="/services">{() => <ServicesPage />}</Route>
         <Route path="/ai-solutions">{() => <AiPage />}</Route>
+        <Route path="/ai/call-management">{() => <AiCallPage />}</Route>
+        <Route path="/ai/whatsapp">{() => <AiWhatsAppPage />}</Route>
+        <Route path="/ai/social-media">{() => <AiSocialPage />}</Route>
+        <Route path="/ai/site-building">{() => <AiSitePage />}</Route>
         <Route path="/portfolio">{() => <PortfolioPage />}</Route>
         <Route path="/about">{() => <AboutPage />}</Route>
         <Route path="/contact">{() => <ContactPage />}</Route>
