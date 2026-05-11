@@ -109,12 +109,12 @@ export function Admin() {
               style={{ width: 44, height: 44, padding: 1.5, background: "linear-gradient(135deg, #8B6914 0%, #CAA353 55%, #F0C97A 100%)", borderRadius: 10, boxSizing: "border-box" }}
             >
               <div className="w-full h-full flex items-center justify-center" style={{ background: "#0c0c0e", borderRadius: 8 }}>
-                <span className="font-black" style={{ fontSize: 13, background: "linear-gradient(135deg, #CAA353, #F0C97A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>NE</span>
+                <span className="font-black" style={{ fontSize: 13, background: "linear-gradient(135deg, #CAA353, #F0C97A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>CE</span>
               </div>
               <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full" style={{ background: "#F0C97A", boxShadow: "0 0 8px rgba(240,201,122,0.95)" }} />
             </div>
             <div>
-              <p className="text-xs font-black tracking-widest uppercase text-white">NextEdge</p>
+              <p className="text-xs font-black tracking-widest uppercase text-white">Core Elite</p>
               <p className="text-[10px] font-bold tracking-[0.4em] uppercase" style={{ color: "#CAA353" }}>Admin</p>
             </div>
           </div>
@@ -165,11 +165,11 @@ export function Admin() {
             style={{ width: 36, height: 36, padding: 1.5, background: "linear-gradient(135deg, #8B6914 0%, #CAA353 55%, #F0C97A 100%)", borderRadius: 8, boxSizing: "border-box" }}
           >
             <div className="w-full h-full flex items-center justify-center" style={{ background: "#0c0c0e", borderRadius: 6 }}>
-              <span className="font-black" style={{ fontSize: 11, background: "linear-gradient(135deg, #CAA353, #F0C97A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>NE</span>
+              <span className="font-black" style={{ fontSize: 11, background: "linear-gradient(135deg, #CAA353, #F0C97A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>CE</span>
             </div>
           </div>
           <div>
-            <p className="text-xs font-black tracking-widest uppercase text-white leading-none">NextEdge</p>
+            <p className="text-xs font-black tracking-widest uppercase text-white leading-none">Core Elite</p>
             <p className="text-[9px] font-bold tracking-[0.4em] uppercase leading-none mt-0.5" style={{ color: "#CAA353" }}>Admin</p>
           </div>
         </div>
@@ -320,7 +320,7 @@ export function Admin() {
               {/* Action buttons */}
               <div className="flex flex-wrap gap-3">
                 <a
-                  href={`mailto:${selected.email}?subject=Re: Your Project Inquiry — NextEdge Tech`}
+                  href={`mailto:${selected.email}?subject=Re: Your Project Inquiry — Core Elite Digital`}
                   className="flex items-center gap-2 px-5 py-3 rounded-lg text-xs font-bold tracking-wide uppercase transition-opacity hover:opacity-90"
                   style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)", color: "#0c0c0e" }}
                 >

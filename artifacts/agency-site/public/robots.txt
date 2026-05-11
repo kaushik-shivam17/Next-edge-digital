@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nextedgetech.com/sitemap.xml
+Sitemap: https://coreelitedigital.com/sitemap.xml
 
 # Block admin
 User-agent: *

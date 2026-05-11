@@ -101,7 +101,7 @@ async function sendNotificationEmail(data: {
     auth: { user: CONTACT_EMAIL, pass: smtpPass },
   });
 
-  const subject = `New Inquiry: ${safe.name}${safe.company ? ` — ${safe.company}` : ""}`;
+  const subject = `New Inquiry: ${safe.name}${safe.company ? ` — ${safe.company}` : ""}`.replace(/[\r\n]/g, " ");
 
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0c0c0e; color: #ffffff; padding: 32px; border-radius: 12px;">
