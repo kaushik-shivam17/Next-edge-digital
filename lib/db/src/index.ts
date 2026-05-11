@@ -15,18 +15,17 @@ function sanitizeConnectionString(url: string): string {
   return `postgresql://${encodeURIComponent(user)}:${encodeURIComponent(password)}@${hostpart}`;
 }
 
-const raw = process.env.SUPABASE_DATABASE_URL || process.env.DATABASE_URL;
+const raw = process.env.DATABASE_URL;
 
 if (!raw) {
-  throw new Error("SUPABASE_DATABASE_URL or DATABASE_URL must be set.");
+  throw new Error("DATABASE_URL must be set.");
 }
 
-const isSupabase = raw.includes("supabase.co");
-const connectionString = isSupabase ? sanitizeConnectionString(raw) : raw;
+const connectionString = raw;
 
 export const pool = new Pool({
   connectionString,
-  ssl: isSupabase ? { rejectUnauthorized: false } : false,
+  ssl: false,
 });
 export const db = drizzle(pool, { schema });
 
