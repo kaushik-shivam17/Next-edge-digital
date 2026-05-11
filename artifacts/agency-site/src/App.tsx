@@ -153,6 +153,8 @@ function AgencySite() {
 
         {/* Navbar */}
         <nav
+          aria-label="Main navigation"
+          role="navigation"
           data-nav-container
           className="fixed top-0 left-0 right-0 z-40 transition-all duration-500"
           style={{
@@ -165,6 +167,7 @@ function AgencySite() {
             <a
               href="#"
               className="flex items-center gap-3 group"
+              aria-label="Core Elite Digital — Go to homepage"
               data-testid="link-logo"
               onClick={(e) => {
                 e.preventDefault();
@@ -290,7 +293,7 @@ function AgencySite() {
           </AnimatePresence>
         </nav>
 
-        <main>
+        <main id="main-content" aria-label="Core Elite Digital — AI-Powered Digital Agency">
           <Hero />
           <TrustedBy />
           <Portfolio />
