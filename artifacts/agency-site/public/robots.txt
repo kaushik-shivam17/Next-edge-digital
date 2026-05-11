@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nextedgetech.com/sitemap.xml
+
+# Block admin
+User-agent: *
+Disallow: /admin

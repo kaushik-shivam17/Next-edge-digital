@@ -10,7 +10,6 @@ const services = [
     description:
       "Comprehensive roadmaps that align your digital presence with aggressive growth targets. Every decision is data-driven, purposeful, and built to win.",
     tags: ["Market Research", "Competitive Analysis", "Growth Planning"],
-    accent: "from-primary/15 to-amber-600/5",
   },
   {
     icon: MonitorSmartphone,
@@ -19,7 +18,6 @@ const services = [
     description:
       "Cinematic, high-performance web experiences engineered to convert. We obsess over every interaction until your site feels like a premium product, not a brochure.",
     tags: ["UI/UX Design", "Custom Development", "Performance Optimization"],
-    accent: "from-primary/15 to-amber-600/5",
   },
   {
     icon: Share2,
@@ -28,7 +26,6 @@ const services = [
     description:
       "We build commanding social narratives that dominate feeds, build cult-level brand followings, and turn passive scrollers into loyal customers.",
     tags: ["Content Strategy", "Community Building", "Paid Social"],
-    accent: "from-primary/15 to-amber-600/5",
   },
   {
     icon: PenTool,
@@ -37,7 +34,6 @@ const services = [
     description:
       "Visual systems and messaging frameworks that project authority, command premium pricing, and make your brand instantly recognizable in any market.",
     tags: ["Logo & Identity", "Brand Guidelines", "Messaging Framework"],
-    accent: "from-primary/15 to-amber-600/5",
   },
   {
     icon: TrendingUp,
@@ -46,7 +42,6 @@ const services = [
     description:
       "Data-driven organic acceleration that puts you in front of high-intent customers exactly when they're ready to buy. We don't chase vanity metrics.",
     tags: ["Technical SEO", "Content Marketing", "Link Acquisition"],
-    accent: "from-primary/15 to-amber-600/5",
   },
   {
     icon: BarChart3,
@@ -55,7 +50,6 @@ const services = [
     description:
       "Full-funnel transparency so you always know what's working and why. Custom dashboards that turn raw data into decisions that compound over time.",
     tags: ["GA4 Setup", "Conversion Tracking", "Monthly Reporting"],
-    accent: "from-primary/15 to-amber-600/5",
   },
 ];
 
@@ -110,36 +104,22 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           willChange: "transform",
         }}
       >
-        {/* Glare layer */}
         <div className="glare absolute inset-0 rounded-2xl pointer-events-none opacity-0 transition-opacity duration-300 z-20" />
-
-        {/* Accent gradient */}
-        <div
-          className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${service.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
-        />
-
-        {/* Animated border on hover */}
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/15 to-amber-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
         <div
           className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
           style={{ boxShadow: "inset 0 0 0 1px rgba(202,163,83,0.2)" }}
         />
 
-        {/* Content */}
         <div className="relative z-10">
           <div className="flex items-start justify-between mb-8">
             <div
               className="w-11 h-11 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500"
-              style={{
-                background: "rgba(202,163,83,0.08)",
-                border: "1px solid rgba(202,163,83,0.15)",
-              }}
+              style={{ background: "rgba(202,163,83,0.08)", border: "1px solid rgba(202,163,83,0.15)" }}
             >
               <service.icon className="w-5 h-5 text-primary" />
             </div>
-            <span
-              className="text-5xl font-black transition-colors duration-500"
-              style={{ color: "rgba(255,255,255,0.04)" }}
-            >
+            <span className="text-5xl font-black" style={{ color: "rgba(255,255,255,0.04)" }}>
               {service.number}
             </span>
           </div>
@@ -178,7 +158,7 @@ export function Services() {
             transition={{ duration: 0.7 }}
             className="max-w-xl"
           >
-            <p className="text-xs font-semibold tracking-[0.3em] uppercase text-primary mb-4">What We Do</p>
+            <p className="text-xs font-semibold tracking-[0.3em] uppercase text-primary mb-4">Core Services</p>
             <h2 className="text-4xl md:text-6xl font-black tracking-tight">
               Capabilities
             </h2>

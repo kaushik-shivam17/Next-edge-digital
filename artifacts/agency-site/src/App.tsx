@@ -10,6 +10,7 @@ import { Admin } from "./components/Admin";
 import { Hero } from "./components/sections/Hero";
 import { TrustedBy } from "./components/sections/TrustedBy";
 import { Services } from "./components/sections/Services";
+import { AiServices } from "./components/sections/AiServices";
 import { Stats } from "./components/sections/Stats";
 import { Process } from "./components/sections/Process";
 import { Portfolio } from "./components/sections/Portfolio";
@@ -19,7 +20,6 @@ import { FAQ } from "./components/sections/FAQ";
 import { WhyUs } from "./components/sections/WhyUs";
 import { Contact } from "./components/sections/Contact";
 import { BookCall } from "./components/sections/BookCall";
-import { Pricing } from "./components/sections/Pricing";
 import { Footer } from "./components/sections/Footer";
 import { FloatingWhatsApp } from "./components/sections/FloatingWhatsApp";
 import { CustomCursor } from "./components/CustomCursor";
@@ -30,7 +30,7 @@ import { AiAssistant } from "./components/AiAssistant";
 const navLinks = [
   { label: "Work", href: "#work" },
   { label: "Services", href: "#services" },
-  { label: "Pricing", href: "#pricing" },
+  { label: "AI Solutions", href: "#ai-solutions" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
@@ -83,9 +83,8 @@ function AgencySite() {
     };
   }, []);
 
-  // Intersection Observer for active nav section
   useEffect(() => {
-    const sectionIds = ["work", "services", "pricing", "about", "contact"];
+    const sectionIds = ["work", "services", "ai-solutions", "about", "contact"];
     const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {
@@ -122,14 +121,12 @@ function AgencySite() {
       className="relative min-h-screen bg-background text-foreground dark selection:bg-primary selection:text-primary-foreground font-sans"
       style={{ cursor: isHoverDevice ? "none" : "auto" }}
     >
-        {/* Fixed floating elements are siblings of the animated wrapper — never inside a transformed parent */}
-        {isHoverDevice && <CustomCursor />}
-        <FloatingWhatsApp />
-        <AiAssistant />
-        <BackToTop />
+      {isHoverDevice && <CustomCursor />}
+      <FloatingWhatsApp />
+      <AiAssistant />
+      <BackToTop />
 
-        {/* Animated content wrapper — opacity only, no transform, so fixed children above are unaffected */}
-        <div className="site-enter">
+      <div className="site-enter">
         <NoiseOverlay />
 
         {/* Top scroll progress bar */}
@@ -165,7 +162,19 @@ function AgencySite() {
           }}
         >
           <div className="container flex items-center justify-between h-20 px-4 md:px-6">
-            <a href="#" className="flex items-center gap-3 group" data-testid="link-logo" onClick={(e) => { e.preventDefault(); if (lenisRef.current) { lenisRef.current.scrollTo(0, { duration: 1.4 }); } else { window.scrollTo({ top: 0, behavior: "smooth" }); } }}>
+            <a
+              href="#"
+              className="flex items-center gap-3 group"
+              data-testid="link-logo"
+              onClick={(e) => {
+                e.preventDefault();
+                if (lenisRef.current) {
+                  lenisRef.current.scrollTo(0, { duration: 1.4 });
+                } else {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+              }}
+            >
               <div
                 className="relative flex-shrink-0 transition-transform duration-500 group-hover:scale-[1.07]"
                 style={{ width: 38, height: 38, padding: 1.5, background: "linear-gradient(135deg, #8B6914 0%, #CAA353 55%, #F0C97A 100%)", borderRadius: 9, boxSizing: "border-box", boxShadow: "0 0 18px rgba(202,163,83,0.22)" }}
@@ -185,11 +194,11 @@ function AgencySite() {
               </div>
               <div className="flex flex-col leading-none gap-[4px]">
                 <span className="font-black uppercase" style={{ fontSize: 13, letterSpacing: "0.13em", color: "#ffffff" }}>nextedge</span>
-                <span className="font-bold uppercase" style={{ fontSize: 8, letterSpacing: "0.48em", color: "#CAA353" }}>tech</span>
+                <span className="font-bold uppercase" style={{ fontSize: 8, letterSpacing: "0.48em", color: "#CAA353" }}>digital</span>
               </div>
             </a>
 
-            <div className="hidden md:flex items-center gap-10 text-xs font-semibold tracking-widest uppercase text-foreground/50">
+            <div className="hidden md:flex items-center gap-8 text-xs font-semibold tracking-widest uppercase text-foreground/50">
               {navLinks.map((link) => {
                 const id = link.href.replace("#", "");
                 const isActive = activeSection === id;
@@ -197,9 +206,9 @@ function AgencySite() {
                   <button
                     key={link.label}
                     onClick={() => handleNavClick(link.href)}
-                    data-testid={`link-nav-${link.label.toLowerCase()}`}
+                    data-testid={`link-nav-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
                     data-nav-item
-                    className="relative group transition-colors duration-200"
+                    className="relative group transition-colors duration-200 whitespace-nowrap"
                     style={{ color: isActive ? "rgba(202,163,83,1)" : undefined }}
                   >
                     <span className={`transition-colors duration-200 ${isActive ? "text-primary" : "hover:text-foreground"}`}>
@@ -218,7 +227,7 @@ function AgencySite() {
               <button
                 onClick={() => handleNavClick("#contact")}
                 data-testid="button-nav-cta"
-                className="ml-4 px-5 py-2.5 text-xs font-bold tracking-widest uppercase transition-all duration-300"
+                className="ml-2 px-5 py-2.5 text-xs font-bold tracking-widest uppercase transition-all duration-300 whitespace-nowrap"
                 style={{
                   background: "linear-gradient(135deg, #CAA353, #F0C97A)",
                   color: "#0c0c0e",
@@ -259,7 +268,7 @@ function AgencySite() {
                       <button
                         key={link.label}
                         onClick={() => handleNavClick(link.href)}
-                        data-testid={`link-mobile-${link.label.toLowerCase()}`}
+                        data-testid={`link-mobile-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
                         className="text-left text-sm font-semibold tracking-widest uppercase transition-colors"
                         style={{ color: isActive ? "#CAA353" : "rgba(255,255,255,0.6)" }}
                       >
@@ -287,7 +296,7 @@ function AgencySite() {
           <Portfolio />
           <WhyUs />
           <Services />
-          <Pricing />
+          <AiServices />
           <About />
           <Stats />
           <Process />
@@ -298,8 +307,8 @@ function AgencySite() {
         </main>
 
         <Footer />
-        </div>
       </div>
+    </div>
   );
 }
 

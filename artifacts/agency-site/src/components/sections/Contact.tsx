@@ -19,12 +19,16 @@ const contactDetails = [
 ];
 
 const services = [
+  "AI Call Management",
+  "AI WhatsApp Management",
+  "AI Social Media Management",
+  "AI Site Building",
   "Website Design & Development",
   "Social Media Management",
   "Brand Identity",
   "SEO & Organic Growth",
   "Digital Strategy",
-  "Full-Service Package",
+  "Full-Service / AI Ecosystem",
 ];
 
 const budgets = [
