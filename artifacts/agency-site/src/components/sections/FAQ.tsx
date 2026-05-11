@@ -34,7 +34,7 @@ const faqs = [
       "Both. We love working with ambitious founders building from the ground up and established brands ready to break into a new tier. Our AI solutions are particularly valuable for startups because they let you operate at the scale of a much larger team from day one — without hiring costs.",
   },
   {
-    question: "What makes Next Edge Digital different from other agencies?",
+    question: "What makes Core Elite Digital different from other agencies?",
     answer:
       "Most agencies sell you a website and disappear. We build AI-powered business ecosystems — combining premium website design, strategic SEO, intelligent automation, and ongoing optimization. Our 98% client retention rate comes from one simple principle: we're only successful when you are. Every AI system and every website we build is tied to measurable business outcomes.",
   },

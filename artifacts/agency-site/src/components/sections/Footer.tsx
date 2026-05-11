@@ -42,13 +42,13 @@ export function Footer() {
                     className="font-black leading-none select-none"
                     style={{ fontSize: 11, letterSpacing: "-0.02em", background: "linear-gradient(135deg, #CAA353, #F0C97A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
                   >
-                    NE
+                    CE
                   </span>
                 </div>
                 <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full" style={{ background: "#F0C97A", boxShadow: "0 0 8px rgba(240,201,122,0.9)" }} />
               </div>
               <div className="flex flex-col leading-none gap-[4px]">
-                <span className="font-black uppercase" style={{ fontSize: 13, letterSpacing: "0.13em", color: "#ffffff" }}>nextedge</span>
+                <span className="font-black uppercase" style={{ fontSize: 13, letterSpacing: "0.13em", color: "#ffffff" }}>coreelite</span>
                 <span className="font-bold uppercase" style={{ fontSize: 8, letterSpacing: "0.48em", color: "#CAA353" }}>digital</span>
               </div>
             </div>
@@ -60,9 +60,9 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-3">
               {[
-                { icon: SiX, href: "https://x.com/nextedgedigital", label: "X (Twitter)" },
-                { icon: SiInstagram, href: "https://instagram.com/nextedgedigital", label: "Instagram" },
-                { icon: SiDribbble, href: "https://dribbble.com/nextedgedigital", label: "Dribbble" },
+                { icon: SiX, href: "https://x.com/coreelitedigital", label: "X (Twitter)" },
+                { icon: SiInstagram, href: "https://instagram.com/coreelitedigital", label: "Instagram" },
+                { icon: SiDribbble, href: "https://dribbble.com/coreelitedigital", label: "Dribbble" },
               ].map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}
@@ -77,7 +77,7 @@ export function Footer() {
                 </a>
               ))}
               <a
-                href="https://linkedin.com/company/nextedgedigital"
+                href="https://linkedin.com/company/coreelitedigital"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
@@ -137,7 +137,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="py-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-[11px] text-foreground/25 tracking-wide">
-            &copy; {new Date().getFullYear()} Next Edge Digital. All rights reserved.
+            &copy; {new Date().getFullYear()} Core Elite Digital. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             {["Privacy Policy", "Terms of Service", "Cookie Policy"].map((item) => (

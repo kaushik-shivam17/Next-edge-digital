@@ -66,7 +66,7 @@ export function About() {
             something that outlasts the campaign."
           </p>
           <p className="mt-5 text-xs font-bold tracking-[0.25em] uppercase text-primary">
-            — nextedgetech
+            — Core Elite Digital
           </p>
         </motion.div>
 

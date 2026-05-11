@@ -570,29 +570,64 @@ export function Portfolio() {
 
         {/* Filter tabs */}
         <div className="flex items-center gap-2 flex-wrap">
-          {filters.map((f) => (
-            <button
-              key={f.value}
-              onClick={() => setActiveFilter(f.value)}
-              data-testid={`filter-${f.value}`}
-              className="relative px-5 py-2 text-[11px] font-bold tracking-[0.2em] uppercase rounded-full transition-all duration-300"
-              style={{
-                background: activeFilter === f.value ? "rgba(202,163,83,0.12)" : "rgba(255,255,255,0.04)",
-                border: activeFilter === f.value ? "1px solid rgba(202,163,83,0.4)" : "1px solid rgba(255,255,255,0.08)",
-                color: activeFilter === f.value ? "#CAA353" : "rgba(255,255,255,0.35)",
-              }}
-            >
-              {f.label}
-              {activeFilter === f.value && (
-                <motion.div
-                  layoutId="filter-pill"
-                  className="absolute inset-0 rounded-full"
-                  style={{ background: "rgba(202,163,83,0.06)" }}
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
-                />
-              )}
-            </button>
-          ))}
+          {filters.map((f) => {
+            const isActive = activeFilter === f.value;
+            return (
+              <button
+                key={f.value}
+                onClick={() => setActiveFilter(f.value)}
+                data-testid={`filter-${f.value}`}
+                className="relative px-5 py-2.5 text-[11px] font-bold tracking-[0.2em] uppercase rounded-xl transition-all duration-300 overflow-hidden"
+                style={{
+                  background: isActive
+                    ? "linear-gradient(135deg, rgba(202,163,83,0.18) 0%, rgba(240,201,122,0.08) 100%)"
+                    : "rgba(255,255,255,0.03)",
+                  border: isActive
+                    ? "1px solid rgba(202,163,83,0.5)"
+                    : "1px solid rgba(255,255,255,0.07)",
+                  color: isActive ? "#F0C97A" : "rgba(255,255,255,0.30)",
+                  boxShadow: isActive
+                    ? "0 0 20px rgba(202,163,83,0.12), inset 0 1px 0 rgba(255,255,255,0.08)"
+                    : "none",
+                  backdropFilter: "blur(8px)",
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+                    e.currentTarget.style.color = "rgba(255,255,255,0.6)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.03)";
+                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)";
+                    e.currentTarget.style.color = "rgba(255,255,255,0.30)";
+                  }
+                }}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="filter-pill"
+                    className="absolute inset-0 rounded-xl"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(202,163,83,0.1) 0%, rgba(240,201,122,0.04) 100%)",
+                    }}
+                    transition={{ type: "spring", bounce: 0.15, duration: 0.45 }}
+                  />
+                )}
+                <span className="relative z-10">{f.label}</span>
+                {isActive && (
+                  <motion.div
+                    layoutId="filter-underline"
+                    className="absolute bottom-0 left-3 right-3 h-[1.5px] rounded-full"
+                    style={{ background: "linear-gradient(to right, transparent, #CAA353, transparent)" }}
+                    transition={{ type: "spring", bounce: 0.15, duration: 0.45 }}
+                  />
+                )}
+              </button>
+            );
+          })}
           <span className="ml-auto text-[10px] text-foreground/25 tracking-widest uppercase hidden md:block">
             Drag to explore →
           </span>

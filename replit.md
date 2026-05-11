@@ -34,6 +34,9 @@ See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and pa
 
 ## Agency Site (`artifacts/agency-site`)
 
+> Brand name is **Core Elite Digital** (previously "Next Edge Digital" / "nextedgetech"). Logo initials: **CE**.
+
+
 A premium digital agency website for "Next Edge Digital". Runs on port 5000.
 
 ### Features

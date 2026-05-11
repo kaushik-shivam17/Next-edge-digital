@@ -107,7 +107,7 @@ async function sendNotificationEmail(data: {
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0c0c0e; color: #ffffff; padding: 32px; border-radius: 12px;">
       <div style="border-bottom: 2px solid #CAA353; padding-bottom: 16px; margin-bottom: 24px;">
         <h2 style="margin: 0; color: #CAA353; font-size: 22px;">New Project Inquiry</h2>
-        <p style="margin: 4px 0 0; color: #888; font-size: 13px;">NextEdge Tech — Admin Notification</p>
+        <p style="margin: 4px 0 0; color: #888; font-size: 13px;">Core Elite Digital — Admin Notification</p>
       </div>
       <table style="width: 100%; border-collapse: collapse;">
         <tr><td style="padding: 10px 0; color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; width: 130px;">Full Name</td><td style="padding: 10px 0; color: #ffffff; font-size: 15px; font-weight: bold;">${safe.name}</td></tr>
@@ -122,14 +122,14 @@ async function sendNotificationEmail(data: {
         <p style="margin: 0; color: #ffffff; font-size: 15px; line-height: 1.6; white-space: pre-wrap;">${safe.message}</p>
       </div>
       <div style="margin-top: 24px; text-align: center;">
-        <a href="mailto:${safe.email}?subject=Re: Your Project Inquiry — NextEdge Tech" style="display: inline-block; padding: 12px 28px; background: linear-gradient(135deg, #CAA353, #F0C97A); color: #0c0c0e; font-weight: bold; font-size: 13px; text-decoration: none; border-radius: 8px;">Reply to ${safe.name}</a>
+        <a href="mailto:${safe.email}?subject=Re: Your Project Inquiry — Core Elite Digital" style="display: inline-block; padding: 12px 28px; background: linear-gradient(135deg, #CAA353, #F0C97A); color: #0c0c0e; font-weight: bold; font-size: 13px; text-decoration: none; border-radius: 8px;">Reply to ${safe.name}</a>
       </div>
-      <p style="margin-top: 24px; color: #555; font-size: 12px; text-align: center;">Sent via NextEdge Tech admin notification</p>
+      <p style="margin-top: 24px; color: #555; font-size: 12px; text-align: center;">Sent via Core Elite Digital admin notification</p>
     </div>
   `;
 
   await transporter.sendMail({
-    from: `"NextEdge Tech" <${CONTACT_EMAIL}>`,
+    from: `"Core Elite Digital" <${CONTACT_EMAIL}>`,
     to: CONTACT_EMAIL,
     replyTo: data.email,
     subject,
