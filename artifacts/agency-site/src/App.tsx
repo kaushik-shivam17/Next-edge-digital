@@ -6,6 +6,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Menu, X } from "lucide-react";
 import { Admin } from "./components/Admin";
+import { ServicesPage } from "./pages/ServicesPage";
+import { AiPage } from "./pages/AiPage";
+import { PortfolioPage } from "./pages/PortfolioPage";
+import { AboutPage } from "./pages/AboutPage";
+import { ContactPage } from "./pages/ContactPage";
+import { ProcessPage } from "./pages/ProcessPage";
 
 import { Hero } from "./components/sections/Hero";
 import { TrustedBy } from "./components/sections/TrustedBy";
@@ -28,11 +34,11 @@ import { BackToTop } from "./components/BackToTop";
 import { AiAssistant } from "./components/AiAssistant";
 
 const navLinks = [
-  { label: "Work", href: "#work" },
-  { label: "Services", href: "#services" },
-  { label: "AI Solutions", href: "#ai-solutions" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "Work", href: "/portfolio", section: "work" },
+  { label: "Services", href: "/services", section: "services" },
+  { label: "AI Solutions", href: "/ai-solutions", section: "ai-solutions" },
+  { label: "About", href: "/about", section: "about" },
+  { label: "Contact", href: "/contact", section: "contact" },
 ];
 
 function AgencySite() {
@@ -203,12 +209,11 @@ function AgencySite() {
 
             <div className="hidden md:flex items-center gap-8 text-xs font-semibold tracking-widest uppercase text-foreground/50">
               {navLinks.map((link) => {
-                const id = link.href.replace("#", "");
-                const isActive = activeSection === id;
+                const isActive = activeSection === link.section;
                 return (
-                  <button
+                  <a
                     key={link.label}
-                    onClick={() => handleNavClick(link.href)}
+                    href={link.href}
                     data-testid={`link-nav-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
                     data-nav-item
                     className="relative group transition-colors duration-200 whitespace-nowrap"
@@ -224,23 +229,21 @@ function AgencySite() {
                         background: "linear-gradient(to right, #CAA353, #F0C97A)",
                       }}
                     />
-                  </button>
+                  </a>
                 );
               })}
-              <button
-                onClick={() => handleNavClick("#contact")}
+              <a
+                href="/contact"
                 data-testid="button-nav-cta"
-                className="ml-2 px-5 py-2.5 text-xs font-bold tracking-widest uppercase transition-all duration-300 whitespace-nowrap"
+                className="ml-2 px-5 py-2.5 text-xs font-bold tracking-widest uppercase transition-all duration-300 whitespace-nowrap hover:opacity-85"
                 style={{
                   background: "linear-gradient(135deg, #CAA353, #F0C97A)",
                   color: "#0c0c0e",
                   clipPath: "polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%)",
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.85"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
               >
                 Start a Project
-              </button>
+              </a>
             </div>
 
             <button
@@ -263,30 +266,30 @@ function AgencySite() {
                 className="md:hidden overflow-hidden"
                 style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
               >
-                <div className="container px-4 py-6 flex flex-col gap-6">
+                <div className="container px-4 py-6 flex flex-col gap-5">
                   {navLinks.map((link) => {
-                    const id = link.href.replace("#", "");
-                    const isActive = activeSection === id;
+                    const isActive = activeSection === link.section;
                     return (
-                      <button
+                      <a
                         key={link.label}
-                        onClick={() => handleNavClick(link.href)}
+                        href={link.href}
+                        onClick={() => setMenuOpen(false)}
                         data-testid={`link-mobile-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
-                        className="text-left text-sm font-semibold tracking-widest uppercase transition-colors"
+                        className="text-left text-sm font-semibold tracking-widest uppercase transition-colors min-h-[44px] flex items-center"
                         style={{ color: isActive ? "#CAA353" : "rgba(255,255,255,0.6)" }}
                       >
                         {link.label}
-                      </button>
+                      </a>
                     );
                   })}
-                  <button
-                    onClick={() => handleNavClick("#contact")}
+                  <a
+                    href="/contact"
                     data-testid="button-mobile-cta"
-                    className="w-full text-center px-5 py-3 text-xs font-bold tracking-widest uppercase rounded-sm"
+                    className="w-full text-center px-5 py-3.5 text-xs font-bold tracking-widest uppercase rounded-sm min-h-[44px] flex items-center justify-center"
                     style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)", color: "#0c0c0e" }}
                   >
                     Start a Project
-                  </button>
+                  </a>
                 </div>
               </motion.div>
             )}
@@ -320,6 +323,12 @@ function App() {
     <TooltipProvider>
       <Switch>
         <Route path="/admin">{() => <Admin />}</Route>
+        <Route path="/services">{() => <ServicesPage />}</Route>
+        <Route path="/ai-solutions">{() => <AiPage />}</Route>
+        <Route path="/portfolio">{() => <PortfolioPage />}</Route>
+        <Route path="/about">{() => <AboutPage />}</Route>
+        <Route path="/contact">{() => <ContactPage />}</Route>
+        <Route path="/process">{() => <ProcessPage />}</Route>
         <Route>{() => <AgencySite />}</Route>
       </Switch>
       <Toaster />

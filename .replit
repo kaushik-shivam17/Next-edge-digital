@@ -90,6 +90,7 @@ externalPort = 3000
 [userenv.shared]
 VITE_WEB3FORMS_ACCESS_KEY = "87c9a8e1-c127-49af-8e8c-4f6a2d78f4c7"
 PORT = "8080"
+BOTPRESS_API_KEY = "bp_bak_aqfOH5l2pEMxVWMgNFBihH5niV5v_oC9LA1d"
 
 [nix]
 channel = "stable-25_05"

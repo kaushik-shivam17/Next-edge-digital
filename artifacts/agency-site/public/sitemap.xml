@@ -12,38 +12,45 @@
   </url>
 
   <url>
-    <loc>https://coreelitedigital.com/#ai-solutions</loc>
+    <loc>https://coreelitedigital.com/services</loc>
     <lastmod>2026-05-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
 
   <url>
-    <loc>https://coreelitedigital.com/#services</loc>
+    <loc>https://coreelitedigital.com/ai-solutions</loc>
     <lastmod>2026-05-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
   </url>
 
   <url>
-    <loc>https://coreelitedigital.com/#work</loc>
+    <loc>https://coreelitedigital.com/portfolio</loc>
     <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.88</priority>
   </url>
 
   <url>
-    <loc>https://coreelitedigital.com/#about</loc>
+    <loc>https://coreelitedigital.com/about</loc>
     <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.82</priority>
   </url>
 
   <url>
-    <loc>https://coreelitedigital.com/#contact</loc>
+    <loc>https://coreelitedigital.com/contact</loc>
     <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://coreelitedigital.com/process</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
   </url>
 
 </urlset>
