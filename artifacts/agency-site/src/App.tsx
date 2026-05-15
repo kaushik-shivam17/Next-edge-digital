@@ -1,21 +1,30 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { Switch, Route } from "wouter";
 import Lenis from "lenis";
 import { motion, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Menu, X } from "lucide-react";
-import { Admin } from "./components/Admin";
-import { ServicesPage } from "./pages/ServicesPage";
-import { AiPage } from "./pages/AiPage";
-import { AiCallPage } from "./pages/AiCallPage";
-import { AiWhatsAppPage } from "./pages/AiWhatsAppPage";
-import { AiSocialPage } from "./pages/AiSocialPage";
-import { AiSitePage } from "./pages/AiSitePage";
-import { PortfolioPage } from "./pages/PortfolioPage";
-import { AboutPage } from "./pages/AboutPage";
-import { ContactPage } from "./pages/ContactPage";
-import { ProcessPage } from "./pages/ProcessPage";
+
+const Admin = lazy(() => import("./components/Admin").then(m => ({ default: m.Admin })));
+const ServicesPage = lazy(() => import("./pages/ServicesPage").then(m => ({ default: m.ServicesPage })));
+const AiPage = lazy(() => import("./pages/AiPage").then(m => ({ default: m.AiPage })));
+const AiCallPage = lazy(() => import("./pages/AiCallPage").then(m => ({ default: m.AiCallPage })));
+const AiWhatsAppPage = lazy(() => import("./pages/AiWhatsAppPage").then(m => ({ default: m.AiWhatsAppPage })));
+const AiSocialPage = lazy(() => import("./pages/AiSocialPage").then(m => ({ default: m.AiSocialPage })));
+const AiSitePage = lazy(() => import("./pages/AiSitePage").then(m => ({ default: m.AiSitePage })));
+const PortfolioPage = lazy(() => import("./pages/PortfolioPage").then(m => ({ default: m.PortfolioPage })));
+const AboutPage = lazy(() => import("./pages/AboutPage").then(m => ({ default: m.AboutPage })));
+const ContactPage = lazy(() => import("./pages/ContactPage").then(m => ({ default: m.ContactPage })));
+const ProcessPage = lazy(() => import("./pages/ProcessPage").then(m => ({ default: m.ProcessPage })));
+
+function PageFallback() {
+  return (
+    <div className="fixed inset-0 bg-[#09090b] flex items-center justify-center z-50">
+      <img src="/logo.jpeg" alt="" style={{ width: 64, height: 64, objectFit: "contain", opacity: 0.7, borderRadius: 10, animation: "pulse 1.5s ease-in-out infinite" }} />
+    </div>
+  );
+}
 
 import { Hero } from "./components/sections/Hero";
 import { TrustedBy } from "./components/sections/TrustedBy";
@@ -315,20 +324,22 @@ function AgencySite() {
 function App() {
   return (
     <TooltipProvider>
-      <Switch>
-        <Route path="/admin">{() => <Admin />}</Route>
-        <Route path="/services">{() => <ServicesPage />}</Route>
-        <Route path="/ai-solutions">{() => <AiPage />}</Route>
-        <Route path="/ai/call-management">{() => <AiCallPage />}</Route>
-        <Route path="/ai/whatsapp">{() => <AiWhatsAppPage />}</Route>
-        <Route path="/ai/social-media">{() => <AiSocialPage />}</Route>
-        <Route path="/ai/site-building">{() => <AiSitePage />}</Route>
-        <Route path="/portfolio">{() => <PortfolioPage />}</Route>
-        <Route path="/about">{() => <AboutPage />}</Route>
-        <Route path="/contact">{() => <ContactPage />}</Route>
-        <Route path="/process">{() => <ProcessPage />}</Route>
-        <Route>{() => <AgencySite />}</Route>
-      </Switch>
+      <Suspense fallback={<PageFallback />}>
+        <Switch>
+          <Route path="/admin">{() => <Admin />}</Route>
+          <Route path="/services">{() => <ServicesPage />}</Route>
+          <Route path="/ai-solutions">{() => <AiPage />}</Route>
+          <Route path="/ai/call-management">{() => <AiCallPage />}</Route>
+          <Route path="/ai/whatsapp">{() => <AiWhatsAppPage />}</Route>
+          <Route path="/ai/social-media">{() => <AiSocialPage />}</Route>
+          <Route path="/ai/site-building">{() => <AiSitePage />}</Route>
+          <Route path="/portfolio">{() => <PortfolioPage />}</Route>
+          <Route path="/about">{() => <AboutPage />}</Route>
+          <Route path="/contact">{() => <ContactPage />}</Route>
+          <Route path="/process">{() => <ProcessPage />}</Route>
+          <Route>{() => <AgencySite />}</Route>
+        </Switch>
+      </Suspense>
       <Toaster />
     </TooltipProvider>
   );
