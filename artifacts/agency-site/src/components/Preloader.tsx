@@ -70,36 +70,30 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
           />
 
           <div className="relative z-10 flex flex-col items-center gap-10">
-            {/* Logo mark */}
+            {/* Logo mark — eagle with grow animation */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-center gap-4"
+              initial={{ opacity: 0, scale: 0.5, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col items-center gap-3"
             >
-              <div
-                className="relative flex-shrink-0"
-                style={{ width: 52, height: 52, padding: 1.5, background: "linear-gradient(135deg, #8B6914 0%, #CAA353 55%, #F0C97A 100%)", borderRadius: 13, boxSizing: "border-box", boxShadow: "0 0 32px rgba(202,163,83,0.3)" }}
+              <motion.div
+                animate={{
+                  scale: [1, 1.06, 1],
+                  filter: [
+                    "drop-shadow(0 0 12px rgba(202,163,83,0.3))",
+                    "drop-shadow(0 0 32px rgba(202,163,83,0.7))",
+                    "drop-shadow(0 0 12px rgba(202,163,83,0.3))",
+                  ],
+                }}
+                transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
               >
-                <motion.div
-                  animate={{ boxShadow: ["0 0 0px rgba(202,163,83,0)", "0 0 24px rgba(202,163,83,0.35)", "0 0 0px rgba(202,163,83,0)"] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                  className="w-full h-full flex items-center justify-center"
-                  style={{ background: "#0c0c0e", borderRadius: 11 }}
-                >
-                  <span
-                    className="font-black leading-none select-none"
-                    style={{ fontSize: 15, letterSpacing: "-0.02em", background: "linear-gradient(135deg, #CAA353, #F0C97A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
-                  >
-                    NE
-                  </span>
-                </motion.div>
-                <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full" style={{ background: "#F0C97A", boxShadow: "0 0 10px rgba(240,201,122,1)" }} />
-              </div>
-              <div className="flex flex-col leading-none gap-[5px]">
-                <span className="font-black uppercase" style={{ fontSize: 16, letterSpacing: "0.15em", color: "#ffffff" }}>nextedge</span>
-                <span className="font-bold uppercase" style={{ fontSize: 9, letterSpacing: "0.5em", color: "#CAA353" }}>tech</span>
-              </div>
+                <img
+                  src="/logo.jpeg"
+                  alt="Core Elite Digital"
+                  style={{ width: 160, height: 160, objectFit: "contain", borderRadius: 16 }}
+                />
+              </motion.div>
             </motion.div>
 
             {/* Counter */}
