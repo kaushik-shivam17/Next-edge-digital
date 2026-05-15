@@ -6,80 +6,79 @@
 
   <url>
     <loc>https://coreelitedigital.com/</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://coreelitedigital.com/services</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
 
   <url>
     <loc>https://coreelitedigital.com/ai-solutions</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
 
   <url>
-    <loc>https://coreelitedigital.com/portfolio</loc>
-    <lastmod>2026-05-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.88</priority>
-  </url>
-
-  <url>
-    <loc>https://coreelitedigital.com/about</loc>
-    <lastmod>2026-05-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.82</priority>
-  </url>
-
-  <url>
-    <loc>https://coreelitedigital.com/contact</loc>
-    <lastmod>2026-05-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.90</priority>
-  </url>
-
-  <url>
-    <loc>https://coreelitedigital.com/process</loc>
-    <lastmod>2026-05-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.78</priority>
-  </url>
-
-  <!-- Individual AI Service Pages -->
-  <url>
     <loc>https://coreelitedigital.com/ai/call-management</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.93</priority>
   </url>
 
   <url>
     <loc>https://coreelitedigital.com/ai/whatsapp</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.93</priority>
   </url>
 
   <url>
     <loc>https://coreelitedigital.com/ai/social-media</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.92</priority>
   </url>
 
   <url>
     <loc>https://coreelitedigital.com/ai/site-building</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.92</priority>
+  </url>
+
+  <url>
+    <loc>https://coreelitedigital.com/portfolio</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <url>
+    <loc>https://coreelitedigital.com/about</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+  </url>
+
+  <url>
+    <loc>https://coreelitedigital.com/contact</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://coreelitedigital.com/process</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
   </url>
 
 </urlset>

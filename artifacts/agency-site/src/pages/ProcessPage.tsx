@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { SEO } from "@/components/SEO";
 import { SharedNav } from "@/components/SharedNav";
 import { Process } from "@/components/sections/Process";
 import { WhyUs } from "@/components/sections/WhyUs";
@@ -12,6 +13,11 @@ import { NoiseOverlay } from "@/components/NoiseOverlay";
 export function ProcessPage() {
   return (
     <div className="relative min-h-screen bg-background text-foreground dark overflow-x-hidden">
+      <SEO
+        title="Our Process — How Core Elite Digital Builds Your Digital Empire"
+        description="A transparent 4-step process: Discovery & Strategy → Design & Build → Launch & Deploy → Optimize & Scale. See how Core Elite Digital transforms ambitious brands."
+        canonical="https://coreelitedigital.com/process"
+      />
       <NoiseOverlay />
       <SharedNav />
       <FloatingWhatsApp />

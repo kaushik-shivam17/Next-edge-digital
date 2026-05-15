@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Bot, Zap, Shield, Clock } from "lucide-react";
+import { SEO } from "@/components/SEO";
 import { SharedNav } from "@/components/SharedNav";
 import { AiServices } from "@/components/sections/AiServices";
 import { Stats } from "@/components/sections/Stats";
@@ -21,6 +22,11 @@ const highlights = [
 export function AiPage() {
   return (
     <div className="relative min-h-screen bg-background text-foreground dark overflow-x-hidden">
+      <SEO
+        title="AI Solutions — Call Management, WhatsApp & Social Media Automation | Core Elite Digital"
+        description="AI-powered automation for your business. AI call management, WhatsApp automation, social media AI, and AI site building. 24/7 intelligent systems that scale your brand without scaling your team."
+        canonical="https://coreelitedigital.com/ai-solutions"
+      />
       <NoiseOverlay />
       <SharedNav />
       <FloatingWhatsApp />

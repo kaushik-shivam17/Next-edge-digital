@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { SEO } from "@/components/SEO";
 import { SharedNav } from "@/components/SharedNav";
 import { About } from "@/components/sections/About";
 import { WhyUs } from "@/components/sections/WhyUs";
@@ -14,6 +15,11 @@ import { NoiseOverlay } from "@/components/NoiseOverlay";
 export function AboutPage() {
   return (
     <div className="relative min-h-screen bg-background text-foreground dark overflow-x-hidden">
+      <SEO
+        title="About Core Elite Digital — AI-Powered Digital Agency Team & Story"
+        description="Meet Core Elite Digital — an elite AI-powered digital agency with 42+ brands transformed and 98% client retention. Our mission: build digital empires for ambitious brands worldwide."
+        canonical="https://coreelitedigital.com/about"
+      />
       <NoiseOverlay />
       <SharedNav />
       <FloatingWhatsApp />

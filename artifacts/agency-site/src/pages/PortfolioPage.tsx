@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { SEO } from "@/components/SEO";
 import { SharedNav } from "@/components/SharedNav";
 import { Portfolio } from "@/components/sections/Portfolio";
 import { Stats } from "@/components/sections/Stats";
@@ -13,6 +14,11 @@ import { NoiseOverlay } from "@/components/NoiseOverlay";
 export function PortfolioPage() {
   return (
     <div className="relative min-h-screen bg-background text-foreground dark overflow-x-hidden">
+      <SEO
+        title="Our Work & Portfolio — E-Commerce, Fintech, Real Estate & More | Core Elite Digital"
+        description="Explore Core Elite Digital's portfolio of market-leading websites and AI systems built for e-commerce, fintech, real estate, automotive and more brands worldwide."
+        canonical="https://coreelitedigital.com/portfolio"
+      />
       <NoiseOverlay />
       <SharedNav />
       <FloatingWhatsApp />

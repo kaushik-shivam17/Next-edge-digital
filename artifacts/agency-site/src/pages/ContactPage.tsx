@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { SEO } from "@/components/SEO";
 import { SharedNav } from "@/components/SharedNav";
 import { Contact } from "@/components/sections/Contact";
 import { FAQ } from "@/components/sections/FAQ";
@@ -11,6 +12,11 @@ import { NoiseOverlay } from "@/components/NoiseOverlay";
 export function ContactPage() {
   return (
     <div className="relative min-h-screen bg-background text-foreground dark overflow-x-hidden">
+      <SEO
+        title="Contact Core Elite Digital — Book a Free Strategy Call"
+        description="Get in touch with Core Elite Digital. Book a free 30-minute strategy call, submit your project brief, or reach us on WhatsApp. We respond within 24 hours."
+        canonical="https://coreelitedigital.com/contact"
+      />
       <NoiseOverlay />
       <SharedNav />
       <FloatingWhatsApp />

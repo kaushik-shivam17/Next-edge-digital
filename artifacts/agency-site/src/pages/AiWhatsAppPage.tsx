@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { MessageSquare, CheckCircle2, ArrowRight, Users, TrendingUp, Repeat, Bot } from "lucide-react";
+import { SEO } from "@/components/SEO";
 import { SharedNav } from "@/components/SharedNav";
 import { BookCall } from "@/components/sections/BookCall";
 import { Footer } from "@/components/sections/Footer";
@@ -37,6 +38,7 @@ export function AiWhatsAppPage() {
     title: "AI WhatsApp Management | Automated Sales on WhatsApp — Core Elite Digital",
     description: "Turn WhatsApp into your highest-converting sales channel. AI responds instantly, follows up automatically, and closes deals while you sleep. 24/7, 40+ languages, zero extra staff.",
     keywords: "AI WhatsApp management, WhatsApp automation, WhatsApp business API, automated WhatsApp sales, WhatsApp chatbot India",
+    canonical: "https://coreelitedigital.com/ai/whatsapp",
   });
 
   return (

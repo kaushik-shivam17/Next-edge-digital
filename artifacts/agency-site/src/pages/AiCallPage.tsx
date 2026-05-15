@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Phone, CheckCircle2, XCircle, ArrowRight, TrendingUp, Clock, Globe, Zap } from "lucide-react";
+import { SEO } from "@/components/SEO";
 import { SharedNav } from "@/components/SharedNav";
 import { BookCall } from "@/components/sections/BookCall";
 import { Footer } from "@/components/sections/Footer";
@@ -63,6 +64,7 @@ export function AiCallPage() {
     title: "AI Call Management | 24/7 Intelligent Call Handling — Core Elite Digital",
     description: "Never miss a lead again. Our AI Call Management system answers every call in under 1 second, qualifies leads in real time, and syncs everything to your CRM. 24/7, 40+ languages.",
     keywords: "AI call management, automated call answering, AI receptionist, lead qualification, CRM integration, 24/7 call handling India",
+    canonical: "https://coreelitedigital.com/ai/call-management",
   });
 
   return (

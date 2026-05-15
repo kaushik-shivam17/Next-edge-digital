@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Globe, CheckCircle2, ArrowRight, TrendingUp, Zap, Target, RefreshCw } from "lucide-react";
+import { SEO } from "@/components/SEO";
 import { SharedNav } from "@/components/SharedNav";
 import { BookCall } from "@/components/sections/BookCall";
 import { Footer } from "@/components/sections/Footer";
@@ -37,6 +38,7 @@ export function AiSitePage() {
     title: "AI Site Building | Self-Optimizing Websites That Convert — Core Elite Digital",
     description: "Launched in 7–14 days. Self-optimizing AI websites that run continuous A/B tests, personalize content for each visitor, and improve conversion rates automatically — every single week.",
     keywords: "AI website builder, conversion rate optimization, self-optimizing website, AI web design India, high-converting website",
+    canonical: "https://coreelitedigital.com/ai/site-building",
   });
 
   return (

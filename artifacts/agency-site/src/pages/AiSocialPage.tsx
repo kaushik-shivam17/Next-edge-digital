@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Bot, CheckCircle2, ArrowRight, Instagram, BarChart3, Sparkles, Calendar } from "lucide-react";
+import { SEO } from "@/components/SEO";
 import { SharedNav } from "@/components/SharedNav";
 import { BookCall } from "@/components/sections/BookCall";
 import { Footer } from "@/components/sections/Footer";
@@ -38,6 +39,7 @@ export function AiSocialPage() {
     title: "AI Social Media Management | Dominate Every Feed — Core Elite Digital",
     description: "AI generates, schedules, and posts brand-consistent content across all platforms. Automated engagement, real-time strategy adjustments, and 4× more output than a human team.",
     keywords: "AI social media management, automated social media, AI content creation, social media automation India, Instagram automation",
+    canonical: "https://coreelitedigital.com/ai/social-media",
   });
 
   return (

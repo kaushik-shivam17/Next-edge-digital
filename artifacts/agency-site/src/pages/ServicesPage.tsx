@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { SEO } from "@/components/SEO";
 import { SharedNav } from "@/components/SharedNav";
 import { Services } from "@/components/sections/Services";
 import { AiServices } from "@/components/sections/AiServices";
@@ -14,6 +15,11 @@ import { NoiseOverlay } from "@/components/NoiseOverlay";
 export function ServicesPage() {
   return (
     <div className="relative min-h-screen bg-background text-foreground dark overflow-x-hidden">
+      <SEO
+        title="Digital Agency Services — Website Design, SEO & Social Media | Core Elite Digital"
+        description="Premium website design, SEO, social media management and brand identity services. Core Elite Digital builds market-leading digital presences for ambitious brands worldwide."
+        canonical="https://coreelitedigital.com/services"
+      />
       <NoiseOverlay />
       <SharedNav />
       <FloatingWhatsApp />
