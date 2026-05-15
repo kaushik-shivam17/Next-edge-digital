@@ -45,6 +45,7 @@ import { CustomCursor } from "./components/CustomCursor";
 import { NoiseOverlay } from "./components/NoiseOverlay";
 import { BackToTop } from "./components/BackToTop";
 import { AiAssistant } from "./components/AiAssistant";
+import { CookieConsent } from "./components/CookieConsent";
 
 const navLinks = [
   { label: "Work", href: "/portfolio", section: "work" },
@@ -141,6 +142,7 @@ function AgencySite() {
       style={{ cursor: isHoverDevice ? "none" : "auto" }}
     >
       {isHoverDevice && <CustomCursor />}
+      <CookieConsent />
       <FloatingWhatsApp />
       <AiAssistant />
       <BackToTop />
