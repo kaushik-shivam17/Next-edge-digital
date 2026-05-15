@@ -158,7 +158,7 @@ function StatCard({
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
       className="relative flex flex-col items-center text-center group"
-      data-testid={`stat-${index}`}
+     
     >
       {/* Vertical divider (between cards on desktop) */}
       {index > 0 && (

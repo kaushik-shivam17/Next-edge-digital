@@ -42,7 +42,7 @@ export function FloatingWhatsApp() {
               border: "1px solid rgba(255,255,255,0.08)",
               boxShadow: "0 32px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(37,211,102,0.1)",
             }}
-            data-testid="whatsapp-popup"
+           
           >
             {/* Header */}
             <div
@@ -73,7 +73,7 @@ export function FloatingWhatsApp() {
                 </div>
                 <button
                   onClick={() => setOpen(false)}
-                  data-testid="button-whatsapp-close"
+                 
                   aria-label="Close"
                   className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/80 hover:text-white transition-all duration-200"
                 >
@@ -104,7 +104,7 @@ export function FloatingWhatsApp() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 * i, duration: 0.2 }}
                   onClick={() => openChat(msg.label)}
-                  data-testid={`button-whatsapp-msg-${i}`}
+                 
                   className="group w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-left transition-all duration-200"
                   style={{
                     background: "rgba(255,255,255,0.04)",
@@ -130,7 +130,7 @@ export function FloatingWhatsApp() {
               {/* Open WhatsApp CTA */}
               <button
                 onClick={() => openChat()}
-                data-testid="button-whatsapp-open"
+               
                 className="w-full mt-1 flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-sm text-white transition-all duration-200 hover:opacity-90 hover:scale-[1.01]"
                 style={{
                   background: "linear-gradient(135deg, #128C7E, #25D366)",
@@ -173,7 +173,7 @@ export function FloatingWhatsApp() {
           onClick={() => setOpen((v) => !v)}
           onHoverStart={() => setHovered(true)}
           onHoverEnd={() => setHovered(false)}
-          data-testid="button-whatsapp-toggle"
+         
           data-cursor-text="CHAT"
           aria-label="Contact us on WhatsApp"
           whileHover={{ scale: 1.1 }}

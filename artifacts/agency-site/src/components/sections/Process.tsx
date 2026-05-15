@@ -56,7 +56,7 @@ function StepCard({ step, index }: { step: typeof steps[0]; index: number }) {
       ref={ref}
       style={{ opacity, scale }}
       className="group flex flex-col"
-      data-testid={`card-process-${index}`}
+     
     >
       <div className="relative flex items-center justify-center w-28 h-28 mx-auto mb-8">
         {/* Outer ring */}

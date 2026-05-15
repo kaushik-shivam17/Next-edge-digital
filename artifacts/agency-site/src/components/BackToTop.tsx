@@ -25,7 +25,7 @@ export function BackToTop() {
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           onClick={scrollToTop}
           aria-label="Back to top"
-          data-testid="button-back-to-top"
+         
           className="fixed left-6 z-40 w-11 h-11 rounded-full flex items-center justify-center group transition-all duration-300 hover:scale-110"
           style={{
             bottom: "max(6rem, calc(env(safe-area-inset-bottom) + 4.5rem))",

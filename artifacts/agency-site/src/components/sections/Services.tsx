@@ -93,7 +93,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
         ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        data-testid={`card-service-${index}`}
+       
         className="group relative p-8 md:p-10 h-full overflow-hidden cursor-default"
         style={{
           background: "rgba(255,255,255,0.02)",

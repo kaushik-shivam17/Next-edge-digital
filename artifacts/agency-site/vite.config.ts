@@ -2,25 +2,14 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
-import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
-
-const rawPort = process.env.VITE_PORT;
-const port = rawPort ? Number(rawPort) : 5000;
-const basePath = process.env.BASE_PATH ?? "/";
-const isProd = process.env.NODE_ENV === "production";
 
 export default defineConfig({
-  base: basePath,
   plugins: [
-    react({
-      babel: {
-        plugins: isProd ? [["babel-plugin-react-remove-properties", { properties: ["data-testid"] }]] : [],
-      },
-    }),
+    react(),
     tailwindcss(),
-    runtimeErrorOverlay(),
     ...(process.env.NODE_ENV !== "production" && process.env.REPL_ID !== undefined
       ? [
+          await import("@replit/vite-plugin-runtime-error-modal").then((m) => m.default()),
           await import("@replit/vite-plugin-cartographer").then((m) =>
             m.cartographer({ root: path.resolve(import.meta.dirname, "..") })
           ),
@@ -59,7 +48,7 @@ export default defineConfig({
     },
   },
   server: {
-    port,
+    port: process.env.VITE_PORT ? Number(process.env.VITE_PORT) : 5000,
     strictPort: true,
     host: "0.0.0.0",
     allowedHosts: true,
@@ -69,12 +58,11 @@ export default defineConfig({
     },
   },
   preview: {
-    port,
+    port: process.env.VITE_PORT ? Number(process.env.VITE_PORT) : 5000,
     host: "0.0.0.0",
     allowedHosts: true,
   },
   optimizeDeps: {
     include: ["react", "react-dom", "framer-motion", "wouter", "lenis"],
-    exclude: [],
   },
 });

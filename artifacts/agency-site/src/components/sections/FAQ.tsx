@@ -60,7 +60,7 @@ function FAQItem({ faq, index }: { faq: typeof faqs[0]; index: number }) {
         onClick={() => setOpen((v) => !v)}
         className="w-full flex items-center justify-between py-7 gap-6 text-left group"
         aria-expanded={open}
-        data-testid={`faq-item-${index}`}
+       
       >
         <span
           className="text-base md:text-lg font-semibold leading-snug transition-colors duration-300"

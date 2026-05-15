@@ -190,7 +190,7 @@ export function Hero() {
               <a
                 href="#contact"
                 onClick={(e) => { e.preventDefault(); scrollToSection("contact"); }}
-                data-testid="button-hero-primary"
+               
                 data-cursor-text="START"
                 className="group relative inline-flex items-center justify-center gap-2 w-full sm:w-auto px-9 py-4 font-bold text-sm tracking-[0.15em] uppercase overflow-hidden"
                 style={{
@@ -215,7 +215,7 @@ export function Hero() {
               <a
                 href="#work"
                 onClick={(e) => { e.preventDefault(); scrollToSection("work"); }}
-                data-testid="button-hero-secondary"
+               
                 data-cursor-text="VIEW"
                 className="group inline-flex items-center justify-center gap-2 w-full sm:w-auto px-9 py-4 text-foreground/60 font-semibold text-sm tracking-[0.15em] uppercase hover:text-foreground transition-all duration-300"
                 style={{

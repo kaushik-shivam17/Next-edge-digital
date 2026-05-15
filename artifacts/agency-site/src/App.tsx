@@ -187,7 +187,7 @@ function AgencySite() {
               href="#"
               className="flex items-center gap-3 group"
               aria-label="Core Elite Digital — Go to homepage"
-              data-testid="link-logo"
+             
               onClick={(e) => {
                 e.preventDefault();
                 if (lenisRef.current) {
@@ -217,7 +217,7 @@ function AgencySite() {
                   <a
                     key={link.label}
                     href={link.href}
-                    data-testid={`link-nav-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
+                   
                     data-nav-item
                     className="relative group transition-colors duration-200 whitespace-nowrap"
                     style={{ color: isActive ? "rgba(202,163,83,1)" : undefined }}
@@ -237,7 +237,7 @@ function AgencySite() {
               })}
               <a
                 href="/contact"
-                data-testid="button-nav-cta"
+               
                 className="ml-2 px-5 py-2.5 text-xs font-bold tracking-widest uppercase transition-all duration-300 whitespace-nowrap hover:opacity-85"
                 style={{
                   background: "linear-gradient(135deg, #CAA353, #F0C97A)",
@@ -250,7 +250,7 @@ function AgencySite() {
             </div>
 
             <button
-              data-testid="button-mobile-menu"
+             
               className="md:hidden p-3 -mr-1 text-foreground/80 touch-manipulation"
               onClick={() => setMenuOpen((v) => !v)}
               aria-label="Toggle menu"
@@ -277,7 +277,7 @@ function AgencySite() {
                         key={link.label}
                         href={link.href}
                         onClick={() => setMenuOpen(false)}
-                        data-testid={`link-mobile-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
+                       
                         className="text-left text-sm font-semibold tracking-widest uppercase transition-colors min-h-[44px] flex items-center"
                         style={{ color: isActive ? "#CAA353" : "rgba(255,255,255,0.6)" }}
                       >
@@ -287,7 +287,7 @@ function AgencySite() {
                   })}
                   <a
                     href="/contact"
-                    data-testid="button-mobile-cta"
+                   
                     className="w-full text-center px-5 py-3.5 text-xs font-bold tracking-widest uppercase rounded-sm min-h-[44px] flex items-center justify-center"
                     style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)", color: "#0c0c0e" }}
                   >

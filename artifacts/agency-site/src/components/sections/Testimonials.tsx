@@ -296,14 +296,14 @@ export function Testimonials() {
             <div className="flex items-center gap-2">
               <button
                 onClick={prev}
-                data-testid="button-testimonial-prev"
+               
                 className="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 text-foreground/40 hover:text-foreground hover:border-white/30 transition-all duration-300"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={next}
-                data-testid="button-testimonial-next"
+               
                 className="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 text-foreground/40 hover:text-foreground hover:border-white/30 transition-all duration-300"
               >
                 <ChevronRight className="w-4 h-4" />

@@ -438,7 +438,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
       exit={{ opacity: 0, scale: 0.92 }}
       transition={{ duration: 0.5, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
       whileHover={{ y: -10, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } }}
-      data-testid={`card-portfolio-${index}`}
+     
       data-cursor-text="VIEW"
       style={{ border: "1px solid rgba(255,255,255,0.07)" }}
     >
@@ -576,7 +576,7 @@ export function Portfolio() {
               <button
                 key={f.value}
                 onClick={() => setActiveFilter(f.value)}
-                data-testid={`filter-${f.value}`}
+               
                 className="relative px-5 py-2.5 text-[11px] font-bold tracking-[0.2em] uppercase rounded-xl transition-all duration-300 overflow-hidden"
                 style={{
                   background: isActive

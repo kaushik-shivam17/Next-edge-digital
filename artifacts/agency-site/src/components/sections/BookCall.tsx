@@ -218,7 +218,7 @@ export function BookCall() {
                   border: "1px solid rgba(37,211,102,0.15)",
                   borderBottomLeftRadius: i === 0 ? 4 : undefined,
                 }}
-                data-testid={`card-perk-${i}`}
+               
               >
                 {/* Hover glow */}
                 <div
@@ -265,7 +265,7 @@ export function BookCall() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              data-testid="button-book-calendar"
+             
               className="group inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-5 rounded-2xl font-bold text-sm tracking-wide transition-all duration-300 hover:scale-[1.02]"
               style={{
                 background: "linear-gradient(135deg, #128C7E, #25D366)",
@@ -282,7 +282,7 @@ export function BookCall() {
 
             <button
               onClick={() => scrollToSection("contact")}
-              data-testid="button-book-whatsapp"
+             
               className="group inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-5 rounded-2xl font-semibold text-sm tracking-wide transition-all duration-300"
               style={{
                 background: "rgba(37,211,102,0.06)",

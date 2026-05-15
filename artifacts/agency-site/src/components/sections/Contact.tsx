@@ -171,7 +171,7 @@ export function Contact() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                data-testid="button-contact-whatsapp"
+               
                 className="inline-flex items-center gap-3 px-6 py-4 rounded-xl bg-[#25D366]/10 border border-[#25D366]/30 hover:bg-[#25D366]/20 hover:border-[#25D366]/60 transition-all duration-300 group mb-10"
               >
                 <div className="w-10 h-10 rounded-full bg-[#25D366] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
@@ -216,7 +216,7 @@ export function Contact() {
           >
             <div
               className="bg-card p-5 sm:p-8 md:p-12 rounded-2xl border border-white/5 relative overflow-hidden"
-              data-testid="form-contact"
+             
             >
               <AnimatePresence mode="wait">
                 {submitted ? (
@@ -302,16 +302,16 @@ export function Contact() {
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <div className="space-y-2">
                                   <Label htmlFor="name" className="text-[10px] font-bold tracking-[0.2em] uppercase text-foreground/40">Full Name</Label>
-                                  <Input id="name" required value={formData.name} onChange={(e) => update("name", e.target.value)} placeholder="John Smith" data-testid="input-name" className="bg-background/60 border-white/10 h-12 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 transition-colors" />
+                                  <Input id="name" required value={formData.name} onChange={(e) => update("name", e.target.value)} placeholder="John Smith" className="bg-background/60 border-white/10 h-12 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 transition-colors" />
                                 </div>
                                 <div className="space-y-2">
                                   <Label htmlFor="company" className="text-[10px] font-bold tracking-[0.2em] uppercase text-foreground/40">Company</Label>
-                                  <Input id="company" required value={formData.company} onChange={(e) => update("company", e.target.value)} placeholder="Acme Corp" data-testid="input-company" className="bg-background/60 border-white/10 h-12 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 transition-colors" />
+                                  <Input id="company" required value={formData.company} onChange={(e) => update("company", e.target.value)} placeholder="Acme Corp" className="bg-background/60 border-white/10 h-12 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 transition-colors" />
                                 </div>
                               </div>
                               <div className="space-y-2">
                                 <Label htmlFor="email" className="text-[10px] font-bold tracking-[0.2em] uppercase text-foreground/40">Email Address</Label>
-                                <Input id="email" type="email" required value={formData.email} onChange={(e) => update("email", e.target.value)} placeholder="john@company.com" data-testid="input-email" className="bg-background/60 border-white/10 h-12 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 transition-colors" />
+                                <Input id="email" type="email" required value={formData.email} onChange={(e) => update("email", e.target.value)} placeholder="john@company.com" className="bg-background/60 border-white/10 h-12 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 transition-colors" />
                               </div>
                               <div className="space-y-2">
                                 <Label htmlFor="country" className="text-[10px] font-bold tracking-[0.2em] uppercase text-foreground/40">Country / Region <span className="text-foreground/20 normal-case tracking-normal font-normal">(optional)</span></Label>
@@ -319,7 +319,7 @@ export function Contact() {
                                   id="country"
                                   value={formData.country}
                                   onChange={(e) => update("country", e.target.value)}
-                                  data-testid="select-country"
+                                 
                                   className="w-full h-12 rounded-sm px-3 text-sm transition-colors outline-none"
                                   style={{
                                     background: "rgba(9,9,11,0.6)",
@@ -410,7 +410,7 @@ export function Contact() {
                               </div>
                               <div className="space-y-2">
                                 <Label htmlFor="message" className="text-[10px] font-bold tracking-[0.2em] uppercase text-foreground/40">Project Details</Label>
-                                <Textarea id="message" required rows={7} data-testid="textarea-message" value={formData.message} onChange={(e) => update("message", e.target.value)} placeholder="Describe what you're building, what results you're after, and your timeline..." className="bg-background/60 border-white/10 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 resize-none transition-colors" />
+                                <Textarea id="message" required rows={7} value={formData.message} onChange={(e) => update("message", e.target.value)} placeholder="Describe what you're building, what results you're after, and your timeline..." className="bg-background/60 border-white/10 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 resize-none transition-colors" />
                               </div>
                             </motion.div>
                           )}
@@ -434,7 +434,7 @@ export function Contact() {
                             type="button"
                             onClick={goNext}
                             disabled={!canAdvance()}
-                            data-testid="button-next-step"
+                           
                             className="flex-1 flex items-center justify-center gap-2 h-12 text-xs font-bold tracking-widest uppercase rounded-sm transition-all duration-300 group disabled:opacity-40 disabled:cursor-not-allowed"
                             style={{
                               background: "linear-gradient(135deg, #CAA353, #F0C97A)",
@@ -448,7 +448,7 @@ export function Contact() {
                           <button
                             type="submit"
                             disabled={!canAdvance() || submitting}
-                            data-testid="button-submit"
+                           
                             className="flex-1 flex items-center justify-center gap-2 h-12 text-xs font-bold tracking-widest uppercase rounded-sm transition-all duration-300 group disabled:opacity-40 disabled:cursor-not-allowed"
                             style={{
                               background: "linear-gradient(135deg, #CAA353, #F0C97A)",
@@ -468,7 +468,7 @@ export function Contact() {
                         href={WHATSAPP_URL}
                         target="_blank"
                         rel="noopener noreferrer"
-                        data-testid="button-form-whatsapp"
+                       
                         className="w-full flex items-center justify-center gap-2 h-11 rounded-sm border border-[#25D366]/20 text-[#25D366]/70 hover:bg-[#25D366]/10 hover:text-[#25D366] hover:border-[#25D366]/40 transition-all duration-300 text-sm font-semibold"
                       >
                         <SiWhatsapp className="w-4 h-4" />

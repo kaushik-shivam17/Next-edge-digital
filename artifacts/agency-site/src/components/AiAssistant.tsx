@@ -77,7 +77,7 @@ export function AiAssistant() {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", stiffness: 300, damping: 22, delay: 1.2 }}
           onClick={() => setOpen((v) => !v)}
-          data-testid="button-ai-assistant"
+         
           aria-label="Toggle AI Chat Assistant"
           className="relative group flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer"
           style={{
