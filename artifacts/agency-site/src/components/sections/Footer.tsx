@@ -139,7 +139,7 @@ export function Footer() {
           <p className="text-[11px] text-foreground/25 tracking-wide">
             &copy; {new Date().getFullYear()} Core Elite Digital. All rights reserved.
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-1">
             {["Privacy Policy", "Terms of Service", "Cookie Policy"].map((item) => (
               <span key={item} className="text-[11px] text-foreground/25 tracking-wide cursor-default">
                 {item}

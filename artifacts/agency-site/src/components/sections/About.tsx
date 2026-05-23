@@ -55,7 +55,7 @@ export function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="p-10 rounded-2xl text-center"
+          className="p-6 md:p-10 rounded-2xl text-center"
           style={{
             background: "rgba(202,163,83,0.04)",
             border: "1px solid rgba(202,163,83,0.12)",

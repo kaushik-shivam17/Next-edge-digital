@@ -90,7 +90,7 @@ function AiServiceCard({ service, index }: { service: typeof aiServices[0]; inde
         ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className="group relative flex flex-col h-full p-8 md:p-10 rounded-2xl overflow-hidden cursor-default"
+        className="group relative flex flex-col h-full p-6 md:p-10 rounded-2xl overflow-hidden cursor-default"
         style={{
           background: "rgba(255,255,255,0.02)",
           border: `1px solid ${service.border}`,

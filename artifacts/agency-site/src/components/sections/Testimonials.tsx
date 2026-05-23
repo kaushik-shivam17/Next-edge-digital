@@ -281,22 +281,21 @@ export function Testimonials() {
                 <button
                   key={i}
                   onClick={() => goTo(i, i > active ? 1 : -1)}
-                  className="relative h-[3px] rounded-full overflow-hidden transition-all duration-300"
-                  style={{
-                    width: i === active ? 48 : 16,
-                    background: "rgba(255,255,255,0.1)",
-                  }}
+                  className="relative py-3 -my-3 touch-manipulation"
+                  style={{ width: i === active ? 48 : 16 }}
                   aria-label={`Go to testimonial ${i + 1}`}
                 >
-                  {i === active && (
-                    <motion.div
-                      className="absolute inset-y-0 left-0 rounded-full"
-                      style={{
-                        width: `${progress}%`,
-                        background: t.accent,
-                      }}
-                    />
-                  )}
+                  <div
+                    className="relative h-[3px] rounded-full overflow-hidden w-full"
+                    style={{ background: "rgba(255,255,255,0.1)" }}
+                  >
+                    {i === active && (
+                      <motion.div
+                        className="absolute inset-y-0 left-0 rounded-full"
+                        style={{ width: `${progress}%`, background: t.accent }}
+                      />
+                    )}
+                  </div>
                 </button>
               ))}
             </div>

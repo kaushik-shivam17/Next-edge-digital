@@ -58,7 +58,7 @@ function WorldClock() {
       <p className="text-center text-[9px] font-bold tracking-[0.35em] uppercase mb-5" style={{ color: "rgba(37,211,102,0.5)" }}>
         Live — We schedule around your local time
       </p>
-      <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10">
+      <div className="flex flex-wrap items-center justify-center gap-4 md:gap-10">
         {timeZones.map(({ label, tz, flag }) => {
           const timeStr = new Intl.DateTimeFormat("en-US", {
             timeZone: tz,

@@ -94,7 +94,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
        
-        className="group relative p-8 md:p-10 h-full overflow-hidden cursor-default"
+        className="group relative p-6 md:p-10 h-full overflow-hidden cursor-default"
         style={{
           background: "rgba(255,255,255,0.02)",
           border: "1px solid rgba(255,255,255,0.06)",

@@ -136,7 +136,7 @@ export function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-[11px] font-bold tracking-[0.25em] text-primary"
+              className="text-[10px] sm:text-[11px] font-bold tracking-[0.15em] sm:tracking-[0.25em] text-primary"
             >
               CURRENTLY ACCEPTING NEW CLIENTS
             </motion.span>
