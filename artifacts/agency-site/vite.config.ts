@@ -48,7 +48,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: process.env.VITE_PORT ? Number(process.env.VITE_PORT) : 5000,
+    port: Number(process.env.VITE_PORT ?? process.env.PORT ?? "3000"),
     strictPort: true,
     host: "0.0.0.0",
     allowedHosts: true,
@@ -58,7 +58,7 @@ export default defineConfig({
     },
   },
   preview: {
-    port: process.env.VITE_PORT ? Number(process.env.VITE_PORT) : 5000,
+    port: Number(process.env.VITE_PORT ?? process.env.PORT ?? "3000"),
     host: "0.0.0.0",
     allowedHosts: true,
   },
