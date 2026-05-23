@@ -10,6 +10,7 @@ export function AiAssistant() {
 
   return (
     <>
+      {/* ── Chat panel — independently fixed ── */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -19,8 +20,8 @@ export function AiAssistant() {
             transition={{ type: "spring", stiffness: 320, damping: 28 }}
             className="fixed z-50 flex flex-col"
             style={{
-              bottom: "calc(max(1.5rem, env(safe-area-inset-bottom)) + 68px)",
-              left: "1.5rem",
+              bottom: "calc(max(1.5rem, env(safe-area-inset-bottom)) + 72px)",
+              right: "1.5rem",
               width: "min(380px, calc(100vw - 3rem))",
               height: "min(580px, calc(100vh - 160px))",
               borderRadius: 20,
@@ -29,6 +30,7 @@ export function AiAssistant() {
               boxShadow: "0 24px 80px rgba(0,0,0,0.65), 0 0 0 1px rgba(202,163,83,0.08)",
             }}
           >
+            {/* Header */}
             <div
               className="flex items-center justify-between px-4 py-3 flex-shrink-0"
               style={{
@@ -68,57 +70,54 @@ export function AiAssistant() {
         )}
       </AnimatePresence>
 
-      <div
-        className="fixed left-6 z-50"
-        style={{ bottom: "max(1.5rem, env(safe-area-inset-bottom))" }}
+      {/* ── Trigger button — positioned by parent container ── */}
+      <motion.button
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 300, damping: 22, delay: 1.2 }}
+        onClick={() => setOpen((v) => !v)}
+        aria-label="Toggle AI Chat Assistant"
+        className="relative group flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer"
+        style={{
+          background: "linear-gradient(135deg, #1a1506 0%, #0c0c0e 100%)",
+          border: open
+            ? "1px solid rgba(202,163,83,0.6)"
+            : "1px solid rgba(202,163,83,0.35)",
+          boxShadow: open
+            ? "0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(202,163,83,0.12)"
+            : "0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(202,163,83,0.06)",
+        }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
       >
-        <motion.button
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: "spring", stiffness: 300, damping: 22, delay: 1.2 }}
-          onClick={() => setOpen((v) => !v)}
-         
-          aria-label="Toggle AI Chat Assistant"
-          className="relative group flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer"
-          style={{
-            background: "linear-gradient(135deg, #1a1506 0%, #0c0c0e 100%)",
-            border: open
-              ? "1px solid rgba(202,163,83,0.6)"
-              : "1px solid rgba(202,163,83,0.35)",
-            boxShadow: open
-              ? "0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(202,163,83,0.12)"
-              : "0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(202,163,83,0.06)",
-          }}
+        {!open && (
+          <motion.div
+            className="absolute inset-0 rounded-2xl pointer-events-none"
+            animate={{
+              boxShadow: [
+                "0 0 0 0 rgba(202,163,83,0.3)",
+                "0 0 0 8px rgba(202,163,83,0)",
+                "0 0 0 0 rgba(202,163,83,0)",
+              ],
+            }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }}
+          />
+        )}
+
+        <div
+          className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+          style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)" }}
         >
-          {!open && (
-            <motion.div
-              className="absolute inset-0 rounded-2xl pointer-events-none"
-              animate={{
-                boxShadow: [
-                  "0 0 0 0 rgba(202,163,83,0.3)",
-                  "0 0 0 8px rgba(202,163,83,0)",
-                  "0 0 0 0 rgba(202,163,83,0)",
-                ],
-              }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }}
-            />
-          )}
+          <Sparkles className="w-4 h-4" style={{ color: "#0c0c0e" }} />
+        </div>
 
-          <div
-            className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
-            style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)" }}
-          >
-            <Sparkles className="w-4 h-4" style={{ color: "#0c0c0e" }} />
-          </div>
-
-          <div className="flex flex-col leading-tight">
-            <span className="text-xs font-bold text-white/90">
-              {open ? "Close Chat" : "Ask Elite AI"}
-            </span>
-            <span className="text-[10px] text-white/40 tracking-wide">Site Assistant</span>
-          </div>
-        </motion.button>
-      </div>
+        <div className="flex flex-col leading-tight">
+          <span className="text-xs font-bold text-white/90">
+            {open ? "Close Chat" : "Ask Elite AI"}
+          </span>
+          <span className="text-[10px] text-white/40 tracking-wide">Site Assistant</span>
+        </div>
+      </motion.button>
     </>
   );
 }

@@ -41,6 +41,7 @@ import { Contact } from "./components/sections/Contact";
 import { BookCall } from "./components/sections/BookCall";
 import { Footer } from "./components/sections/Footer";
 import { FloatingWhatsApp } from "./components/sections/FloatingWhatsApp";
+import { AiAssistant } from "./components/AiAssistant";
 import { CustomCursor } from "./components/CustomCursor";
 import { NoiseOverlay } from "./components/NoiseOverlay";
 import { BackToTop } from "./components/BackToTop";
@@ -142,7 +143,16 @@ function AgencySite() {
     >
       {isHoverDevice && <CustomCursor />}
       <CookieConsent />
-      <FloatingWhatsApp />
+
+      {/* Floating buttons — side by side, bottom-right */}
+      <div
+        className="fixed right-6 z-50 flex flex-row items-end gap-3"
+        style={{ bottom: "max(1.5rem, env(safe-area-inset-bottom))" }}
+      >
+        <AiAssistant />
+        <FloatingWhatsApp />
+      </div>
+
       <BackToTop />
 
       <div className="site-enter">

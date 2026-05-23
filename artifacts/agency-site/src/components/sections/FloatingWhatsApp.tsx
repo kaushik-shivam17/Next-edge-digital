@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SiWhatsapp } from "react-icons/si";
-import { X, ArrowRight, icons } from "lucide-react";
+import { X, ArrowRight } from "lucide-react";
 
 const WHATSAPP_NUMBER = "918218628232";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
@@ -10,7 +10,7 @@ const QUICK_MESSAGES = [
   { label: "Discuss a website project", icon: "🌐" },
   { label: "Social media management", icon: "📱" },
   { label: "Book a free strategy call", icon: "📞" },
-  { label: "Get a quote for SEO services", icon: "🔍"}
+  { label: "Get a quote for SEO services", icon: "🔍" },
 ];
 
 export function FloatingWhatsApp() {
@@ -26,8 +26,8 @@ export function FloatingWhatsApp() {
   };
 
   return (
-    <div className="fixed right-6 z-50 flex flex-col items-end gap-3" style={{ bottom: "max(1.5rem, env(safe-area-inset-bottom))" }}>
-      {/* Premium popup card */}
+    <>
+      {/* ── Popup card — independently fixed ── */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -35,28 +35,23 @@ export function FloatingWhatsApp() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.92 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="w-[min(320px,calc(100vw-3rem))] rounded-2xl overflow-hidden shadow-2xl"
+            className="fixed right-6 z-50 w-[min(320px,calc(100vw-3rem))] rounded-2xl overflow-hidden shadow-2xl"
             style={{
+              bottom: "calc(max(1.5rem, env(safe-area-inset-bottom)) + 72px)",
               background: "rgba(12, 12, 14, 0.92)",
               backdropFilter: "blur(20px)",
               border: "1px solid rgba(255,255,255,0.08)",
               boxShadow: "0 32px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(37,211,102,0.1)",
             }}
-           
           >
             {/* Header */}
             <div
               className="px-5 py-4 relative overflow-hidden"
-              style={{
-                background: "linear-gradient(135deg, #1a5c38 0%, #128C7E 50%, #25D366 100%)",
-              }}
+              style={{ background: "linear-gradient(135deg, #1a5c38 0%, #128C7E 50%, #25D366 100%)" }}
             >
-              {/* Subtle radial glow */}
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.15),transparent_60%)]" />
-
               <div className="relative flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  {/* Avatar */}
                   <div className="relative">
                     <div className="w-11 h-11 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 flex items-center justify-center">
                       <SiWhatsapp className="w-5 h-5 text-white" />
@@ -73,7 +68,6 @@ export function FloatingWhatsApp() {
                 </div>
                 <button
                   onClick={() => setOpen(false)}
-                 
                   aria-label="Close"
                   className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/80 hover:text-white transition-all duration-200"
                 >
@@ -104,12 +98,8 @@ export function FloatingWhatsApp() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 * i, duration: 0.2 }}
                   onClick={() => openChat(msg.label)}
-                 
                   className="group w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-left transition-all duration-200"
-                  style={{
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                  }}
+                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = "rgba(37,211,102,0.08)";
                     e.currentTarget.style.borderColor = "rgba(37,211,102,0.3)";
@@ -126,11 +116,8 @@ export function FloatingWhatsApp() {
                   <ArrowRight className="w-3.5 h-3.5 text-foreground/20 group-hover:text-[#25D366] group-hover:translate-x-0.5 transition-all" />
                 </motion.button>
               ))}
-
-              {/* Open WhatsApp CTA */}
               <button
                 onClick={() => openChat()}
-               
                 className="w-full mt-1 flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-sm text-white transition-all duration-200 hover:opacity-90 hover:scale-[1.01]"
                 style={{
                   background: "linear-gradient(135deg, #128C7E, #25D366)",
@@ -145,9 +132,9 @@ export function FloatingWhatsApp() {
         )}
       </AnimatePresence>
 
-      {/* Floating button row */}
+      {/* ── Trigger button — positioned by parent container ── */}
       <div className="flex items-center gap-3">
-        {/* "Let's Talk" label */}
+        {/* "Let's Talk" hover label */}
         <AnimatePresence>
           {(hovered || open) && (
             <motion.div
@@ -168,12 +155,10 @@ export function FloatingWhatsApp() {
           )}
         </AnimatePresence>
 
-        {/* Main button */}
         <motion.button
           onClick={() => setOpen((v) => !v)}
           onHoverStart={() => setHovered(true)}
           onHoverEnd={() => setHovered(false)}
-         
           data-cursor-text="CHAT"
           aria-label="Contact us on WhatsApp"
           whileHover={{ scale: 1.1 }}
@@ -186,14 +171,10 @@ export function FloatingWhatsApp() {
               : "0 8px 24px rgba(37,211,102,0.4), 0 2px 8px rgba(0,0,0,0.3)",
           }}
         >
-          {/* Glow ring */}
           <div
             className="absolute inset-0 rounded-full"
-            style={{
-              background: "linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 60%)",
-            }}
+            style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 60%)" }}
           />
-
           <AnimatePresence mode="wait">
             {open ? (
               <motion.span
@@ -219,8 +200,6 @@ export function FloatingWhatsApp() {
               </motion.span>
             )}
           </AnimatePresence>
-
-          {/* Pulse ring (only when closed) */}
           {!open && (
             <>
               <motion.span
@@ -237,6 +216,6 @@ export function FloatingWhatsApp() {
           )}
         </motion.button>
       </div>
-    </div>
+    </>
   );
 }
