@@ -44,7 +44,6 @@ import { FloatingWhatsApp } from "./components/sections/FloatingWhatsApp";
 import { CustomCursor } from "./components/CustomCursor";
 import { NoiseOverlay } from "./components/NoiseOverlay";
 import { BackToTop } from "./components/BackToTop";
-import { AiAssistant } from "./components/AiAssistant";
 import { CookieConsent } from "./components/CookieConsent";
 
 const navLinks = [
@@ -144,7 +143,6 @@ function AgencySite() {
       {isHoverDevice && <CustomCursor />}
       <CookieConsent />
       <FloatingWhatsApp />
-      <AiAssistant />
       <BackToTop />
 
       <div className="site-enter">

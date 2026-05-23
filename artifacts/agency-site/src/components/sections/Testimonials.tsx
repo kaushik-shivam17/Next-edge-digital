@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -78,6 +78,7 @@ export function Testimonials() {
   const [direction, setDirection] = useState(1);
   const [paused, setPaused] = useState(false);
   const [progress, setProgress] = useState(0);
+  const touchStartX = useRef<number | null>(null);
 
   const goTo = useCallback((idx: number, dir: number) => {
     setDirection(dir);
@@ -181,6 +182,14 @@ export function Testimonials() {
         >
           <div
             className="relative rounded-2xl overflow-hidden p-5 sm:p-10 md:p-16"
+            onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
+            onTouchEnd={(e) => {
+              if (touchStartX.current === null) return;
+              const delta = e.changedTouches[0].clientX - touchStartX.current;
+              touchStartX.current = null;
+              if (Math.abs(delta) < 40) return;
+              if (delta < 0) next(); else prev();
+            }}
             style={{
               background: "rgba(255,255,255,0.02)",
               border: "1px solid rgba(255,255,255,0.06)",
