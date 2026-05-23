@@ -75,6 +75,11 @@ app.use(express.urlencoded({ extended: true, limit: "32kb" }));
 
 app.use("/api", router);
 
+// Return JSON for unmatched routes instead of Express's default HTML page
+app.use((_req: Request, res: Response) => {
+  res.status(404).json({ error: "Not found" });
+});
+
 app.use((err: Error & { status?: number; type?: string }, _req: Request, res: Response, _next: NextFunction) => {
   if (err.message === "Not allowed by CORS") {
     res.status(403).json({ error: "Forbidden" });

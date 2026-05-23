@@ -14,6 +14,12 @@ const ADMIN_KEY = process.env["ADMIN_KEY"] ?? "";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/** Strip null bytes so they never reach the DB driver */
+function sanitize(v: unknown): string {
+  if (typeof v !== "string") return "";
+  return v.replace(/\u0000/g, "");
+}
+
 const MAX_LENGTHS: Record<string, number> = {
   name: 120,
   company: 120,
@@ -138,9 +144,16 @@ async function sendNotificationEmail(data: {
 }
 
 router.post("/submissions", submitLimiter, async (req: Request, res: Response) => {
-  const { name, company, email, country, service, budget, message } = req.body as Record<string, string>;
+  const body = req.body as Record<string, unknown>;
+  const name    = sanitize(body.name);
+  const company = sanitize(body.company);
+  const email   = sanitize(body.email);
+  const country = sanitize(body.country);
+  const service = sanitize(body.service);
+  const budget  = sanitize(body.budget);
+  const message = sanitize(body.message);
 
-  if (!name?.trim() || !email?.trim() || !message?.trim()) {
+  if (!name.trim() || !email.trim() || !message.trim()) {
     res.status(400).json({ error: "Missing required fields." });
     return;
   }
