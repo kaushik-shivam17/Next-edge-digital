@@ -77,10 +77,10 @@ function WorldClock() {
             return h >= 8 && h < 20;
           })();
           return (
-            <div key={label} className="flex items-center gap-3">
-              <span className="text-2xl leading-none">{flag}</span>
+            <div key={label} className="flex items-center gap-2">
+              <span className="text-lg sm:text-2xl leading-none">{flag}</span>
               <div>
-                <p className="text-base font-black tabular-nums tracking-tight text-foreground/80 leading-none">
+                <p className="text-sm sm:text-base font-black tabular-nums tracking-tight text-foreground/80 leading-none">
                   {timeStr}
                 </p>
                 <div className="flex items-center gap-1.5 mt-1">
@@ -193,7 +193,7 @@ export function BookCall() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.16 }}
-            className="text-lg text-foreground/50 leading-relaxed"
+            className="text-base md:text-lg text-foreground/50 leading-relaxed"
           >
             Book a free 30-minute strategy session. We'll audit your current digital presence,
             identify your biggest opportunities, and tell you exactly how we'd scale your brand —

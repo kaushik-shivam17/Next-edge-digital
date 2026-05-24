@@ -432,7 +432,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
   return (
     <motion.div
       layout
-      className="group relative flex-shrink-0 w-[300px] md:w-[400px] h-[500px] rounded-3xl overflow-hidden cursor-pointer"
+      className="group relative flex-shrink-0 w-[260px] sm:w-[300px] md:w-[400px] h-[440px] sm:h-[500px] rounded-3xl overflow-hidden cursor-pointer"
       initial={{ opacity: 0, x: 60 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, scale: 0.92 }}

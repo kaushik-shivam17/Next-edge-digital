@@ -265,7 +265,7 @@ export function Contact() {
                               {i < step ? "✓" : i + 1}
                             </div>
                             <span
-                              className="text-[10px] font-semibold tracking-wider uppercase hidden sm:block transition-colors duration-300"
+                              className="text-[9px] sm:text-[10px] font-semibold tracking-wider uppercase transition-colors duration-300"
                               style={{ color: i === step ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.2)" }}
                             >
                               {label}

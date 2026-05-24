@@ -102,13 +102,13 @@ export function Hero() {
       <motion.div
         animate={{ y: [0, -40, 0], scale: [1, 1.08, 1] }}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/4 left-[8%] w-80 h-80 rounded-full pointer-events-none z-[1]"
+        className="absolute top-1/4 left-[8%] w-40 h-40 sm:w-80 sm:h-80 rounded-full pointer-events-none z-[1]"
         style={{ background: "radial-gradient(circle, rgba(202,163,83,0.08) 0%, transparent 70%)", filter: "blur(40px)" }}
       />
       <motion.div
         animate={{ y: [0, 30, 0], scale: [1, 1.1, 1] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-        className="absolute bottom-1/4 right-[8%] w-96 h-96 rounded-full pointer-events-none z-[1]"
+        className="absolute bottom-1/4 right-[8%] w-48 h-48 sm:w-96 sm:h-96 rounded-full pointer-events-none z-[1]"
         style={{ background: "radial-gradient(circle, rgba(45,100,255,0.07) 0%, transparent 70%)", filter: "blur(50px)" }}
       />
 

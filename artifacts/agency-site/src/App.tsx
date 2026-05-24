@@ -146,8 +146,8 @@ function AgencySite() {
 
       {/* Floating buttons — side by side, bottom-right */}
       <div
-        className="fixed right-6 z-50 flex flex-row items-end gap-3"
-        style={{ bottom: "max(1.5rem, env(safe-area-inset-bottom))" }}
+        className="fixed right-4 sm:right-6 z-50 flex flex-row flex-nowrap items-end gap-2 sm:gap-3"
+        style={{ bottom: "max(1rem, env(safe-area-inset-bottom))" }}
       >
         <AiAssistant />
         <FloatingWhatsApp />

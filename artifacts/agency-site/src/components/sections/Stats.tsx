@@ -200,7 +200,7 @@ function StatCard({
       </div>
 
       {/* Description */}
-      <div className="text-xs text-foreground/25 hidden md:block leading-relaxed max-w-[160px]">
+      <div className="text-[10px] md:text-xs text-foreground/25 leading-relaxed max-w-[160px]">
         {stat.description}
       </div>
     </motion.div>

@@ -137,7 +137,7 @@ export function Process() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-foreground/50 text-lg leading-relaxed"
+            className="text-foreground/50 text-base md:text-lg leading-relaxed"
           >
             Four deliberate steps that transform your vision into a digital force of nature. No shortcuts. No compromises.
           </motion.p>

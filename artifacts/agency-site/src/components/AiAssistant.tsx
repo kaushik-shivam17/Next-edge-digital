@@ -74,48 +74,61 @@ export function AiAssistant() {
       <motion.button
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 300, damping: 22, delay: 1.2 }}
+        transition={{ type: "spring", stiffness: 300, damping: 22, delay: 0.3 }}
         onClick={() => setOpen((v) => !v)}
         aria-label="Toggle AI Chat Assistant"
-        className="relative group flex items-center gap-3 px-4 py-3 rounded-2xl cursor-pointer"
-        style={{
-          background: "linear-gradient(135deg, #1a1506 0%, #0c0c0e 100%)",
-          border: open
-            ? "1px solid rgba(202,163,83,0.6)"
-            : "1px solid rgba(202,163,83,0.35)",
-          boxShadow: open
-            ? "0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(202,163,83,0.12)"
-            : "0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(202,163,83,0.06)",
-        }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.92 }}
+        className="relative group cursor-pointer"
       >
-        {!open && (
-          <motion.div
-            className="absolute inset-0 rounded-2xl pointer-events-none"
-            animate={{
-              boxShadow: [
-                "0 0 0 0 rgba(202,163,83,0.3)",
-                "0 0 0 8px rgba(202,163,83,0)",
-                "0 0 0 0 rgba(202,163,83,0)",
-              ],
-            }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }}
-          />
-        )}
-
+        {/* Mobile: circle icon only */}
         <div
-          className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
-          style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)" }}
+          className="sm:hidden relative w-14 h-14 rounded-full flex items-center justify-center"
+          style={{
+            background: "linear-gradient(135deg, #1a1506 0%, #0c0c0e 100%)",
+            border: open ? "1.5px solid rgba(202,163,83,0.7)" : "1.5px solid rgba(202,163,83,0.35)",
+            boxShadow: open
+              ? "0 0 20px rgba(202,163,83,0.25)"
+              : "0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(202,163,83,0.08)",
+          }}
         >
-          <Sparkles className="w-4 h-4" style={{ color: "#0c0c0e" }} />
+          {!open && (
+            <motion.span
+              className="absolute inset-0 rounded-full pointer-events-none"
+              animate={{ boxShadow: ["0 0 0 0 rgba(202,163,83,0.3)", "0 0 0 8px rgba(202,163,83,0)", "0 0 0 0 rgba(202,163,83,0)"] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }}
+            />
+          )}
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)" }}>
+            <Sparkles className="w-4 h-4" style={{ color: "#0c0c0e" }} />
+          </div>
         </div>
 
-        <div className="flex flex-col leading-tight">
-          <span className="text-xs font-bold text-white/90">
-            {open ? "Close Chat" : "Ask Elite AI"}
-          </span>
-          <span className="text-[10px] text-white/40 tracking-wide">Site Assistant</span>
+        {/* Desktop: full pill */}
+        <div
+          className="hidden sm:flex items-center gap-3 px-4 py-3 rounded-2xl"
+          style={{
+            background: "linear-gradient(135deg, #1a1506 0%, #0c0c0e 100%)",
+            border: open ? "1px solid rgba(202,163,83,0.6)" : "1px solid rgba(202,163,83,0.35)",
+            boxShadow: open
+              ? "0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(202,163,83,0.12)"
+              : "0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(202,163,83,0.06)",
+          }}
+        >
+          {!open && (
+            <motion.div
+              className="absolute inset-0 rounded-2xl pointer-events-none"
+              animate={{ boxShadow: ["0 0 0 0 rgba(202,163,83,0.3)", "0 0 0 8px rgba(202,163,83,0)", "0 0 0 0 rgba(202,163,83,0)"] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }}
+            />
+          )}
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)" }}>
+            <Sparkles className="w-4 h-4" style={{ color: "#0c0c0e" }} />
+          </div>
+          <div className="flex flex-col leading-tight">
+            <span className="text-xs font-bold text-white/90">{open ? "Close Chat" : "Ask Elite AI"}</span>
+            <span className="text-[10px] text-white/40 tracking-wide">Site Assistant</span>
+          </div>
         </div>
       </motion.button>
     </>
