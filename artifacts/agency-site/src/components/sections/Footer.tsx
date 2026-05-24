@@ -1,8 +1,8 @@
-import { SiInstagram, SiDribbble, SiX, SiWhatsapp } from "react-icons/si";
-import { Linkedin } from "lucide-react";
+import { SiInstagram, SiWhatsapp } from "react-icons/si";
 import { scrollToSection } from "@/lib/scrollTo";
 
 const WHATSAPP_URL = `https://wa.me/918218628232`;
+const INSTAGRAM_URL = `https://instagram.com/coreelitedigital`;
 
 const serviceLinks = [
   { label: "AI Call Management", section: "ai-solutions" },
@@ -27,75 +27,66 @@ export function Footer() {
     <footer className="bg-card/30 border-t border-white/5 relative z-10">
       <div className="container px-4 md:px-6">
         <div className="py-10 md:py-16 grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
+
           {/* Brand */}
           <div className="md:col-span-2">
+            {/* Logo */}
             <div className="flex items-center gap-3 mb-6">
-              <div
-                className="relative flex-shrink-0"
-                style={{ width: 38, height: 38, padding: 1.5, background: "linear-gradient(135deg, #8B6914 0%, #CAA353 55%, #F0C97A 100%)", borderRadius: 9, boxSizing: "border-box", boxShadow: "0 0 18px rgba(202,163,83,0.15)" }}
-              >
-                <div
-                  className="w-full h-full flex items-center justify-center"
-                  style={{ background: "#0c0c0e", borderRadius: 7 }}
-                >
-                  <span
-                    className="font-black leading-none select-none"
-                    style={{ fontSize: 11, letterSpacing: "-0.02em", background: "linear-gradient(135deg, #CAA353, #F0C97A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
-                  >
-                    CE
-                  </span>
-                </div>
-                <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full" style={{ background: "#F0C97A", boxShadow: "0 0 8px rgba(240,201,122,0.9)" }} />
-              </div>
+              <img
+                src="/logo.svg"
+                alt="Core Elite Digital"
+                style={{ width: 40, height: 40, filter: "drop-shadow(0 0 10px rgba(202,163,83,0.35))" }}
+              />
               <div className="flex flex-col leading-none gap-[4px]">
                 <span className="font-black uppercase" style={{ fontSize: 13, letterSpacing: "0.13em", color: "#ffffff" }}>coreelite</span>
                 <span className="font-bold uppercase" style={{ fontSize: 8, letterSpacing: "0.48em", color: "#CAA353" }}>digital</span>
               </div>
             </div>
+
             <p className="text-foreground/40 text-sm leading-relaxed max-w-xs mb-3">
               An elite AI-powered digital agency. We build market-leading websites and deploy intelligent AI systems that automate, scale, and dominate.
             </p>
             <p className="text-foreground/25 text-xs leading-relaxed max-w-xs mb-8">
               AI Call Management · AI WhatsApp · AI Social Media · AI Site Building · Website Design · SEO · Brand Identity
             </p>
-            <div className="flex items-center gap-3">
-              {[
-                { icon: SiX, href: "https://x.com/coreelitedigital", label: "X (Twitter)" },
-                { icon: SiInstagram, href: "https://instagram.com/coreelitedigital", label: "Instagram" },
-                { icon: SiDribbble, href: "https://dribbble.com/coreelitedigital", label: "Dribbble" },
-              ].map(({ icon: Icon, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                 
-                  className="w-11 h-11 md:w-9 md:h-9 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-foreground/40 hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all duration-300"
-                >
-                  <Icon className="w-4 h-4 md:w-3.5 md:h-3.5" />
-                </a>
-              ))}
+
+            {/* Social icons — Instagram + WhatsApp only */}
+            <div className="flex items-center gap-4">
+
+              {/* Instagram — gradient highlight */}
               <a
-                href="https://linkedin.com/company/coreelitedigital"
+                href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="LinkedIn"
-               
-                className="w-11 h-11 md:w-9 md:h-9 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-foreground/40 hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all duration-300"
+                aria-label="Instagram"
+                className="group relative w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-0.5"
+                style={{
+                  background: "linear-gradient(135deg, #833ab4 0%, #c13584 35%, #e1306c 60%, #fd1d1d 80%, #f77737 100%)",
+                  boxShadow: "0 4px 20px rgba(193,53,132,0.35)",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 8px 32px rgba(193,53,132,0.55)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 4px 20px rgba(193,53,132,0.35)"; }}
               >
-                <Linkedin className="w-4 h-4 md:w-3.5 md:h-3.5" />
+                <SiInstagram className="w-5 h-5 text-white relative z-10" />
               </a>
+
+              {/* WhatsApp — green highlight */}
               <a
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"
-               
-                className="w-11 h-11 md:w-9 md:h-9 rounded-sm bg-[#25D366]/10 border border-[#25D366]/30 flex items-center justify-center text-[#25D366]/70 hover:text-[#25D366] hover:border-[#25D366]/60 hover:bg-[#25D366]/20 transition-all duration-300"
+                className="group relative w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-0.5"
+                style={{
+                  background: "linear-gradient(135deg, #128C7E 0%, #25D366 100%)",
+                  boxShadow: "0 4px 20px rgba(37,211,102,0.35)",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 8px 32px rgba(37,211,102,0.55)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 4px 20px rgba(37,211,102,0.35)"; }}
               >
-                <SiWhatsapp className="w-4 h-4 md:w-3.5 md:h-3.5" />
+                <SiWhatsapp className="w-5 h-5 text-white relative z-10" />
               </a>
+
             </div>
           </div>
 
