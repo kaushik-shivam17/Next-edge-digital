@@ -9,10 +9,9 @@ export function CookieConsent() {
 
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (!saved) {
-      const t = setTimeout(() => setVisible(true), 1800);
-      return () => clearTimeout(t);
-    }
+    if (saved) return;
+    const t = setTimeout(() => setVisible(true), 1800);
+    return () => clearTimeout(t);
   }, []);
 
   const accept = () => {
