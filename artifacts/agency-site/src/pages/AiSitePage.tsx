@@ -5,7 +5,6 @@ import { SharedNav } from "@/components/SharedNav";
 import { BookCall } from "@/components/sections/BookCall";
 import { Footer } from "@/components/sections/Footer";
 import { FloatingWhatsApp } from "@/components/sections/FloatingWhatsApp";
-import { AiAssistant } from "@/components/AiAssistant";
 import { BackToTop } from "@/components/BackToTop";
 import { NoiseOverlay } from "@/components/NoiseOverlay";
 import { usePageSEO } from "@/hooks/usePageSEO";
@@ -46,7 +45,6 @@ export function AiSitePage() {
       <NoiseOverlay />
       <SharedNav />
       <FloatingWhatsApp />
-      <AiAssistant />
       <BackToTop />
 
       {/* HERO */}

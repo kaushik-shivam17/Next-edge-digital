@@ -132,8 +132,11 @@ export function FloatingWhatsApp() {
         )}
       </AnimatePresence>
 
-      {/* ── Trigger button — positioned by parent container ── */}
-      <div className="flex items-center gap-3">
+      {/* ── Trigger button — self-contained fixed position ── */}
+      <div
+        className="fixed z-50 flex items-center gap-3"
+        style={{ bottom: "max(1rem, env(safe-area-inset-bottom))", right: "1.5rem" }}
+      >
         {/* "Let's Talk" hover label */}
         <AnimatePresence>
           {(hovered || open) && (

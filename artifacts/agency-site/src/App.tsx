@@ -17,6 +17,7 @@ const PortfolioPage = lazy(() => import("./pages/PortfolioPage").then(m => ({ de
 const AboutPage = lazy(() => import("./pages/AboutPage").then(m => ({ default: m.AboutPage })));
 const ContactPage = lazy(() => import("./pages/ContactPage").then(m => ({ default: m.ContactPage })));
 const ProcessPage = lazy(() => import("./pages/ProcessPage").then(m => ({ default: m.ProcessPage })));
+const ThankYouPage = lazy(() => import("./pages/ThankYouPage").then(m => ({ default: m.ThankYouPage })));
 
 function PageFallback() {
   return (
@@ -41,7 +42,6 @@ import { Contact } from "./components/sections/Contact";
 import { BookCall } from "./components/sections/BookCall";
 import { Footer } from "./components/sections/Footer";
 import { FloatingWhatsApp } from "./components/sections/FloatingWhatsApp";
-import { AiAssistant } from "./components/AiAssistant";
 import { CustomCursor } from "./components/CustomCursor";
 import { NoiseOverlay } from "./components/NoiseOverlay";
 import { BackToTop } from "./components/BackToTop";
@@ -144,14 +144,7 @@ function AgencySite() {
       {isHoverDevice && <CustomCursor />}
       <CookieConsent />
 
-      {/* Floating buttons — side by side, bottom-right */}
-      <div
-        className="fixed right-4 sm:right-6 z-50 flex flex-row flex-nowrap items-end gap-2 sm:gap-3"
-        style={{ bottom: "max(1rem, env(safe-area-inset-bottom))" }}
-      >
-        <AiAssistant />
-        <FloatingWhatsApp />
-      </div>
+      <FloatingWhatsApp />
 
       <BackToTop />
 
@@ -347,6 +340,7 @@ function App() {
           <Route path="/about">{() => <AboutPage />}</Route>
           <Route path="/contact">{() => <ContactPage />}</Route>
           <Route path="/process">{() => <ProcessPage />}</Route>
+          <Route path="/thank-you">{() => <ThankYouPage />}</Route>
           <Route>{() => <AgencySite />}</Route>
         </Switch>
       </Suspense>

@@ -6,7 +6,6 @@ import { WhyUs } from "@/components/sections/WhyUs";
 import { BookCall } from "@/components/sections/BookCall";
 import { Footer } from "@/components/sections/Footer";
 import { FloatingWhatsApp } from "@/components/sections/FloatingWhatsApp";
-import { AiAssistant } from "@/components/AiAssistant";
 import { BackToTop } from "@/components/BackToTop";
 import { NoiseOverlay } from "@/components/NoiseOverlay";
 
@@ -21,7 +20,6 @@ export function ProcessPage() {
       <NoiseOverlay />
       <SharedNav />
       <FloatingWhatsApp />
-      <AiAssistant />
       <BackToTop />
 
       <section className="relative pt-28 pb-16 md:pt-40 md:pb-24 overflow-hidden">

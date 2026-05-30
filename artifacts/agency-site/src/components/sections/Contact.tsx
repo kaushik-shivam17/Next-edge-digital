@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -73,6 +74,7 @@ const stepVariants = {
 
 export function Contact() {
   const { toast } = useToast();
+  const [, navigate] = useLocation();
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const [submitted, setSubmitted] = useState(false);
@@ -128,6 +130,7 @@ export function Contact() {
         lastSubmitRef.current = Date.now();
         setSubmitted(true);
         toast({ title: "Inquiry Received", description: "Our partners will personally review your submission within 24 hours." });
+        setTimeout(() => navigate("/thank-you"), 800);
       } else {
         toast({
           title: "Something went wrong",
