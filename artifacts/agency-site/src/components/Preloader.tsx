@@ -89,9 +89,9 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
                 transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
               >
                 <img
-                  src="/logo.jpeg"
+                  src="/logo.svg"
                   alt="Core Elite Digital"
-                  style={{ width: 160, height: 160, objectFit: "contain", borderRadius: 16 }}
+                  style={{ width: 160, height: 160, objectFit: "contain" }}
                 />
               </motion.div>
             </motion.div>

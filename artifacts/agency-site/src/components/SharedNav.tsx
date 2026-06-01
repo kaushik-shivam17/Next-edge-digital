@@ -45,9 +45,9 @@ export function SharedNav() {
         >
           <div className="relative flex-shrink-0 transition-transform duration-500 group-hover:scale-[1.07]">
             <img
-              src="/logo.jpeg"
+              src="/logo.svg"
               alt="Core Elite Digital"
-              style={{ width: 44, height: 44, objectFit: "contain", borderRadius: 8, filter: "drop-shadow(0 0 10px rgba(202,163,83,0.35))" }}
+              style={{ width: 44, height: 44, objectFit: "contain", filter: "drop-shadow(0 0 10px rgba(202,163,83,0.35))" }}
             />
           </div>
           <div className="flex flex-col leading-none gap-[4px]">

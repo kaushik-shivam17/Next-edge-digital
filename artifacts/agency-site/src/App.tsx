@@ -22,7 +22,7 @@ const ThankYouPage = lazy(() => import("./pages/ThankYouPage").then(m => ({ defa
 function PageFallback() {
   return (
     <div className="fixed inset-0 bg-[#09090b] flex items-center justify-center z-50">
-      <img src="/logo.jpeg" alt="" style={{ width: 64, height: 64, objectFit: "contain", opacity: 0.7, borderRadius: 10, animation: "pulse 1.5s ease-in-out infinite" }} />
+      <img src="/logo.svg" alt="" style={{ width: 64, height: 64, objectFit: "contain", opacity: 0.7, animation: "pulse 1.5s ease-in-out infinite" }} />
     </div>
   );
 }
@@ -204,7 +204,7 @@ function AgencySite() {
                 <img
                   src="/logo.svg"
                   alt="Core Elite Digital"
-                  style={{ width: 44, height: 44, objectFit: "contain", filter: "drop-shadow(0 0 12px rgba(202,163,83,0.45))" }}
+                  style={{ width: 44, height: 44, objectFit: "contain", filter: "drop-shadow(0 0 10px rgba(202,163,83,0.35))" }}
                 />
               </div>
               <div className="flex flex-col leading-none gap-[4px]">

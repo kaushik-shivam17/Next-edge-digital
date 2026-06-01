@@ -568,72 +568,73 @@ export function Portfolio() {
           </p>
         </div>
 
-        {/* Filter tabs */}
-        <div className="flex items-center gap-2 flex-wrap">
-          {filters.map((f) => {
-            const isActive = activeFilter === f.value;
-            return (
-              <button
-                key={f.value}
-                onClick={() => setActiveFilter(f.value)}
-               
-                className="relative px-5 py-2.5 text-[11px] font-bold tracking-[0.2em] uppercase rounded-xl transition-all duration-300 overflow-hidden"
-                style={{
-                  background: isActive
-                    ? "linear-gradient(135deg, rgba(202,163,83,0.18) 0%, rgba(240,201,122,0.08) 100%)"
-                    : "rgba(255,255,255,0.03)",
-                  border: isActive
-                    ? "1px solid rgba(202,163,83,0.5)"
-                    : "1px solid rgba(255,255,255,0.07)",
-                  color: isActive ? "#F0C97A" : "rgba(255,255,255,0.30)",
-                  boxShadow: isActive
-                    ? "0 0 20px rgba(202,163,83,0.12), inset 0 1px 0 rgba(255,255,255,0.08)"
-                    : "none",
-                  backdropFilter: "blur(8px)",
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.background = "rgba(255,255,255,0.06)";
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
-                    e.currentTarget.style.color = "rgba(255,255,255,0.6)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.background = "rgba(255,255,255,0.03)";
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)";
-                    e.currentTarget.style.color = "rgba(255,255,255,0.30)";
-                  }
-                }}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="filter-pill"
-                    className="absolute inset-0 rounded-xl"
-                    style={{
-                      background: "linear-gradient(135deg, rgba(202,163,83,0.1) 0%, rgba(240,201,122,0.04) 100%)",
-                    }}
-                    transition={{ type: "spring", bounce: 0.15, duration: 0.45 }}
-                  />
-                )}
-                <span className="relative z-10">{f.label}</span>
-                {isActive && (
-                  <motion.div
-                    layoutId="filter-underline"
-                    className="absolute bottom-0 left-3 right-3 h-[1.5px] rounded-full"
-                    style={{ background: "linear-gradient(to right, transparent, #CAA353, transparent)" }}
-                    transition={{ type: "spring", bounce: 0.15, duration: 0.45 }}
-                  />
-                )}
-              </button>
-            );
-          })}
-          <span className="ml-auto text-[10px] text-foreground/25 tracking-widest uppercase hidden md:block">
+        {/* Filter tabs row + hint */}
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-1">
+            {filters.map((f) => {
+              const isActive = activeFilter === f.value;
+              return (
+                <button
+                  key={f.value}
+                  onClick={() => setActiveFilter(f.value)}
+                  className="relative flex-shrink-0 px-4 sm:px-5 py-2.5 text-[11px] font-bold tracking-[0.2em] uppercase rounded-xl transition-all duration-300 overflow-hidden touch-manipulation"
+                  style={{
+                    background: isActive
+                      ? "linear-gradient(135deg, rgba(202,163,83,0.18) 0%, rgba(240,201,122,0.08) 100%)"
+                      : "rgba(255,255,255,0.03)",
+                    border: isActive
+                      ? "1px solid rgba(202,163,83,0.5)"
+                      : "1px solid rgba(255,255,255,0.07)",
+                    color: isActive ? "#F0C97A" : "rgba(255,255,255,0.30)",
+                    boxShadow: isActive
+                      ? "0 0 20px rgba(202,163,83,0.12), inset 0 1px 0 rgba(255,255,255,0.08)"
+                      : "none",
+                    backdropFilter: "blur(8px)",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+                      e.currentTarget.style.color = "rgba(255,255,255,0.6)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = "rgba(255,255,255,0.03)";
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)";
+                      e.currentTarget.style.color = "rgba(255,255,255,0.30)";
+                    }
+                  }}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="filter-pill"
+                      className="absolute inset-0 rounded-xl"
+                      style={{
+                        background: "linear-gradient(135deg, rgba(202,163,83,0.1) 0%, rgba(240,201,122,0.04) 100%)",
+                      }}
+                      transition={{ type: "spring", bounce: 0.15, duration: 0.45 }}
+                    />
+                  )}
+                  <span className="relative z-10">{f.label}</span>
+                  {isActive && (
+                    <motion.div
+                      layoutId="filter-underline"
+                      className="absolute bottom-0 left-3 right-3 h-[1.5px] rounded-full"
+                      style={{ background: "linear-gradient(to right, transparent, #CAA353, transparent)" }}
+                      transition={{ type: "spring", bounce: 0.15, duration: 0.45 }}
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+          <span className="text-[10px] text-foreground/25 tracking-widest uppercase hidden md:flex items-center">
             Drag to explore →
           </span>
-          <span className="ml-auto text-[10px] text-foreground/25 tracking-widest uppercase flex items-center gap-1.5 md:hidden">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            Swipe to explore
+          <span className="text-[10px] text-foreground/25 tracking-widest uppercase flex items-center gap-1.5 md:hidden">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            Swipe cards to explore
           </span>
         </div>
       </motion.div>
