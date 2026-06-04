@@ -6,7 +6,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Menu, X } from "lucide-react";
 
-const Admin = lazy(() => import("./components/Admin").then(m => ({ default: m.Admin })));
 const ServicesPage = lazy(() => import("./pages/ServicesPage").then(m => ({ default: m.ServicesPage })));
 const AiPage = lazy(() => import("./pages/AiPage").then(m => ({ default: m.AiPage })));
 const AiCallPage = lazy(() => import("./pages/AiCallPage").then(m => ({ default: m.AiCallPage })));
@@ -329,7 +328,6 @@ function App() {
     <TooltipProvider>
       <Suspense fallback={<PageFallback />}>
         <Switch>
-          <Route path="/admin">{() => <Admin />}</Route>
           <Route path="/services">{() => <ServicesPage />}</Route>
           <Route path="/ai-solutions">{() => <AiPage />}</Route>
           <Route path="/ai/call-management">{() => <AiCallPage />}</Route>
