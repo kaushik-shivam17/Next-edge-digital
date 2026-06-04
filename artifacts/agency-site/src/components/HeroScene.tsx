@@ -112,7 +112,7 @@ export function HeroScene() {
     window.addEventListener("resize", onResize, { passive: true });
 
     // ── Animation loop ───────────────────────────────────────────────────
-    let animId: number;
+    let animId = 0;
     const t0 = performance.now();
 
     const animate = () => {

@@ -305,16 +305,16 @@ export function Contact() {
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <div className="space-y-2">
                                   <Label htmlFor="name" className="text-[10px] font-bold tracking-[0.2em] uppercase text-foreground/40">Full Name</Label>
-                                  <Input id="name" required value={formData.name} onChange={(e) => update("name", e.target.value)} placeholder="John Smith" className="bg-background/60 border-white/10 h-12 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 transition-colors" />
+                                  <Input id="name" required maxLength={100} value={formData.name} onChange={(e) => update("name", e.target.value)} placeholder="John Smith" className="bg-background/60 border-white/10 h-12 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 transition-colors" />
                                 </div>
                                 <div className="space-y-2">
                                   <Label htmlFor="company" className="text-[10px] font-bold tracking-[0.2em] uppercase text-foreground/40">Company</Label>
-                                  <Input id="company" required value={formData.company} onChange={(e) => update("company", e.target.value)} placeholder="Acme Corp" className="bg-background/60 border-white/10 h-12 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 transition-colors" />
+                                  <Input id="company" required maxLength={100} value={formData.company} onChange={(e) => update("company", e.target.value)} placeholder="Acme Corp" className="bg-background/60 border-white/10 h-12 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 transition-colors" />
                                 </div>
                               </div>
                               <div className="space-y-2">
                                 <Label htmlFor="email" className="text-[10px] font-bold tracking-[0.2em] uppercase text-foreground/40">Email Address</Label>
-                                <Input id="email" type="email" required value={formData.email} onChange={(e) => update("email", e.target.value)} placeholder="john@company.com" className="bg-background/60 border-white/10 h-12 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 transition-colors" />
+                                <Input id="email" type="email" required maxLength={100} value={formData.email} onChange={(e) => update("email", e.target.value)} placeholder="john@company.com" className="bg-background/60 border-white/10 h-12 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 transition-colors" />
                               </div>
                               <div className="space-y-2">
                                 <Label htmlFor="country" className="text-[10px] font-bold tracking-[0.2em] uppercase text-foreground/40">Country / Region <span className="text-foreground/20 normal-case tracking-normal font-normal">(optional)</span></Label>
@@ -413,7 +413,7 @@ export function Contact() {
                               </div>
                               <div className="space-y-2">
                                 <Label htmlFor="message" className="text-[10px] font-bold tracking-[0.2em] uppercase text-foreground/40">Project Details</Label>
-                                <Textarea id="message" required rows={7} value={formData.message} onChange={(e) => update("message", e.target.value)} placeholder="Describe what you're building, what results you're after, and your timeline..." className="bg-background/60 border-white/10 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 resize-none transition-colors" />
+                                <Textarea id="message" required maxLength={2000} rows={7} value={formData.message} onChange={(e) => update("message", e.target.value)} placeholder="Describe what you're building, what results you're after, and your timeline..." className="bg-background/60 border-white/10 rounded-sm focus-visible:ring-primary focus-visible:border-primary/50 placeholder:text-foreground/20 resize-none transition-colors" />
                               </div>
                             </motion.div>
                           )}

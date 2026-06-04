@@ -1,11 +1,6 @@
-import { useRef, useEffect, useState, MouseEvent } from "react";
+import { useRef, MouseEvent } from "react";
 import { motion } from "framer-motion";
-import { MonitorSmartphone, Share2, PenTool, TrendingUp, Compass, BarChart3, Zap, Globe, Code, Palette, Search, type LucideIcon } from "lucide-react";
-import { fetchServices, type SanityService } from "@/lib/sanity";
-
-const ICON_MAP: Record<string, LucideIcon> = {
-  Compass, MonitorSmartphone, Share2, PenTool, TrendingUp, BarChart3, Zap, Globe, Code, Palette, Search,
-};
+import { MonitorSmartphone, Share2, PenTool, TrendingUp, Compass, BarChart3, type LucideIcon } from "lucide-react";
 
 type Service = {
   icon: LucideIcon;
@@ -66,20 +61,13 @@ const STATIC_SERVICES: Service[] = [
   },
 ];
 
-function sanityToService(s: SanityService, fallback: Service): Service {
-  return {
-    icon: (s.iconName && ICON_MAP[s.iconName]) ? ICON_MAP[s.iconName]! : fallback.icon,
-    number: s.number ?? fallback.number,
-    title: s.title ?? fallback.title,
-    description: s.description ?? fallback.description,
-    tags: s.tags?.length ? s.tags : fallback.tags,
-  };
-}
+const isTouch = typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
 
 function ServiceCard({ service, index }: { service: Service; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (isTouch) return;
     const card = cardRef.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();
@@ -109,6 +97,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   };
 
   const handleMouseLeave = () => {
+    if (isTouch) return;
     const card = cardRef.current;
     if (!card) return;
     card.style.transform = "perspective(700px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)";
@@ -139,8 +128,8 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
           border: "1px solid rgba(255,255,255,0.06)",
           borderRadius: "16px",
           transition: "transform 0.1s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease",
-          transformStyle: "preserve-3d",
-          willChange: "transform",
+          transformStyle: isTouch ? "flat" : "preserve-3d",
+          willChange: isTouch ? "auto" : "transform",
         }}
       >
         <div className="glare absolute inset-0 rounded-2xl pointer-events-none opacity-0 transition-opacity duration-200 z-20" />
@@ -196,18 +185,6 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 }
 
 export function Services() {
-  const [services, setServices] = useState<Service[]>(STATIC_SERVICES);
-
-  useEffect(() => {
-    fetchServices()
-      .then((data) => {
-        if (!data?.length) return;
-        const merged = data.map((s, i) => sanityToService(s, STATIC_SERVICES[i] ?? STATIC_SERVICES[0]!));
-        setServices(merged);
-      })
-      .catch(() => {});
-  }, []);
-
   return (
     <section id="services" className="py-16 md:py-32 relative bg-background z-10">
       <div className="container px-4 md:px-6">
@@ -237,7 +214,7 @@ export function Services() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {services.map((service, index) => (
+          {STATIC_SERVICES.map((service, index) => (
             <ServiceCard key={index} service={service} index={index} />
           ))}
         </div>
