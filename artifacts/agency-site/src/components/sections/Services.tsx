@@ -1,8 +1,21 @@
-import { useRef, MouseEvent } from "react";
+import { useRef, useEffect, useState, MouseEvent } from "react";
 import { motion } from "framer-motion";
-import { MonitorSmartphone, Share2, PenTool, TrendingUp, Compass, BarChart3 } from "lucide-react";
+import { MonitorSmartphone, Share2, PenTool, TrendingUp, Compass, BarChart3, Zap, Globe, Code, Palette, Search, type LucideIcon } from "lucide-react";
+import { fetchServices, type SanityService } from "@/lib/sanity";
 
-const services = [
+const ICON_MAP: Record<string, LucideIcon> = {
+  Compass, MonitorSmartphone, Share2, PenTool, TrendingUp, BarChart3, Zap, Globe, Code, Palette, Search,
+};
+
+type Service = {
+  icon: LucideIcon;
+  number: string;
+  title: string;
+  description: string;
+  tags: string[];
+};
+
+const STATIC_SERVICES: Service[] = [
   {
     icon: Compass,
     number: "01",
@@ -53,7 +66,17 @@ const services = [
   },
 ];
 
-function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
+function sanityToService(s: SanityService, fallback: Service): Service {
+  return {
+    icon: (s.iconName && ICON_MAP[s.iconName]) ? ICON_MAP[s.iconName]! : fallback.icon,
+    number: s.number ?? fallback.number,
+    title: s.title ?? fallback.title,
+    description: s.description ?? fallback.description,
+    tags: s.tags?.length ? s.tags : fallback.tags,
+  };
+}
+
+function ServiceCard({ service, index }: { service: Service; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
@@ -64,22 +87,39 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
     const y = e.clientY - rect.top;
     const cx = rect.width / 2;
     const cy = rect.height / 2;
-    const rotX = ((y - cy) / cy) * -8;
-    const rotY = ((x - cx) / cx) * 8;
-    card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.02)`;
+    const rotX = ((y - cy) / cy) * -14;
+    const rotY = ((x - cx) / cx) * 14;
+
+    card.style.transform = `perspective(700px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.03,1.03,1.03)`;
+
     const glare = card.querySelector<HTMLDivElement>(".glare");
     if (glare) {
       glare.style.opacity = "1";
-      glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.07) 0%, transparent 60%)`;
+      glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(202,163,83,0.09) 0%, transparent 65%)`;
     }
+
+    const icon = card.querySelector<HTMLDivElement>(".card-icon");
+    if (icon) icon.style.transform = `translateZ(30px) scale(1.1)`;
+
+    const title = card.querySelector<HTMLElement>(".card-title");
+    if (title) title.style.transform = `translateZ(20px)`;
+
+    const tags = card.querySelector<HTMLDivElement>(".card-tags");
+    if (tags) tags.style.transform = `translateZ(15px)`;
   };
 
   const handleMouseLeave = () => {
     const card = cardRef.current;
     if (!card) return;
-    card.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)";
+    card.style.transform = "perspective(700px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)";
     const glare = card.querySelector<HTMLDivElement>(".glare");
     if (glare) glare.style.opacity = "0";
+    const icon = card.querySelector<HTMLDivElement>(".card-icon");
+    if (icon) icon.style.transform = "translateZ(0px) scale(1)";
+    const title = card.querySelector<HTMLElement>(".card-title");
+    if (title) title.style.transform = "translateZ(0px)";
+    const tags = card.querySelector<HTMLDivElement>(".card-tags");
+    if (tags) tags.style.transform = "translateZ(0px)";
   };
 
   return (
@@ -93,29 +133,32 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
         ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-       
         className="group relative p-6 md:p-10 h-full overflow-hidden cursor-default"
         style={{
           background: "rgba(255,255,255,0.02)",
           border: "1px solid rgba(255,255,255,0.06)",
           borderRadius: "16px",
-          transition: "transform 0.12s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease",
+          transition: "transform 0.1s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease",
           transformStyle: "preserve-3d",
           willChange: "transform",
         }}
       >
-        <div className="glare absolute inset-0 rounded-2xl pointer-events-none opacity-0 transition-opacity duration-300 z-20" />
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/15 to-amber-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        <div className="glare absolute inset-0 rounded-2xl pointer-events-none opacity-0 transition-opacity duration-200 z-20" />
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/10 to-amber-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
         <div
           className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{ boxShadow: "inset 0 0 0 1px rgba(202,163,83,0.2)" }}
+          style={{ boxShadow: "inset 0 0 0 1px rgba(202,163,83,0.18), 0 0 40px rgba(202,163,83,0.06)" }}
         />
 
-        <div className="relative z-10">
+        <div className="relative z-10" style={{ transformStyle: "preserve-3d" }}>
           <div className="flex items-start justify-between mb-8">
             <div
-              className="w-11 h-11 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500"
-              style={{ background: "rgba(202,163,83,0.08)", border: "1px solid rgba(202,163,83,0.15)" }}
+              className="card-icon w-11 h-11 rounded-xl flex items-center justify-center"
+              style={{
+                background: "rgba(202,163,83,0.08)",
+                border: "1px solid rgba(202,163,83,0.15)",
+                transition: "transform 0.12s cubic-bezier(0.16,1,0.3,1)",
+              }}
             >
               <service.icon className="w-5 h-5 text-primary" />
             </div>
@@ -124,12 +167,18 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
             </span>
           </div>
 
-          <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
+          <h3
+            className="card-title text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300"
+            style={{ transition: "transform 0.12s cubic-bezier(0.16,1,0.3,1), color 0.3s" }}
+          >
             {service.title}
           </h3>
           <p className="text-foreground/45 text-sm leading-relaxed mb-6">{service.description}</p>
 
-          <div className="flex flex-wrap gap-2">
+          <div
+            className="card-tags flex flex-wrap gap-2"
+            style={{ transition: "transform 0.12s cubic-bezier(0.16,1,0.3,1)" }}
+          >
             {service.tags.map((tag) => (
               <span
                 key={tag}
@@ -147,6 +196,18 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
 }
 
 export function Services() {
+  const [services, setServices] = useState<Service[]>(STATIC_SERVICES);
+
+  useEffect(() => {
+    fetchServices()
+      .then((data) => {
+        if (!data?.length) return;
+        const merged = data.map((s, i) => sanityToService(s, STATIC_SERVICES[i] ?? STATIC_SERVICES[0]!));
+        setServices(merged);
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <section id="services" className="py-16 md:py-32 relative bg-background z-10">
       <div className="container px-4 md:px-6">

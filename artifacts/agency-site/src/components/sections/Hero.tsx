@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Award, Users, Clock } from "lucide-react";
 import { Magnetic } from "../Magnetic";
-import { HeroCanvas } from "../HeroCanvas";
+import { HeroScene } from "../HeroScene";
 import { scrollToSection } from "@/lib/scrollTo";
 
 const HEADLINE_1 = "We Build";
@@ -78,8 +78,8 @@ export function Hero() {
 
   return (
     <section ref={ref} className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-20">
-      {/* Canvas constellation */}
-      <HeroCanvas />
+      {/* Three.js 3D scene */}
+      <HeroScene />
 
       {/* Layered glow */}
       <div className="absolute inset-0 z-[1] pointer-events-none">

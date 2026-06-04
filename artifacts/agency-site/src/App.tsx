@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Menu, X } from "lucide-react";
 
+const BlogPage = lazy(() => import("./pages/BlogPage").then(m => ({ default: m.BlogPage })));
 const ServicesPage = lazy(() => import("./pages/ServicesPage").then(m => ({ default: m.ServicesPage })));
 const AiPage = lazy(() => import("./pages/AiPage").then(m => ({ default: m.AiPage })));
 const AiCallPage = lazy(() => import("./pages/AiCallPage").then(m => ({ default: m.AiCallPage })));
@@ -39,6 +40,7 @@ import { FAQ } from "./components/sections/FAQ";
 import { WhyUs } from "./components/sections/WhyUs";
 import { Contact } from "./components/sections/Contact";
 import { BookCall } from "./components/sections/BookCall";
+import { Blog } from "./components/sections/Blog";
 import { Footer } from "./components/sections/Footer";
 import { FloatingWhatsApp } from "./components/sections/FloatingWhatsApp";
 import { CustomCursor } from "./components/CustomCursor";
@@ -315,6 +317,7 @@ function AgencySite() {
           <BookCall />
           <Contact />
           <FAQ />
+          <Blog />
         </main>
 
         <Footer />
@@ -328,6 +331,7 @@ function App() {
     <TooltipProvider>
       <Suspense fallback={<PageFallback />}>
         <Switch>
+          <Route path="/blog">{() => <BlogPage />}</Route>
           <Route path="/services">{() => <ServicesPage />}</Route>
           <Route path="/ai-solutions">{() => <AiPage />}</Route>
           <Route path="/ai/call-management">{() => <AiCallPage />}</Route>

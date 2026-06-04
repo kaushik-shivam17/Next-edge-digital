@@ -1,0 +1,1 @@
+- [Sanity CORS Configuration](sanity-cors.md) — Sanity API blocks browser fetch unless domain is added to project CORS origins at sanity.io/manage

@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
+import { fetchProjects } from "@/lib/sanity";
 
 const projects = [
   {
@@ -540,6 +541,27 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
 export function Portfolio() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeFilter, setActiveFilter] = useState("all");
+  const [allProjects, setAllProjects] = useState(projects);
+
+  useEffect(() => {
+    fetchProjects()
+      .then((data) => {
+        if (!data?.length) return;
+        const mapped = data.map((p) => ({
+          title: p.title,
+          category: p.category,
+          filter: p.industry ?? "other",
+          tags: p.tags ?? [],
+          gradient: ["#1a1a2e", "#16213e", "#0f3460"] as [string, string, string],
+          result: p.result ?? "",
+          year: p.year ?? "2024",
+          slug: p.url ?? "",
+          photo: p.photo ?? "",
+        }));
+        setAllProjects(mapped);
+      })
+      .catch(() => {});
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -549,7 +571,7 @@ export function Portfolio() {
   const headerY = useTransform(scrollYProgress, [0, 0.4], [40, 0]);
   const headerOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
 
-  const filtered = activeFilter === "all" ? projects : projects.filter((p) => p.filter === activeFilter);
+  const filtered = activeFilter === "all" ? allProjects : allProjects.filter((p) => p.filter === activeFilter);
 
   return (
     <section
