@@ -655,7 +655,9 @@ export function Portfolio() {
 
         {/* View all CTA card */}
         <motion.a
-          href="#contact"
+          href={`https://wa.me/918218628232?text=${encodeURIComponent("Hi! I'd like to start a project with Core Elite Digital.")}`}
+          target="_blank"
+          rel="noopener noreferrer"
           className="flex-shrink-0 w-[220px] h-[500px] rounded-3xl flex flex-col items-center justify-center gap-4 group"
           style={{ background: "rgba(202,163,83,0.04)", border: "1px solid rgba(202,163,83,0.15)" }}
           initial={{ opacity: 0, x: 40 }}

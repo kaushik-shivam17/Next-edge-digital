@@ -146,11 +146,12 @@ export function FAQ() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              href="#contact"
-              onClick={(e) => { e.preventDefault(); document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); }}
+              href={`https://wa.me/918218628232?text=${encodeURIComponent("Hi! I have a question for Core Elite Digital.")}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm font-semibold tracking-wider text-primary hover:text-primary/80 transition-colors"
             >
-              Ask Us Directly
+              Ask Us on WhatsApp
               <span className="text-base">→</span>
             </motion.a>
           </div>

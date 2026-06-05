@@ -119,7 +119,9 @@ export function AiCallPage() {
                 <ArrowRight className="w-4 h-4" />
               </a>
               <a
-                href="/contact"
+                href={`https://wa.me/918218628232?text=${encodeURIComponent("Hi! I'd like to see a live demo of the AI Phone System.")}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2.5 px-8 py-4 font-bold text-sm tracking-widest uppercase text-foreground/60 hover:text-foreground transition-colors"
                 style={{ border: "1px solid rgba(255,255,255,0.1)" }}
               >

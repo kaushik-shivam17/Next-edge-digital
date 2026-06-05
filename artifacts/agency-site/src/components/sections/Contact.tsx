@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -72,7 +71,6 @@ const stepVariants = {
 
 export function Contact() {
   const { toast } = useToast();
-  const [, navigate] = useLocation();
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const [submitted, setSubmitted] = useState(false);
@@ -103,7 +101,7 @@ export function Contact() {
 
   const lastSubmitRef = useRef<number>(0);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!canAdvance()) return;
 
@@ -114,33 +112,28 @@ export function Contact() {
     }
 
     setSubmitting(true);
+    lastSubmitRef.current = Date.now();
 
-    try {
-      const res = await fetch("/api/submissions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+    const msg = [
+      `Hi! I'd like to work with Core Elite Digital.`,
+      ``,
+      `👤 Name: ${formData.name}`,
+      `🏢 Company: ${formData.company}`,
+      `📧 Email: ${formData.email}`,
+      formData.country ? `🌍 Country: ${formData.country}` : null,
+      formData.service ? `🛠 Service: ${formData.service}` : null,
+      formData.budget ? `💰 Budget: ${formData.budget}` : null,
+      ``,
+      `📝 Project Details:`,
+      formData.message,
+    ].filter(Boolean).join("\n");
 
-      const data = await res.json() as { success?: boolean; error?: string };
+    const waUrl = `https://wa.me/918218628232?text=${encodeURIComponent(msg)}`;
+    window.open(waUrl, "_blank", "noopener,noreferrer");
 
-      if (res.ok && data.success) {
-        lastSubmitRef.current = Date.now();
-        setSubmitted(true);
-        toast({ title: "Inquiry Received", description: "Our partners will personally review your submission within 24 hours." });
-        setTimeout(() => navigate("/thank-you"), 800);
-      } else {
-        toast({
-          title: "Something went wrong",
-          description: data.error ?? "Please try again or reach us on WhatsApp.",
-          variant: "destructive",
-        });
-      }
-    } catch {
-      toast({ title: "Network error", description: "Please check your connection and try again.", variant: "destructive" });
-    } finally {
-      setSubmitting(false);
-    }
+    setSubmitted(true);
+    setSubmitting(false);
+    toast({ title: "Opening WhatsApp", description: "Your details are pre-filled — just hit Send!" });
   };
 
   return (

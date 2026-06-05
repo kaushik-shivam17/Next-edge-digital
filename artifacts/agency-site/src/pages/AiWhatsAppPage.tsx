@@ -92,7 +92,7 @@ export function AiWhatsAppPage() {
                 Automate My WhatsApp
                 <ArrowRight className="w-4 h-4" />
               </a>
-              <a href="/contact" className="inline-flex items-center justify-center gap-2.5 px-8 py-4 font-bold text-sm tracking-widest uppercase text-foreground/60 hover:text-foreground transition-colors" style={{ border: "1px solid rgba(255,255,255,0.1)" }}>
+              <a href={`https://wa.me/918218628232?text=${encodeURIComponent("Hi! I'd like to see the AI WhatsApp automation in action.")}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2.5 px-8 py-4 font-bold text-sm tracking-widest uppercase text-foreground/60 hover:text-foreground transition-colors" style={{ border: "1px solid rgba(255,255,255,0.1)" }}>
                 See It in Action
               </a>
             </div>

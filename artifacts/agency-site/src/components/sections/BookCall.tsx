@@ -280,9 +280,10 @@ export function BookCall() {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
 
-            <button
-              onClick={() => scrollToSection("contact")}
-             
+            <a
+              href={`https://wa.me/918218628232?text=${encodeURIComponent("Hi! I'd like to send a project brief to Core Elite Digital.")}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-5 rounded-2xl font-semibold text-sm tracking-wide transition-all duration-300"
               style={{
                 background: "rgba(37,211,102,0.06)",
@@ -302,7 +303,7 @@ export function BookCall() {
             >
               <MessageCircle className="w-4 h-4" />
               Send a Project Brief
-            </button>
+            </a>
           </motion.div>
 
           {/* Social proof row */}
@@ -321,7 +322,7 @@ export function BookCall() {
               ))}
             </div>
             <p className="text-xs text-foreground/30 tracking-wide">
-              5.0 rating · 10+ brands transformed · 1+ country served
+              5.0 rating · 50+ projects delivered · 10+ countries served
             </p>
           </motion.div>
         </div>
