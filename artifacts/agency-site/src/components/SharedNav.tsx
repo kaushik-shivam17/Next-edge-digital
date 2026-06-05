@@ -77,11 +77,11 @@ export function SharedNav() {
             );
           })}
           <a
-            href="/contact"
+            href="/#bookcall"
             className="ml-2 px-5 py-2.5 text-xs font-bold tracking-widest uppercase transition-all duration-300 whitespace-nowrap hover:opacity-85"
             style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)", color: "#0c0c0e", clipPath: "polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%)" }}
           >
-            Start a Project
+            Book Free Call
           </a>
         </div>
 
@@ -120,11 +120,11 @@ export function SharedNav() {
                 );
               })}
               <a
-                href="/contact"
+                href="/#bookcall"
                 className="w-full text-center px-5 py-3.5 text-xs font-bold tracking-widest uppercase rounded-sm min-h-[44px] flex items-center justify-center"
                 style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)", color: "#0c0c0e" }}
               >
-                Start a Project
+                Book Free Call
               </a>
             </div>
           </motion.div>

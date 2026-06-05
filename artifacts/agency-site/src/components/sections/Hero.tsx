@@ -188,10 +188,10 @@ export function Hero() {
           >
             <Magnetic strength={0.3} className="w-full sm:w-auto">
               <a
-                href="#contact"
-                onClick={(e) => { e.preventDefault(); scrollToSection("contact"); }}
+                href="#bookcall"
+                onClick={(e) => { e.preventDefault(); scrollToSection("bookcall"); }}
                
-                data-cursor-text="START"
+                data-cursor-text="BOOK"
                 className="group relative inline-flex items-center justify-center gap-2 w-full sm:w-auto px-9 py-4 font-bold text-sm tracking-[0.15em] uppercase overflow-hidden"
                 style={{
                   background: "linear-gradient(135deg, #CAA353, #F0C97A, #CAA353)",
@@ -207,7 +207,7 @@ export function Hero() {
                   transition={{ duration: 0.4, ease: "easeInOut" }}
                   style={{ background: "rgba(255,255,255,0.15)" }}
                 />
-                <span className="relative">Start a Project</span>
+                <span className="relative">Book Free Call</span>
                 <ArrowRight className="w-4 h-4 relative group-hover:translate-x-1 transition-transform" />
               </a>
             </Magnetic>
@@ -244,9 +244,9 @@ export function Hero() {
             className="mt-8 md:mt-16 flex flex-wrap items-center justify-center gap-2 md:gap-3"
           >
             {[
-              { label: "42+ Brands Transformed", Icon: Award },
+              { label: "10+ Brands Transformed", Icon: Award },
               { label: "98% Client Retention", Icon: Users },
-              { label: "6+ Years of Excellence", Icon: Clock },
+              { label: "4+ Years of Excellence", Icon: Clock },
             ].map(({ label, Icon }, i) => (
               <motion.div
                 key={label}

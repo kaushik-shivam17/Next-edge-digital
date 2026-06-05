@@ -107,7 +107,7 @@ function WorldClock() {
 
 export function BookCall() {
   return (
-    <section className="py-16 md:py-32 relative z-10 overflow-hidden border-t border-white/5">
+    <section id="bookcall" className="py-16 md:py-32 relative z-10 overflow-hidden border-t border-white/5">
       {/* Background layers */}
       <div className="absolute inset-0 bg-background" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_100%,rgba(37,211,102,0.08),transparent)]" />
@@ -321,7 +321,7 @@ export function BookCall() {
               ))}
             </div>
             <p className="text-xs text-foreground/30 tracking-wide">
-              5.0 rating · 42+ brands transformed · 3+ countries served
+              5.0 rating · 10+ brands transformed · 1+ country served
             </p>
           </motion.div>
         </div>

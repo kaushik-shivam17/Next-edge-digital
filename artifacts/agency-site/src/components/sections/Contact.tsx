@@ -5,18 +5,16 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowRight, Mail, MapPin, Clock, CheckCircle2 } from "lucide-react";
+import { ArrowRight, MapPin, Clock, CheckCircle2 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 
 const WHATSAPP_NUMBER = "918218628232";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi! I'd like to discuss a project with Core Elite Digital.")}`;
 
-const CONTACT_EMAIL = "nextedgetech@rediffmail.com";
-
 const contactDetails = [
-  { icon: Mail, label: "General Inquiries", value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
-  { icon: MapPin, label: "Studio", value: "Remote-first · Serving clients globally", href: null },
-  { icon: Clock, label: "Response Time", value: "Within 24 hrs — any time zone", href: null },
+  { icon: SiWhatsapp, label: "General Inquiries", value: "Currently contact us on WhatsApp", href: WHATSAPP_URL, isWhatsApp: true },
+  { icon: MapPin, label: "Studio", value: "Remote-first · Serving clients globally", href: null, isWhatsApp: false },
+  { icon: Clock, label: "Response Time", value: "Within 24 hrs — any time zone", href: null, isWhatsApp: false },
 ];
 
 const services = [
@@ -197,7 +195,12 @@ export function Contact() {
                   <div>
                     <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-foreground/30 mb-1">{detail.label}</p>
                     {detail.href ? (
-                      <a href={detail.href} className="text-foreground/80 hover:text-primary transition-colors text-sm font-medium">
+                      <a
+                        href={detail.href}
+                        target={detail.isWhatsApp ? "_blank" : undefined}
+                        rel={detail.isWhatsApp ? "noopener noreferrer" : undefined}
+                        className="text-foreground/80 hover:text-primary transition-colors text-sm font-medium"
+                      >
                         {detail.value}
                       </a>
                     ) : (
