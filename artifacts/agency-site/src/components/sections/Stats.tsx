@@ -3,7 +3,7 @@ import { motion, useInView } from "framer-motion";
 
 const stats = [
   {
-    value: 50,
+    value: 10,
     suffix: "+",
     prefix: "",
     label: "Projects Delivered",
@@ -19,7 +19,7 @@ const stats = [
     accent: "#CAA353",
   },
   {
-    value: 10,
+    value: 1,
     suffix: "+",
     prefix: "",
     label: "Countries Served",

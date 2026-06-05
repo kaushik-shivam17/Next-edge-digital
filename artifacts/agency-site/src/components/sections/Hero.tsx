@@ -242,9 +242,9 @@ export function Hero() {
             className="mt-8 md:mt-16 flex flex-wrap items-center justify-center gap-2 md:gap-3"
           >
             {[
-              { label: "50+ Projects Delivered", Icon: Award },
+              { label: "10+ Projects Delivered", Icon: Award },
               { label: "98% Client Retention", Icon: Users },
-              { label: "10+ Countries Served", Icon: Clock },
+              { label: "1+ Countries Served", Icon: Clock },
             ].map(({ label, Icon }, i) => (
               <motion.div
                 key={label}
