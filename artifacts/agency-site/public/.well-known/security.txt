@@ -1,4 +1,3 @@
-Contact: mailto:nextedgetech@rediffmail.com
 Contact: https://wa.me/918218628232
 Preferred-Languages: en
 Canonical: https://coreelitedigital.com/.well-known/security.txt
