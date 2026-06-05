@@ -1,17 +1,19 @@
 User-agent: *
 Allow: /
-Disallow: /admin
+Disallow: /api/
+Disallow: /thank-you
 
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 0
+Allow: /*.js
+Allow: /*.css
 
 User-agent: Googlebot-Image
 Allow: /
 
 User-agent: Bingbot
 Allow: /
-Crawl-delay: 1
+Crawl-delay: 2
 
 User-agent: LinkedInBot
 Allow: /
@@ -31,6 +33,16 @@ Disallow: /
 User-agent: DotBot
 Disallow: /
 
-Sitemap: https://coreelitedigital.com/sitemap.xml
+User-agent: SemrushBot
+Disallow: /
 
-Host: https://coreelitedigital.com
+User-agent: PetalBot
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+Sitemap: https://coreelitedigital.com/sitemap.xml

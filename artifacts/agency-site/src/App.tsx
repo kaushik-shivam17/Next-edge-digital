@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Menu, X } from "lucide-react";
 
 const BlogPage = lazy(() => import("./pages/BlogPage").then(m => ({ default: m.BlogPage })));
+const BlogPostPage = lazy(() => import("./pages/BlogPostPage").then(m => ({ default: m.BlogPostPage })));
 const ServicesPage = lazy(() => import("./pages/ServicesPage").then(m => ({ default: m.ServicesPage })));
 const AiPage = lazy(() => import("./pages/AiPage").then(m => ({ default: m.AiPage })));
 const AiCallPage = lazy(() => import("./pages/AiCallPage").then(m => ({ default: m.AiCallPage })));
@@ -330,6 +331,7 @@ function App() {
     <TooltipProvider>
       <Suspense fallback={<PageFallback />}>
         <Switch>
+          <Route path="/blog/:slug">{(params) => <BlogPostPage slug={(params as { slug: string }).slug} />}</Route>
           <Route path="/blog">{() => <BlogPage />}</Route>
           <Route path="/services">{() => <ServicesPage />}</Route>
           <Route path="/ai-solutions">{() => <AiPage />}</Route>
