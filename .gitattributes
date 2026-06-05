@@ -1,0 +1,6 @@
+* text=auto
+
+# Treat all TypeScript/TSX as vendored so GitHub Linguist
+# does not display the TypeScript badge on the repository.
+*.ts  linguist-vendored
+*.tsx linguist-vendored
