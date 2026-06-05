@@ -2,9 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SiWhatsapp } from "react-icons/si";
 import { X, ArrowRight } from "lucide-react";
-
-const WHATSAPP_NUMBER = "918218628232";
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+import { WA, wa } from "@/lib/whatsapp";
 
 const QUICK_MESSAGES = [
   { label: "Discuss a website project", icon: "🌐" },
@@ -18,9 +16,7 @@ export function FloatingWhatsApp() {
   const [hovered, setHovered] = useState(false);
 
   const openChat = (message?: string) => {
-    const url = message
-      ? `${WHATSAPP_URL}?text=${encodeURIComponent(message)}`
-      : WHATSAPP_URL;
+    const url = message ? wa(message) : WA.base;
     window.open(url, "_blank", "noopener,noreferrer");
     setOpen(false);
   };
