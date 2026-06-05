@@ -1,490 +1,415 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { ArrowUpRight, MapPin } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Check, MessageCircle, Globe, Zap, Layers, ArrowRight, Sparkles } from "lucide-react";
+import { SiWhatsapp } from "react-icons/si";
 
-/* ─── Types & Data ─────────────────────────────────────────────────────── */
+const WHATSAPP_URL = `https://wa.me/918218628232?text=${encodeURIComponent("Hi! I'd like to get a quote from Core Elite Digital.")}`;
 
-type Currency = {
-  code: string;
-  symbol: string;
-  maintenance: string;
-  website: string;
+type CurrencyKey = "INR" | "USD" | "AED" | "SGD" | "GBP";
+
+const CURRENCIES: Record<CurrencyKey, { symbol: string; label: string; flag: string; rate: number }> = {
+  INR: { symbol: "₹", label: "INR", flag: "🇮🇳", rate: 1 },
+  USD: { symbol: "$", label: "USD", flag: "🇺🇸", rate: 0.012 },
+  AED: { symbol: "AED", label: "AED", flag: "🇦🇪", rate: 0.044 },
+  SGD: { symbol: "S$", label: "SGD", flag: "🇸🇬", rate: 0.016 },
+  GBP: { symbol: "£", label: "GBP", flag: "🇬🇧", rate: 0.0097 },
 };
 
-// Base prices: ₹3,000/month maintenance · ₹8,000 one-time website build
-// All other currencies converted at live approximate rates from INR
-const currencies: Record<string, Currency> = {
-  IN:      { code: "INR", symbol: "₹",    maintenance: "5,000",  website: "8,000"  },
-  US:      { code: "USD", symbol: "$",    maintenance: "60",     website: "97"     },
-  GB:      { code: "GBP", symbol: "£",    maintenance: "47",     website: "77"     },
-  AE:      { code: "AED", symbol: "AED ", maintenance: "220",    website: "354"    },
-  SG:      { code: "SGD", symbol: "S$",   maintenance: "81",     website: "130"    },
-  AU:      { code: "AUD", symbol: "A$",   maintenance: "91",     website: "147"    },
-  CA:      { code: "CAD", symbol: "C$",   maintenance: "82",     website: "132"    },
-  DEFAULT: { code: "USD", symbol: "$",    maintenance: "60",     website: "97"     },
+function detectCurrency(): CurrencyKey {
+  try {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (tz === "Asia/Kolkata" || tz === "Asia/Calcutta") return "INR";
+    if (tz === "Asia/Dubai" || tz === "Asia/Muscat") return "AED";
+    if (tz === "Asia/Singapore") return "SGD";
+    if (tz === "Europe/London") return "GBP";
+    const lang = navigator.language || "";
+    if (lang.includes("IN")) return "INR";
+    if (lang.includes("AE")) return "AED";
+    if (lang.includes("SG")) return "SGD";
+    if (lang.includes("GB")) return "GBP";
+  } catch (_) {}
+  return "USD";
+}
+
+function formatPrice(amountINR: number, currency: CurrencyKey): string {
+  const { symbol, rate } = CURRENCIES[currency];
+  const converted = Math.round(amountINR * rate);
+  if (currency === "INR") return `${symbol}${converted.toLocaleString("en-IN")}`;
+  if (currency === "AED") return `${symbol} ${converted.toLocaleString()}`;
+  return `${symbol}${converted.toLocaleString()}`;
+}
+
+type Plan = {
+  id: string;
+  icon: React.ElementType;
+  badge: string | null;
+  name: string;
+  tagline: string;
+  baseINR: number | null;
+  billingNote: string;
+  features: string[];
+  cta: string;
+  highlight: boolean;
+  custom: boolean;
 };
 
-const countryNames: Record<string, string> = {
-  IN: "India", US: "United States", GB: "United Kingdom",
-  AE: "UAE", SG: "Singapore", AU: "Australia", CA: "Canada",
-};
-
-const plans = [
+const PLANS: Plan[] = [
   {
-    index:    "I",
-    id:       "maintenance",
-    label:    "Web Maintenance",
-    category: "Ongoing Retainer",
-    priceKey: "maintenance" as const,
-    period:   "per month",
-    billing:  "Billed monthly. Cancel anytime.",
-    pitch:    "Complete website stewardship — security, performance, updates, and monthly analytics. Your site, always at its best.",
-    deliverables: [
-      "Monthly security & CMS updates",
-      "Core Web Vitals monitoring",
-      "Content & copy revisions",
-      "99.9% uptime guarantee",
+    id: "website",
+    icon: Globe,
+    badge: null,
+    name: "Website",
+    tagline: "Custom-built, conversion-ready sites",
+    baseINR: 6000,
+    billingNote: "one-time · varies by complexity",
+    features: [
+      "Custom responsive design",
+      "Up to 5 pages (more available)",
+      "Mobile-first & SEO optimised",
+      "Contact / booking form",
+      "WhatsApp button integration",
+      "1 revision round included",
+      "Delivered in 7–14 days",
+    ],
+    cta: "Book Free Consultation",
+    highlight: false,
+    custom: false,
+  },
+  {
+    id: "ai-agent",
+    icon: Zap,
+    badge: null,
+    name: "AI Agent",
+    tagline: "24/7 intelligent business automation",
+    baseINR: 2200,
+    billingNote: "per month · scales with volume",
+    features: [
+      "AI WhatsApp or Call Bot",
+      "24 / 7 automated responses",
+      "Lead qualification engine",
+      "CRM & calendar integration",
+      "Custom objection handling",
       "Monthly performance report",
-      "48-hour priority response",
+      "Onboarded in 3–5 days",
     ],
-    cta: "Begin Engagement",
-    featured: false,
+    cta: "Start Automating",
+    highlight: false,
+    custom: false,
   },
   {
-    index:    "II",
-    id:       "website",
-    label:    "Website Build",
-    category: "Full Project",
-    priceKey: "website" as const,
-    period:   "one-time",
-    billing:  "Milestone billing. 4–8 week delivery.",
-    pitch:    "A bespoke, conversion-engineered digital presence built from first principles — strategy, design, engineering, and launch.",
-    deliverables: [
-      "Discovery & strategy workshop",
-      "Custom UI/UX design in Figma",
-      "Full-stack development",
-      "SEO & performance foundation",
-      "CMS integration & training",
-      "30-day post-launch support",
+    id: "web-ai",
+    icon: Layers,
+    badge: "Most Popular",
+    name: "Web + AI Management",
+    tagline: "Complete digital engine, done for you",
+    baseINR: 5000,
+    billingNote: "per month · website setup included",
+    features: [
+      "Full website design & build",
+      "AI agent setup & training",
+      "Monthly content updates",
+      "SEO monitoring & reporting",
+      "Analytics dashboard access",
+      "Proactive strategy reviews",
+      "Priority WhatsApp support",
     ],
-    cta: "Start a Project",
-    featured: true,
+    cta: "Get Started Today",
+    highlight: true,
+    custom: false,
   },
   {
-    index:    "III",
-    id:       "custom",
-    label:    "Custom Retainer",
-    category: "Full Partnership",
-    priceKey: null,
-    period:   "",
-    billing:  "Scoped to your goals. No lock-in.",
-    pitch:    "An end-to-end digital partnership — strategy, design, development, social, SEO, and reporting unified under one team.",
-    deliverables: [
-      "Dedicated account manager",
-      "Unlimited design requests",
-      "Development hours included",
+    id: "custom",
+    icon: Sparkles,
+    badge: null,
+    name: "Other Services",
+    tagline: "Branding · SEO · Social · Ads",
+    baseINR: null,
+    billingNote: "custom quote · no surprises",
+    features: [
+      "Brand identity & logo design",
       "Social media management",
       "SEO & content strategy",
-      "Weekly strategy sessions",
+      "Paid advertising (Meta / Google)",
+      "Video & creative production",
+      "Tailored scope & timeline",
+      "Free discovery call included",
     ],
-    cta: "Request a Proposal",
-    featured: false,
+    cta: "Get Custom Pricing",
+    highlight: false,
+    custom: true,
   },
 ];
 
-/* ─── Hook ─────────────────────────────────────────────────────────────── */
-
-function useCurrency() {
-  const [currency, setCurrency] = useState<Currency>(currencies.IN);
-  const [country,  setCountry]  = useState("IN");
-  const [loading,  setLoading]  = useState(true);
-
-  useEffect(() => {
-    fetch("https://ipapi.co/json/")
-      .then((r) => r.json())
-      .then((d) => {
-        const c = d.country_code || "IN";
-        setCountry(c);
-        setCurrency(currencies[c] ?? currencies.IN);
-      })
-      .catch(() => setCurrency(currencies.IN))
-      .finally(() => setLoading(false));
-  }, []);
-
-  return { currency, country, loading };
+function CurrencyTab({ k, selected, onSelect }: { k: CurrencyKey; selected: boolean; onSelect: () => void }) {
+  const c = CURRENCIES[k];
+  return (
+    <button
+      onClick={onSelect}
+      className="relative flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-[10px] font-bold tracking-widest uppercase transition-all duration-200 whitespace-nowrap"
+      style={{
+        color: selected ? "#0c0c0e" : "rgba(255,255,255,0.35)",
+        background: selected ? "linear-gradient(135deg, #CAA353, #F0C97A)" : "transparent",
+      }}
+    >
+      <span className="text-sm leading-none">{c.flag}</span>
+      <span>{c.label}</span>
+    </button>
+  );
 }
 
-/* ─── Card ─────────────────────────────────────────────────────────────── */
-
-function PlanCard({
-  plan,
-  currency,
-  loading,
-  index,
-}: {
-  plan: typeof plans[0];
-  currency: Currency;
-  loading: boolean;
-  index: number;
-}) {
-  const amount = plan.priceKey ? currency[plan.priceKey] : null;
+function PlanCard({ plan, currency, index }: { plan: Plan; currency: CurrencyKey; index: number }) {
+  const priceStr = plan.baseINR != null ? formatPrice(plan.baseINR, currency) : null;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.75, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      className={`relative flex flex-col md:border-l md:border-white/[0.07] ${index === plans.length - 1 ? "md:border-r md:border-white/[0.07]" : ""}`}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.6, delay: index * 0.09, ease: [0.16, 1, 0.3, 1] }}
+      className="relative flex flex-col rounded-2xl overflow-hidden"
+      style={{
+        background: plan.highlight
+          ? "linear-gradient(160deg, rgba(202,163,83,0.10) 0%, rgba(10,10,12,1) 65%)"
+          : "rgba(255,255,255,0.02)",
+        border: plan.highlight
+          ? "1px solid rgba(202,163,83,0.45)"
+          : "1px solid rgba(255,255,255,0.07)",
+        boxShadow: plan.highlight ? "0 0 60px rgba(202,163,83,0.10)" : "none",
+      }}
     >
-      {/* Featured top bar */}
-      {plan.featured && (
+      {plan.badge && (
         <div
-          className="absolute top-0 left-0 right-0 h-px"
-          style={{ background: "linear-gradient(to right, transparent, #CAA353, transparent)" }}
-        />
+          className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-px px-5 py-1 text-[9px] font-black tracking-[0.22em] uppercase rounded-b-xl"
+          style={{ background: "linear-gradient(135deg, #CAA353, #F0C97A)", color: "#0c0c0e" }}
+        >
+          {plan.badge}
+        </div>
       )}
 
-      <div className="flex flex-col h-full px-6 md:px-10 pt-8 pb-8 md:pt-10 md:pb-10">
+      <div className="p-7 flex flex-col flex-1" style={{ paddingTop: plan.badge ? "2.1rem" : "1.75rem" }}>
 
-        {/* Roman numeral */}
-        <p
-          className="text-xs tracking-[0.4em] mb-6"
-          style={{
-            fontFamily: "'Syne', sans-serif",
-            color: plan.featured ? "#CAA353" : "rgba(255,255,255,0.2)",
-            fontWeight: 700,
-          }}
-        >
-          {plan.index}
-        </p>
+        <div className="flex items-center gap-3 mb-5">
+          <div
+            className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+            style={{
+              background: plan.highlight ? "rgba(202,163,83,0.15)" : "rgba(255,255,255,0.05)",
+              border: `1px solid ${plan.highlight ? "rgba(202,163,83,0.3)" : "rgba(255,255,255,0.08)"}`,
+            }}
+          >
+            <plan.icon
+              style={{ color: plan.highlight ? "#CAA353" : "rgba(255,255,255,0.45)", width: 18, height: 18 }}
+            />
+          </div>
+          <div>
+            <h3 className="font-black text-base tracking-tight" style={{ color: plan.highlight ? "#F0C97A" : "#fff" }}>
+              {plan.name}
+            </h3>
+            <p className="text-[10px] text-foreground/30 leading-tight mt-0.5">{plan.tagline}</p>
+          </div>
+        </div>
 
-        {/* Category */}
-        <p
-          className="text-[10px] font-semibold tracking-[0.35em] uppercase mb-2"
-          style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Inter', sans-serif" }}
-        >
-          {plan.category}
-        </p>
-
-        {/* Title */}
-        <h3
-          className="text-2xl md:text-3xl font-bold tracking-tight mb-4"
-          style={{ fontFamily: "'Syne', sans-serif", color: "#fff", lineHeight: 1.1 }}
-        >
-          {plan.label}
-        </h3>
-
-        {/* Pitch */}
-        <p
-          className="text-sm leading-relaxed mb-8"
-          style={{ color: "rgba(255,255,255,0.38)", fontFamily: "'Inter', sans-serif" }}
-        >
-          {plan.pitch}
-        </p>
-
-        {/* Thin rule */}
-        <div className="w-full h-px mb-8" style={{ background: "rgba(255,255,255,0.06)" }} />
-
-        {/* Price block */}
-        <div className="mb-1">
-          {amount ? (
+        <div className="mb-6 min-h-[72px]">
+          {plan.custom ? (
             <>
-              <p
-                className="text-[10px] tracking-[0.35em] uppercase mb-3"
-                style={{ color: "#CAA353", fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
-              >
-                Starting from
-              </p>
-              <div
-                className="flex items-end gap-2 flex-wrap"
-                style={{
-                  filter: loading ? "blur(10px)" : "none",
-                  transition: "filter 0.4s ease",
-                }}
-              >
-                <p
-                  className="font-bold leading-none"
-                  style={{
-                    fontFamily: "'Syne', sans-serif",
-                    fontSize: "clamp(2.5rem, 5vw, 4rem)",
-                    color: plan.featured ? "#fff" : "rgba(255,255,255,0.85)",
-                    letterSpacing: "-0.02em",
-                  }}
-                >
-                  {currency.symbol}{amount}
-                </p>
-                {plan.period && (
-                  <p
-                    className="text-sm pb-1.5"
-                    style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Inter', sans-serif" }}
-                  >
-                    / {plan.period}
-                  </p>
-                )}
-              </div>
-              {!loading && (
-                <p className="text-[11px] mt-2" style={{ color: "rgba(255,255,255,0.2)", fontFamily: "'Inter', sans-serif" }}>
-                  {currency.code}
-                </p>
-              )}
+              <p className="text-3xl font-black tracking-tight text-foreground/70">Custom</p>
+              <p className="text-[10px] text-foreground/30 mt-1">{plan.billingNote}</p>
             </>
           ) : (
             <>
-              <p
-                className="text-[10px] tracking-[0.35em] uppercase mb-3"
-                style={{ color: "#CAA353", fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
-              >
-                Pricing
-              </p>
-              <p
-                className="font-bold leading-none mb-3"
-                style={{
-                  fontFamily: "'Syne', sans-serif",
-                  fontSize: "clamp(2rem, 4vw, 3rem)",
-                  color: "rgba(255,255,255,0.85)",
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                On Request
-              </p>
-              <p
-                className="text-xs"
-                style={{ color: "rgba(255,255,255,0.25)", fontFamily: "'Inter', sans-serif" }}
-              >
-                Tailored to your scope
-              </p>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-[10px] font-semibold text-foreground/30 uppercase tracking-widest">from</span>
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={`${currency}-${plan.id}`}
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 5 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-3xl font-black tracking-tight"
+                    style={{ color: plan.highlight ? "#F0C97A" : "#fff" }}
+                  >
+                    {priceStr}
+                  </motion.span>
+                </AnimatePresence>
+              </div>
+              <p className="text-[10px] text-foreground/30 mt-1">{plan.billingNote}</p>
             </>
           )}
         </div>
 
-        {/* Billing note */}
-        <p
-          className="text-[11px] mt-3 mb-8"
-          style={{ color: "rgba(255,255,255,0.2)", fontFamily: "'Inter', sans-serif" }}
-        >
-          {plan.billing}
-        </p>
+        <div
+          className="mb-5"
+          style={{ height: 1, background: plan.highlight ? "rgba(202,163,83,0.15)" : "rgba(255,255,255,0.05)" }}
+        />
 
-        {/* Thin rule */}
-        <div className="w-full h-px mb-6" style={{ background: "rgba(255,255,255,0.06)" }} />
-
-        {/* Deliverables */}
-        <ul className="flex-1 mb-10">
-          {plan.deliverables.map((item, i) => (
-            <li
-              key={item}
-              className="flex items-start gap-4 py-3.5"
-              style={{
-                borderBottom: i < plan.deliverables.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
-              }}
-            >
-              {/* Em dash marker — editorial style */}
-              <span
-                className="text-xs shrink-0 mt-0.5"
-                style={{
-                  color: plan.featured ? "#CAA353" : "rgba(255,255,255,0.2)",
-                  fontFamily: "'Inter', sans-serif",
-                }}
-              >
-                —
-              </span>
-              <span
-                className="text-sm"
-                style={{
-                  color: "rgba(255,255,255,0.55)",
-                  fontFamily: "'Inter', sans-serif",
-                  fontWeight: 400,
-                  lineHeight: 1.5,
-                }}
-              >
-                {item}
-              </span>
+        <ul className="space-y-2.5 flex-1 mb-7">
+          {plan.features.map((f) => (
+            <li key={f} className="flex items-start gap-2.5 text-sm" style={{ color: "rgba(255,255,255,0.58)" }}>
+              <Check
+                className="flex-shrink-0 mt-[3px]"
+                style={{ width: 13, height: 13, color: plan.highlight ? "#CAA353" : "rgba(255,255,255,0.28)" }}
+              />
+              <span>{f}</span>
             </li>
           ))}
         </ul>
 
-        {/* CTA */}
         <a
-          href="#contact"
-          className="group flex items-center justify-between w-full px-6 py-4 transition-all duration-300"
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-bold text-sm tracking-wide transition-all duration-300 hover:scale-[1.02]"
           style={
-            plan.featured
+            plan.highlight
               ? {
-                  background: "#CAA353",
+                  background: "linear-gradient(135deg, #CAA353, #F0C97A)",
                   color: "#0c0c0e",
-                  fontFamily: "'Syne', sans-serif",
-                  fontWeight: 700,
-                  fontSize: "0.75rem",
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
+                  boxShadow: "0 6px 28px rgba(202,163,83,0.30)",
                 }
               : {
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  color: "rgba(255,255,255,0.5)",
-                  fontFamily: "'Syne', sans-serif",
-                  fontWeight: 700,
-                  fontSize: "0.75rem",
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.10)",
+                  color: "rgba(255,255,255,0.65)",
                 }
           }
           onMouseEnter={(e) => {
-            if (plan.featured) {
-              e.currentTarget.style.background = "#F0C97A";
-            } else {
-              e.currentTarget.style.borderColor = "rgba(202,163,83,0.4)";
-              e.currentTarget.style.color = "#CAA353";
+            if (!plan.highlight) {
+              (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.09)";
+              (e.currentTarget as HTMLElement).style.color = "#fff";
             }
           }}
           onMouseLeave={(e) => {
-            if (plan.featured) {
-              e.currentTarget.style.background = "#CAA353";
-            } else {
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-              e.currentTarget.style.color = "rgba(255,255,255,0.5)";
+            if (!plan.highlight) {
+              (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)";
+              (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.65)";
             }
           }}
         >
+          <SiWhatsapp className="w-4 h-4" />
           {plan.cta}
-          <ArrowUpRight
-            className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200"
-          />
+          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
         </a>
       </div>
     </motion.div>
   );
 }
 
-/* ─── Section ──────────────────────────────────────────────────────────── */
-
 export function Pricing() {
-  const { currency, country, loading } = useCurrency();
+  const [currency, setCurrency] = useState<CurrencyKey>("INR");
+
+  useEffect(() => {
+    setCurrency(detectCurrency());
+  }, []);
 
   return (
-    <section id="pricing" className="py-20 md:py-40 relative bg-background z-10">
-
-      {/* Top rule */}
+    <section id="pricing" className="py-16 md:py-32 relative z-10 overflow-hidden border-t border-white/5">
+      <div className="absolute inset-0 bg-background" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_55%_at_50%_0%,rgba(202,163,83,0.06),transparent)]" />
       <div
-        className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: "rgba(255,255,255,0.05)" }}
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          opacity: 0.012,
+          backgroundImage: "radial-gradient(circle, rgba(202,163,83,1) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
       />
 
-      <div className="container px-4 md:px-6">
+      <div className="container px-4 md:px-6 relative z-10">
 
-        {/* ── Header ── */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-8">
-
-          <motion.div
+        <div className="text-center max-w-2xl mx-auto mb-10 md:mb-14">
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.5 }}
+            className="text-xs font-semibold tracking-[0.3em] uppercase mb-4"
+            style={{ color: "#CAA353" }}
           >
-            <p
-              className="text-[10px] tracking-[0.4em] uppercase mb-5"
-              style={{ color: "#CAA353", fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
+            Transparent Pricing
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.07 }}
+            className="text-4xl md:text-6xl font-black tracking-tight leading-[0.92] mb-5"
+          >
+            Invest in Results,<br />
+            <span
+              className="text-transparent bg-clip-text"
+              style={{ backgroundImage: "linear-gradient(135deg, #CAA353, #F0C97A)" }}
             >
-              Investment
-            </p>
-            <h2
-              className="font-bold tracking-tight"
-              style={{
-                fontFamily: "'Syne', sans-serif",
-                fontSize: "clamp(2.8rem, 7vw, 5.5rem)",
-                lineHeight: 1.0,
-                color: "#fff",
-                letterSpacing: "-0.03em",
-              }}
-            >
-              Transparent
-              <br />
-              Pricing.
-            </h2>
-          </motion.div>
-
-          <motion.div
+              Not Promises.
+            </span>
+          </motion.h2>
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col gap-4 md:max-w-xs"
+            transition={{ duration: 0.6, delay: 0.14 }}
+            className="text-base text-foreground/45 leading-relaxed"
           >
-            <p
-              className="text-base leading-relaxed"
-              style={{ color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif" }}
-            >
-              No inflated agency rates. No hidden costs.
-              Honest pricing built for serious brands worldwide.
-            </p>
-
-            {/* Geo indicator */}
-            <div
-              className="inline-flex items-center gap-2.5 self-start px-3.5 py-2"
-              style={{
-                border: "1px solid rgba(202,163,83,0.15)",
-                background: "rgba(202,163,83,0.04)",
-              }}
-            >
-              <MapPin className="w-3 h-3 text-primary shrink-0" />
-              <span
-                className="text-[11px] tracking-wide"
-                style={{ color: "rgba(255,255,255,0.35)", fontFamily: "'Inter', sans-serif" }}
-              >
-                {loading
-                  ? "Detecting location…"
-                  : `${currency.code} · ${countryNames[country] ?? "Global"}`}
-              </span>
-              {!loading && (
-                <span className="w-1 h-1 rounded-full bg-primary animate-pulse" />
-              )}
-            </div>
-          </motion.div>
+            No hidden fees. No lock-in contracts. Every price is a starting point — final cost is confirmed after a free discovery call tailored to your exact needs.
+          </motion.p>
         </div>
 
-        {/* ── Thin full-width rule ── */}
+        {/* Currency switcher */}
         <motion.div
-          initial={{ scaleX: 0, opacity: 0 }}
-          whileInView={{ scaleX: 1, opacity: 1 }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full h-px mb-0 origin-left"
-          style={{ background: "rgba(255,255,255,0.08)" }}
-        />
+          transition={{ duration: 0.5, delay: 0.18 }}
+          className="flex items-center justify-center mb-10 md:mb-14"
+        >
+          <div
+            className="inline-flex items-center gap-1 p-1.5 rounded-xl flex-wrap justify-center"
+            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+          >
+            {(Object.keys(CURRENCIES) as CurrencyKey[]).map((k) => (
+              <CurrencyTab key={k} k={k} selected={currency === k} onSelect={() => setCurrency(k)} />
+            ))}
+          </div>
+        </motion.div>
 
-        {/* ── Plans grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 divide-y divide-white/5 md:divide-y-0">
-          {plans.map((plan, i) => (
-            <PlanCard
-              key={plan.id}
-              plan={plan}
-              currency={currency}
-              loading={loading}
-              index={i}
-            />
+        {/* Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+          {PLANS.map((plan, i) => (
+            <PlanCard key={plan.id} plan={plan} currency={currency} index={i} />
           ))}
         </div>
 
-        {/* ── Bottom rule ── */}
-        <div className="w-full h-px" style={{ background: "rgba(255,255,255,0.06)" }} />
+        {/* Bottom note */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex items-center justify-center mt-12"
+        >
+          <div
+            className="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl text-xs tracking-wide"
+            style={{
+              background: "rgba(37,211,102,0.04)",
+              border: "1px solid rgba(37,211,102,0.15)",
+              color: "rgba(255,255,255,0.4)",
+            }}
+          >
+            <MessageCircle className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "#25D366" }} />
+            All projects start with a free 30-min strategy call on WhatsApp — zero commitment, zero pressure.
+          </div>
+        </motion.div>
 
-        {/* ── Footnote ── */}
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-10 text-center text-[11px] leading-loose tracking-wide"
-          style={{
-            color: "rgba(255,255,255,0.18)",
-            fontFamily: "'Inter', sans-serif",
-          }}
+          transition={{ duration: 0.6, delay: 0.38 }}
+          className="text-center text-[10px] mt-4 tracking-wide"
+          style={{ color: "rgba(255,255,255,0.18)" }}
         >
-          All figures are starting points. Final scope confirmed after a complimentary discovery call.
-          <br />
-          We work with clients across India, UAE, Singapore, United Kingdom, United States, and beyond.
+          Prices shown are starting rates in {CURRENCIES[currency].label} and are indicative.
+          {currency !== "INR" ? " Exchange rates are approximate." : ""}
         </motion.p>
-
       </div>
     </section>
   );

@@ -41,6 +41,7 @@ import { FAQ } from "./components/sections/FAQ";
 import { WhyUs } from "./components/sections/WhyUs";
 import { Contact } from "./components/sections/Contact";
 import { BookCall } from "./components/sections/BookCall";
+import { Pricing } from "./components/sections/Pricing";
 import { Blog } from "./components/sections/Blog";
 import { Footer } from "./components/sections/Footer";
 import { FloatingWhatsApp } from "./components/sections/FloatingWhatsApp";
@@ -312,6 +313,7 @@ function AgencySite() {
           <AiServices />
           <About />
           <Stats />
+          <Pricing />
           <Process />
           <Testimonials />
           <BookCall />
