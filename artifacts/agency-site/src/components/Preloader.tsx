@@ -7,17 +7,18 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
 
   useEffect(() => {
     let current = 0;
+    // Faster steps: total ~1.2s instead of ~3.5s
     const steps = [
-      { target: 33, delay: 60 },
-      { target: 67, delay: 40 },
-      { target: 100, delay: 25 },
+      { target: 40, delay: 18 },
+      { target: 75, delay: 12 },
+      { target: 100, delay: 8 },
     ];
 
     let stepIdx = 0;
     const run = () => {
       if (stepIdx >= steps.length) {
         setPhase("reveal");
-        setTimeout(onComplete, 900);
+        setTimeout(onComplete, 500);
         return;
       }
       const { target, delay } = steps[stepIdx];
@@ -25,16 +26,17 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
         current++;
         setCount(current);
         if (current < target) {
-          setTimeout(tick, delay + Math.random() * 20);
+          setTimeout(tick, delay + Math.random() * 8);
         } else {
           stepIdx++;
-          setTimeout(run, 120);
+          setTimeout(run, 60);
         }
       };
       tick();
     };
 
-    const startTimeout = setTimeout(run, 300);
+    // Start immediately, no 300ms pause
+    const startTimeout = setTimeout(run, 50);
     return () => clearTimeout(startTimeout);
   }, [onComplete]);
 
@@ -46,7 +48,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
           className="fixed inset-0 z-[99999] flex flex-col items-center justify-center"
           style={{ background: "#09090b" }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         >
           {/* Subtle grid */}
           <div
@@ -58,80 +60,54 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
             }}
           />
 
-          {/* Glow orb */}
-          <motion.div
-            animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute w-96 h-96 rounded-full pointer-events-none"
+          {/* Glow orb — static, no pulse animation for perf */}
+          <div
+            className="absolute w-80 h-80 rounded-full pointer-events-none opacity-40"
             style={{
               background: "radial-gradient(circle, rgba(202,163,83,0.12) 0%, transparent 70%)",
               filter: "blur(60px)",
             }}
           />
 
-          <div className="relative z-10 flex flex-col items-center gap-10">
-            {/* Logo mark — eagle with grow animation */}
+          <div className="relative z-10 flex flex-col items-center gap-8">
+            {/* Logo */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.5, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col items-center gap-3"
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
-              <motion.div
-                animate={{
-                  scale: [1, 1.06, 1],
-                  filter: [
-                    "drop-shadow(0 0 12px rgba(202,163,83,0.3))",
-                    "drop-shadow(0 0 32px rgba(202,163,83,0.7))",
-                    "drop-shadow(0 0 12px rgba(202,163,83,0.3))",
-                  ],
-                }}
-                transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <img
-                  src="/logo.svg"
-                  alt="Core Elite Digital"
-                  style={{ width: 160, height: 160, objectFit: "contain" }}
-                />
-              </motion.div>
+              <img
+                src="/logo.svg"
+                alt="Core Elite Digital"
+                style={{ width: 120, height: 120, objectFit: "contain", filter: "drop-shadow(0 0 16px rgba(202,163,83,0.5))" }}
+              />
             </motion.div>
 
             {/* Counter */}
             <div className="relative">
-              <motion.span
-                key={count}
-                className="text-[5rem] font-black tabular-nums leading-none"
+              <span
+                className="text-[4.5rem] font-black tabular-nums leading-none"
                 style={{
                   background: "linear-gradient(135deg, #CAA353 0%, #F0C97A 50%, #CAA353 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
-                  textShadow: "none",
                 }}
               >
                 {String(count).padStart(2, "0")}
-              </motion.span>
+              </span>
               <span className="absolute -bottom-1 right-0 text-sm font-bold text-white/20">%</span>
             </div>
 
             {/* Progress bar */}
-            <div className="w-64 h-[1px] bg-white/10 relative overflow-hidden rounded-full">
+            <div className="w-48 h-[1px] bg-white/10 relative overflow-hidden rounded-full">
               <motion.div
                 className="absolute inset-y-0 left-0 rounded-full"
                 animate={{ width: `${count}%` }}
-                transition={{ duration: 0.1 }}
+                transition={{ duration: 0.08 }}
                 style={{ background: "linear-gradient(to right, #8B6914, #CAA353, #F0C97A)" }}
               />
             </div>
-
-            {/* Status text */}
-            <motion.p
-              animate={{ opacity: [0.3, 0.7, 0.3] }}
-              transition={{ duration: 1.8, repeat: Infinity }}
-              className="text-[10px] tracking-[0.4em] uppercase text-white/25 font-medium"
-            >
-              {count < 40 ? "Initializing Systems" : count < 80 ? "Loading Assets" : "Ready"}
-            </motion.p>
           </div>
 
           {/* Curtain reveal */}
@@ -141,7 +117,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
                 initial={{ scaleY: 0 }}
                 animate={{ scaleY: 1 }}
                 exit={{}}
-                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute inset-0"
                 style={{ background: "#09090b", transformOrigin: "top" }}
               />

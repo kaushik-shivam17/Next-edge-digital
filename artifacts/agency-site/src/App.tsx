@@ -30,24 +30,30 @@ function PageFallback() {
 
 import { Hero } from "./components/sections/Hero";
 import { TrustedBy } from "./components/sections/TrustedBy";
-import { Services } from "./components/sections/Services";
-import { AiServices } from "./components/sections/AiServices";
-import { Stats } from "./components/sections/Stats";
-import { Process } from "./components/sections/Process";
-import { Portfolio } from "./components/sections/Portfolio";
-import { About } from "./components/sections/About";
-import { Testimonials } from "./components/sections/Testimonials";
-import { FAQ } from "./components/sections/FAQ";
-import { WhyUs } from "./components/sections/WhyUs";
-import { Contact } from "./components/sections/Contact";
-import { BookCall } from "./components/sections/BookCall";
-import { Blog } from "./components/sections/Blog";
-import { Footer } from "./components/sections/Footer";
 import { FloatingWhatsApp } from "./components/sections/FloatingWhatsApp";
 import { CustomCursor } from "./components/CustomCursor";
 import { NoiseOverlay } from "./components/NoiseOverlay";
 import { BackToTop } from "./components/BackToTop";
 import { CookieConsent } from "./components/CookieConsent";
+
+// Below-fold sections — lazy loaded for faster initial paint
+const Portfolio = lazy(() => import("./components/sections/Portfolio").then(m => ({ default: m.Portfolio })));
+const WhyUs = lazy(() => import("./components/sections/WhyUs").then(m => ({ default: m.WhyUs })));
+const Services = lazy(() => import("./components/sections/Services").then(m => ({ default: m.Services })));
+const AiServices = lazy(() => import("./components/sections/AiServices").then(m => ({ default: m.AiServices })));
+const About = lazy(() => import("./components/sections/About").then(m => ({ default: m.About })));
+const Stats = lazy(() => import("./components/sections/Stats").then(m => ({ default: m.Stats })));
+const Process = lazy(() => import("./components/sections/Process").then(m => ({ default: m.Process })));
+const Testimonials = lazy(() => import("./components/sections/Testimonials").then(m => ({ default: m.Testimonials })));
+const BookCall = lazy(() => import("./components/sections/BookCall").then(m => ({ default: m.BookCall })));
+const Contact = lazy(() => import("./components/sections/Contact").then(m => ({ default: m.Contact })));
+const FAQ = lazy(() => import("./components/sections/FAQ").then(m => ({ default: m.FAQ })));
+const Blog = lazy(() => import("./components/sections/Blog").then(m => ({ default: m.Blog })));
+const Footer = lazy(() => import("./components/sections/Footer").then(m => ({ default: m.Footer })));
+
+function SectionFallback() {
+  return <div style={{ minHeight: 200 }} />;
+}
 
 const navLinks = [
   { label: "Work", href: "/portfolio", section: "work" },
@@ -306,21 +312,25 @@ function AgencySite() {
         <main id="main-content" aria-label="Core Elite Digital — AI-Powered Digital Agency">
           <Hero />
           <TrustedBy />
-          <Portfolio />
-          <WhyUs />
-          <Services />
-          <AiServices />
-          <About />
-          <Stats />
-          <Process />
-          <Testimonials />
-          <BookCall />
-          <Contact />
-          <FAQ />
-          <Blog />
+          <Suspense fallback={<SectionFallback />}>
+            <Portfolio />
+            <WhyUs />
+            <Services />
+            <AiServices />
+            <About />
+            <Stats />
+            <Process />
+            <Testimonials />
+            <BookCall />
+            <Contact />
+            <FAQ />
+            <Blog />
+          </Suspense>
         </main>
 
-        <Footer />
+        <Suspense fallback={null}>
+          <Footer />
+        </Suspense>
       </div>
     </div>
   );

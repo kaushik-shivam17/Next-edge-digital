@@ -72,14 +72,16 @@ function ScrambleText({ text, delay = 0, className = "" }: { text: string; delay
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  // Disable parallax on mobile — expensive scroll tracking not needed
+  const y = useTransform(scrollYProgress, [0, 1], isMobile ? ["0%", "0%"] : ["0%", "30%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.6], isMobile ? [1, 1] : [1, 0]);
 
   return (
     <section ref={ref} className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-20">
-      {/* Three.js 3D scene */}
-      <HeroScene />
+      {/* Three.js 3D scene — desktop only */}
+      {!isMobile && <HeroScene />}
 
       {/* Layered glow */}
       <div className="absolute inset-0 z-[1] pointer-events-none">
@@ -98,16 +100,12 @@ export function Hero() {
         }}
       />
 
-      {/* Floating orbs */}
-      <motion.div
-        animate={{ y: [0, -40, 0], scale: [1, 1.08, 1] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+      {/* Floating orbs — static on mobile, animated only on desktop */}
+      <div
         className="absolute top-1/4 left-[8%] w-40 h-40 sm:w-80 sm:h-80 rounded-full pointer-events-none z-[1]"
         style={{ background: "radial-gradient(circle, rgba(202,163,83,0.08) 0%, transparent 70%)", filter: "blur(40px)" }}
       />
-      <motion.div
-        animate={{ y: [0, 30, 0], scale: [1, 1.1, 1] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+      <div
         className="absolute bottom-1/4 right-[8%] w-48 h-48 sm:w-96 sm:h-96 rounded-full pointer-events-none z-[1]"
         style={{ background: "radial-gradient(circle, rgba(45,100,255,0.07) 0%, transparent 70%)", filter: "blur(50px)" }}
       />
@@ -244,9 +242,9 @@ export function Hero() {
             className="mt-8 md:mt-16 flex flex-wrap items-center justify-center gap-2 md:gap-3"
           >
             {[
-              { label: "10+ Brands Transformed", Icon: Award },
+              { label: "50+ Projects Delivered", Icon: Award },
               { label: "98% Client Retention", Icon: Users },
-              { label: "4+ Years of Excellence", Icon: Clock },
+              { label: "10+ Countries Served", Icon: Clock },
             ].map(({ label, Icon }, i) => (
               <motion.div
                 key={label}
@@ -268,22 +266,24 @@ export function Hero() {
         </div>
       </motion.div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10"
-      >
-        <span className="text-[9px] tracking-[0.3em] uppercase text-foreground/20 font-medium">Scroll</span>
-        <div className="w-px h-12 bg-gradient-to-b from-foreground/20 to-transparent relative overflow-hidden">
-          <motion.div
-            animate={{ y: ["-100%", "200%"] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-0 left-0 w-full h-1/2 bg-primary/60"
-          />
-        </div>
-      </motion.div>
+      {/* Scroll indicator — desktop only to save mobile resources */}
+      {!isMobile && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-3 z-10 hidden md:flex"
+        >
+          <span className="text-[9px] tracking-[0.3em] uppercase text-foreground/20 font-medium">Scroll</span>
+          <div className="w-px h-12 bg-gradient-to-b from-foreground/20 to-transparent relative overflow-hidden">
+            <motion.div
+              animate={{ y: ["-100%", "200%"] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-0 left-0 w-full h-1/2 bg-primary/60"
+            />
+          </div>
+        </motion.div>
+      )}
     </section>
   );
 }

@@ -10,10 +10,16 @@ export function HeroScene() {
 
     const isMobile = window.innerWidth < 768;
 
+    // Skip 3D scene on mobile entirely — major LCP & FID win
+    if (isMobile) return;
+
     // Bail out gracefully when WebGL is unavailable (e.g. sandboxed preview)
     const testCanvas = document.createElement("canvas");
     const testCtx = testCanvas.getContext("webgl2") || testCanvas.getContext("webgl");
     if (!testCtx) return;
+
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // Renderer
     let renderer: THREE.WebGLRenderer;
@@ -22,7 +28,7 @@ export function HeroScene() {
     } catch {
       return;
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 1.5));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(mount.clientWidth, mount.clientHeight);
     renderer.setClearColor(0x000000, 0);
     mount.appendChild(renderer.domElement);
@@ -68,7 +74,7 @@ export function HeroScene() {
     }
 
     // ── Particles ────────────────────────────────────────────────────────
-    const count = isMobile ? 280 : 620;
+    const count = 420;
     const positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 24;
@@ -96,7 +102,9 @@ export function HeroScene() {
       mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -((e.clientY / window.innerHeight) * 2 - 1);
     };
-    window.addEventListener("mousemove", onMouseMove, { passive: true });
+    if (!prefersReducedMotion) {
+      window.addEventListener("mousemove", onMouseMove, { passive: true });
+    }
 
     // ── Resize ───────────────────────────────────────────────────────────
     let resizeTimer: ReturnType<typeof setTimeout>;
@@ -115,38 +123,48 @@ export function HeroScene() {
     let animId = 0;
     const t0 = performance.now();
 
-    const animate = () => {
-      if (document.hidden) { animId = requestAnimationFrame(animate); return; }
+    // Throttle to ~30fps on low-end devices
+    let lastFrame = 0;
+    const targetFPS = prefersReducedMotion ? 10 : 60;
+    const frameInterval = 1000 / targetFPS;
+
+    const animate = (now: number) => {
       animId = requestAnimationFrame(animate);
+      if (document.hidden) return;
+      if (now - lastFrame < frameInterval) return;
+      lastFrame = now;
+
       const t = (performance.now() - t0) / 1000;
 
-      // Icosahedron spin
-      icosa.rotation.x = t * 0.07;
-      icosa.rotation.y = t * 0.11;
+      if (!prefersReducedMotion) {
+        // Icosahedron spin
+        icosa.rotation.x = t * 0.07;
+        icosa.rotation.y = t * 0.11;
 
-      // Ring drift
-      ring.rotation.z = t * 0.05;
+        // Ring drift
+        ring.rotation.z = t * 0.05;
 
-      // Floating shapes
-      for (const d of floatData) {
-        d.mesh.rotation.x += d.speed * 0.016;
-        d.mesh.rotation.z += d.speed * 0.7 * 0.016;
-        d.mesh.position.y = d.baseY + Math.sin(t * 0.35 + d.phase) * 0.35;
+        // Floating shapes
+        for (const d of floatData) {
+          d.mesh.rotation.x += d.speed * 0.016;
+          d.mesh.rotation.z += d.speed * 0.7 * 0.016;
+          d.mesh.position.y = d.baseY + Math.sin(t * 0.35 + d.phase) * 0.35;
+        }
+
+        // Particles slow drift
+        particles.rotation.y = t * 0.011;
+        particles.rotation.x = t * 0.004;
+
+        // Mouse parallax — smooth lerp
+        target.x += (mouse.x * 0.3 - target.x) * 0.045;
+        target.y += (mouse.y * 0.15 - target.y) * 0.045;
+        group.rotation.y = target.x;
+        group.rotation.x = target.y;
       }
-
-      // Particles slow drift
-      particles.rotation.y = t * 0.011;
-      particles.rotation.x = t * 0.004;
-
-      // Mouse parallax — smooth lerp
-      target.x += (mouse.x * 0.3 - target.x) * 0.045;
-      target.y += (mouse.y * 0.15 - target.y) * 0.045;
-      group.rotation.y = target.x;
-      group.rotation.x = target.y;
 
       renderer.render(scene, camera);
     };
-    animate();
+    animId = requestAnimationFrame(animate);
 
     return () => {
       cancelAnimationFrame(animId);
