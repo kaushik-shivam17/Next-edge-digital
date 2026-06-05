@@ -132,9 +132,14 @@ export function Footer() {
           </p>
           <div className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-1">
             {["Privacy Policy", "Terms of Service", "Cookie Policy"].map((item) => (
-              <span key={item} className="text-[11px] text-foreground/25 tracking-wide cursor-default">
+              <button
+                key={item}
+                onClick={() => scrollToSection("contact")}
+                className="text-[11px] text-foreground/25 tracking-wide hover:text-foreground/50 transition-colors duration-200"
+                title={`${item} — contact us for details`}
+              >
                 {item}
-              </span>
+              </button>
             ))}
           </div>
         </div>
