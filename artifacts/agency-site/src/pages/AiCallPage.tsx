@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Phone, CheckCircle2, XCircle, ArrowRight, TrendingUp, Clock, Globe, Zap } from "lucide-react";
+import { WA } from "@/lib/whatsapp";
 import { SEO } from "@/components/SEO";
 import { SharedNav } from "@/components/SharedNav";
 import { BookCall } from "@/components/sections/BookCall";
@@ -108,7 +109,7 @@ export function AiCallPage() {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <a
-                href="https://wa.me/918218628232?text=I%20want%20to%20deploy%20AI%20Call%20Management%20for%20my%20business"
+                href={WA.aiCall}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2.5 px-8 py-4 font-bold text-sm tracking-widest uppercase"
@@ -119,7 +120,7 @@ export function AiCallPage() {
                 <ArrowRight className="w-4 h-4" />
               </a>
               <a
-                href={`https://wa.me/918218628232?text=${encodeURIComponent("Hi! I'd like to see a live demo of the AI Phone System.")}`}
+                href={WA.aiCallDemo}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2.5 px-8 py-4 font-bold text-sm tracking-widest uppercase text-foreground/60 hover:text-foreground transition-colors"
@@ -258,7 +259,7 @@ export function AiCallPage() {
             </h2>
             <p className="text-foreground/50 mb-8 text-lg">72-hour deployment. Full setup handled by us. No technical knowledge needed.</p>
             <a
-              href="https://wa.me/918218628232?text=I%20want%20to%20deploy%20AI%20Call%20Management%20for%20my%20business"
+              href={WA.aiCall}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-10 py-5 font-black text-sm tracking-widest uppercase"

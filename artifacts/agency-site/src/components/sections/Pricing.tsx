@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, MessageCircle, Globe, Zap, Layers, ArrowRight, Sparkles } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
+import { WA } from "@/lib/whatsapp";
 
-const WHATSAPP_URL = `https://wa.me/918218628232?text=${encodeURIComponent("Hi! I'd like to get a quote from Core Elite Digital.")}`;
+const WHATSAPP_URL = WA.quote;
 
 type CurrencyKey = "INR" | "USD" | "AED" | "SGD" | "GBP";
 

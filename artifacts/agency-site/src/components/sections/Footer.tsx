@@ -1,7 +1,8 @@
 import { SiInstagram, SiWhatsapp } from "react-icons/si";
 import { scrollToSection } from "@/lib/scrollTo";
+import { WA } from "@/lib/whatsapp";
 
-const WHATSAPP_URL = `https://wa.me/918218628232`;
+const WHATSAPP_URL = WA.base;
 const INSTAGRAM_URL = `https://instagram.com/coreelitedigital`;
 
 const serviceLinks = [

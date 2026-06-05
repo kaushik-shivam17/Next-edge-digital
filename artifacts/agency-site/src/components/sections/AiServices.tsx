@@ -6,8 +6,9 @@ import {
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { scrollToSection } from "@/lib/scrollTo";
+import { WA } from "@/lib/whatsapp";
 
-const WHATSAPP_URL = `https://wa.me/918218628232?text=${encodeURIComponent("Hi! I'd like to get a quote from Core Elite Digital.")}`;
+const WHATSAPP_URL = WA.quote;
 
 type CurrencyKey = "INR" | "USD" | "AED" | "SGD" | "GBP";
 const CURRENCIES: Record<CurrencyKey, { symbol: string; label: string; flag: string; rate: number }> = {

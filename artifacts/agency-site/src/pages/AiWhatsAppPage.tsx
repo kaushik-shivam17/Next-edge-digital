@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { WA } from "@/lib/whatsapp";
 import { MessageSquare, CheckCircle2, ArrowRight, Users, TrendingUp, Repeat, Bot } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { SharedNav } from "@/components/SharedNav";
@@ -82,7 +83,7 @@ export function AiWhatsAppPage() {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <a
-                href="https://wa.me/918218628232?text=I%20want%20to%20automate%20my%20WhatsApp%20business%20with%20AI"
+                href={WA.aiWhatsApp}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2.5 px-8 py-4 font-bold text-sm tracking-widest uppercase"
@@ -92,7 +93,7 @@ export function AiWhatsAppPage() {
                 Automate My WhatsApp
                 <ArrowRight className="w-4 h-4" />
               </a>
-              <a href={`https://wa.me/918218628232?text=${encodeURIComponent("Hi! I'd like to see the AI WhatsApp automation in action.")}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2.5 px-8 py-4 font-bold text-sm tracking-widest uppercase text-foreground/60 hover:text-foreground transition-colors" style={{ border: "1px solid rgba(255,255,255,0.1)" }}>
+              <a href={WA.aiWhatsAppDemo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2.5 px-8 py-4 font-bold text-sm tracking-widest uppercase text-foreground/60 hover:text-foreground transition-colors" style={{ border: "1px solid rgba(255,255,255,0.1)" }}>
                 See It in Action
               </a>
             </div>
@@ -183,7 +184,7 @@ export function AiWhatsAppPage() {
             <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-5">Your Competitor Just<br /><span className="text-transparent bg-clip-text" style={{ backgroundImage: "linear-gradient(135deg, #CAA353, #F0C97A)" }}>Deployed This Yesterday.</span></h2>
             <p className="text-foreground/50 mb-8 text-lg">Every day you wait is another day of missed follow-ups, lost leads, and revenue walking out the door. Setup in 72 hours.</p>
             <a
-              href="https://wa.me/918218628232?text=I%20want%20to%20automate%20my%20WhatsApp%20with%20AI"
+              href={WA.aiWhatsApp}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-10 py-5 font-black text-sm tracking-widest uppercase"

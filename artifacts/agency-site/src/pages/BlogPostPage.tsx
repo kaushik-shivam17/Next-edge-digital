@@ -3,8 +3,9 @@ import { ArrowLeft, Calendar, Tag, Clock } from "lucide-react";
 import { Footer } from "@/components/sections/Footer";
 import { SharedNav } from "@/components/SharedNav";
 import { SiWhatsapp } from "react-icons/si";
+import { WA } from "@/lib/whatsapp";
 
-const WHATSAPP_URL = `https://wa.me/918218628232?text=${encodeURIComponent("Hi! I read your blog and I'd like to discuss a project with Core Elite Digital.")}`;
+const WHATSAPP_URL = WA.blogReader;
 
 type Post = {
   id: string;

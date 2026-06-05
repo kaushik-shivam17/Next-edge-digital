@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
+import { WA } from "@/lib/whatsapp";
 
 const projects = [
   {
@@ -655,7 +656,7 @@ export function Portfolio() {
 
         {/* View all CTA card */}
         <motion.a
-          href={`https://wa.me/918218628232?text=${encodeURIComponent("Hi! I'd like to start a project with Core Elite Digital.")}`}
+          href={WA.startProject}
           target="_blank"
           rel="noopener noreferrer"
           className="flex-shrink-0 w-[220px] h-[500px] rounded-3xl flex flex-col items-center justify-center gap-4 group"

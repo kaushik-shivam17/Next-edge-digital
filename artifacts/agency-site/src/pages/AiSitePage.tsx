@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Globe, CheckCircle2, ArrowRight, TrendingUp, Zap, Target, RefreshCw } from "lucide-react";
+import { WA } from "@/lib/whatsapp";
 import { SEO } from "@/components/SEO";
 import { SharedNav } from "@/components/SharedNav";
 import { BookCall } from "@/components/sections/BookCall";
@@ -82,7 +83,7 @@ export function AiSitePage() {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <a
-                href="https://wa.me/918218628232?text=I%20want%20an%20AI-powered%20website%20for%20my%20business"
+                href={WA.aiSite}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2.5 px-8 py-4 font-bold text-sm tracking-widest uppercase"
@@ -188,7 +189,7 @@ export function AiSitePage() {
             <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-5">Your Website Should Be<br /><span className="text-transparent bg-clip-text" style={{ backgroundImage: "linear-gradient(135deg, #CAA353, #F0C97A)" }}>Working For You. Not Against You.</span></h2>
             <p className="text-foreground/50 mb-8 text-lg">14-day delivery. Guaranteed PageSpeed 95+. AI that optimizes every week. No excuses, just results.</p>
             <a
-              href="https://wa.me/918218628232?text=I%20want%20an%20AI%20website%20for%20my%20business"
+              href={WA.aiSite}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-10 py-5 font-black text-sm tracking-widest uppercase"

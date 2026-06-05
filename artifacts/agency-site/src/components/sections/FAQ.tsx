@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
+import { WA } from "@/lib/whatsapp";
 
 const faqs = [
   {
@@ -146,7 +147,7 @@ export function FAQ() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              href={`https://wa.me/918218628232?text=${encodeURIComponent("Hi! I have a question for Core Elite Digital.")}`}
+              href={WA.question}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm font-semibold tracking-wider text-primary hover:text-primary/80 transition-colors"

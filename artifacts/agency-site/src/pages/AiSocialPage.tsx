@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Bot, CheckCircle2, ArrowRight, Instagram, BarChart3, Sparkles, Calendar } from "lucide-react";
+import { WA } from "@/lib/whatsapp";
 import { SEO } from "@/components/SEO";
 import { SharedNav } from "@/components/SharedNav";
 import { BookCall } from "@/components/sections/BookCall";
@@ -90,7 +91,7 @@ export function AiSocialPage() {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <a
-                href="https://wa.me/918218628232?text=I%20want%20AI%20to%20manage%20my%20social%20media"
+                href={WA.aiSocial}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2.5 px-8 py-4 font-bold text-sm tracking-widest uppercase"
@@ -100,7 +101,7 @@ export function AiSocialPage() {
                 Let AI Run My Social
                 <ArrowRight className="w-4 h-4" />
               </a>
-              <a href={`https://wa.me/918218628232?text=${encodeURIComponent("Hi! I'd like to see sample AI social media content from Core Elite Digital.")}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2.5 px-8 py-4 font-bold text-sm tracking-widest uppercase text-foreground/60 hover:text-foreground transition-colors" style={{ border: "1px solid rgba(255,255,255,0.1)" }}>
+              <a href={WA.aiSocialSample} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2.5 px-8 py-4 font-bold text-sm tracking-widest uppercase text-foreground/60 hover:text-foreground transition-colors" style={{ border: "1px solid rgba(255,255,255,0.1)" }}>
                 See Sample Content
               </a>
             </div>
@@ -177,7 +178,7 @@ export function AiSocialPage() {
             <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-5">While You Read This,<br /><span className="text-transparent bg-clip-text" style={{ backgroundImage: "linear-gradient(135deg, #CAA353, #F0C97A)" }}>Your Feed Is Silent.</span></h2>
             <p className="text-foreground/50 mb-8 text-lg">Brands that post consistently 5× outperform those that don't. AI makes that effortless. Starting in 72 hours.</p>
             <a
-              href="https://wa.me/918218628232?text=I%20want%20AI%20to%20manage%20my%20social%20media"
+              href={WA.aiSocial}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-10 py-5 font-black text-sm tracking-widest uppercase"

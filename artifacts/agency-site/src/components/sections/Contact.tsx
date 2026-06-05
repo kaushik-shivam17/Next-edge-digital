@@ -6,9 +6,9 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowRight, MapPin, Clock, CheckCircle2 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
+import { WA, wa } from "@/lib/whatsapp";
 
-const WHATSAPP_NUMBER = "918218628232";
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi! I'd like to discuss a project with Core Elite Digital.")}`;
+const WHATSAPP_URL = WA.generalInquiry;
 
 const contactDetails = [
   { icon: SiWhatsapp, label: "General Inquiries", value: "Currently contact us on WhatsApp", href: WHATSAPP_URL, isWhatsApp: true },
@@ -128,7 +128,7 @@ export function Contact() {
       formData.message,
     ].filter(Boolean).join("\n");
 
-    const waUrl = `https://wa.me/918218628232?text=${encodeURIComponent(msg)}`;
+    const waUrl = wa(msg);
     window.open(waUrl, "_blank", "noopener,noreferrer");
 
     setSubmitted(true);

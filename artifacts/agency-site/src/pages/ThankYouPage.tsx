@@ -6,8 +6,9 @@ import { SEO } from "@/components/SEO";
 import { NoiseOverlay } from "@/components/NoiseOverlay";
 import { FloatingWhatsApp } from "@/components/sections/FloatingWhatsApp";
 import { BackToTop } from "@/components/BackToTop";
+import { WA } from "@/lib/whatsapp";
 
-const WHATSAPP_URL = `https://wa.me/918218628232?text=${encodeURIComponent("Hi! I just submitted an inquiry and wanted to follow up.")}`;
+const WHATSAPP_URL = WA.followUp;
 
 const perks = [
   { label: "Personal review by our partners", delay: 0.6 },

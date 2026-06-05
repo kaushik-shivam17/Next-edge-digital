@@ -3,8 +3,9 @@ import { motion } from "framer-motion";
 import { SiWhatsapp } from "react-icons/si";
 import { ArrowRight, CalendarCheck, Globe, ShieldCheck, MessageCircle } from "lucide-react";
 import { scrollToSection } from "@/lib/scrollTo";
+import { WA } from "@/lib/whatsapp";
 
-const WHATSAPP_URL = `https://wa.me/918218628232?text=${encodeURIComponent("Hi! I'd like to book a free strategy call with Core Elite Digital.")}`;
+const WHATSAPP_URL = WA.bookCall;
 
 const perks = [
   {
@@ -281,7 +282,7 @@ export function BookCall() {
             </a>
 
             <a
-              href={`https://wa.me/918218628232?text=${encodeURIComponent("Hi! I'd like to send a project brief to Core Elite Digital.")}`}
+              href={WA.projectBrief}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-5 rounded-2xl font-semibold text-sm tracking-wide transition-all duration-300"
